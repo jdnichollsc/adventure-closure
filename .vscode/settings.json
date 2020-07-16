@@ -1,0 +1,17 @@
+{
+  "sqltools.connections": [
+    {
+      "database": "my_database",
+      "driver": "PostgreSQL",
+      "name": "my-db",
+      "password": "postgres",
+      "pgOptions": {
+        "ssl": false
+      },
+      "port": 5432,
+      "previewLimit": 50,
+      "server": "localhost",
+      "username": "postgres"
+    }
+  ]
+}
