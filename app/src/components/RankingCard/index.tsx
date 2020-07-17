@@ -3,37 +3,55 @@ import {
   IonCard,
   IonItem,
   IonThumbnail,
-  IonLabel
+  IonLabel,
+  IonImg
 } from '@ionic/react'
 import {
   createAnimatableComponent
 } from '@proyecto26/animatable-component-react'
 
+import './style.css'
+
 interface RankingCardProps {
   id: number
   name: string
   points: number
+  profileImg: string
+  rankingPosition: number
 }
 
 const AnimatableIonCard = createAnimatableComponent(IonCard)
 
 const RankingCard: React.FC<RankingCardProps> = ({
-  id
+  id,
+  name,
+  points,
+  profileImg,
+  rankingPosition
 }) => {
   return (
     <AnimatableIonCard
       animation='fadeInUp'
-      delay={200*id}
+      delay={200 * id}
       duration={1000}
       fill='forwards'
       composite='accumulate'
       autoPlay
+      className='ranking-card'
     >
-      <IonItem>
+      <IonItem className="item">
         <IonThumbnail slot="start">
-          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" />
+          <img src={profileImg} />
         </IonThumbnail>
-        <IonLabel>Item Thumbnail</IonLabel>
+        <div>
+          <IonLabel className="label-name">{name}</IonLabel>
+          <IonLabel className="label-points">{points}</IonLabel>
+        </div>
+        <div className="ranking" slot="end">
+          <IonImg slot="end" className="badge-img" src={require('../../assets/img/medal.png')}>
+          </IonImg>
+          <IonLabel className="label-ranking">{rankingPosition}</IonLabel>
+        </div>
       </IonItem>
     </AnimatableIonCard>
   )
