@@ -2,8 +2,8 @@ import React from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 
 import { useFBInstant } from '../../hooks/useFBInstant';
-import './style.css';
 import GameContainer from '../../components/GameContainer';
+import './style.scss';
 
 const Game: React.FC = () => {
   const {

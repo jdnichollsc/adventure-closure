@@ -12,7 +12,7 @@ import {
   createAnimatableComponent
 } from '@proyecto26/animatable-component-react'
 
-import './style.css'
+import './style.scss'
 
 interface RankingCardProps {
   id: number

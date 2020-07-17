@@ -9,6 +9,7 @@
     "@ionic/react-router": "^5.0.7",
     "@proyecto26/animatable-component-react": "^1.0.2",
     "ionicons": "^5.0.0",
+    "node-sass": "^4.14.1",
     "phaser": "^3.24.1",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",

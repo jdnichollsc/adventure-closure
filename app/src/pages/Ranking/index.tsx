@@ -8,6 +8,9 @@ import {
   IonGrid,
   IonRow,
   IonCol,
+  IonImg,
+  IonLabel,
+  IonChip,
   IonCard,
   IonButtons,
   IonToggle
@@ -15,7 +18,7 @@ import {
 
 import { useDarkTheme } from '../../hooks'
 import RankingCard from '../../components/RankingCard'
-import './style.css'
+import './style.scss'
 
 const Ranking: React.FC = () => {
   const ranking = [
@@ -87,6 +90,25 @@ const Ranking: React.FC = () => {
         <IonGrid>
           <IonRow className="backgnd-ranking">
             <IonCol>
+              <IonRow className="header-rank">
+                <IonCol className="fst col-rank">
+                  <IonRow>
+                    <IonImg className="medal" src={require('../../assets/img/first.png')}></IonImg>
+                  </IonRow>
+                  <IonRow>
+                    <IonChip>
+                      <IonImg className="coin" src={require('../../assets/img/coin.png')}></IonImg>
+                      <IonLabel color="warning" className="label-ranking">546467</IonLabel>
+                    </IonChip>
+                  </IonRow>
+                </IonCol>
+                <IonCol className="snd col-rank">
+                  <IonImg className="medal" src={require('../../assets/img/second.png')}></IonImg>
+                </IonCol>
+                <IonCol className="trd col-rank">
+                  <IonImg className="medal" src={require('../../assets/img/third.png')}></IonImg>
+                </IonCol>
+              </IonRow>
               <IonRow>
                 {ranking.map((r) => (
                   <IonCol key={r.id} size="12" sizeMd="6" sizeLg="4">

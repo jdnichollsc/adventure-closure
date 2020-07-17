@@ -11,3 +11,45 @@ ion-content {
   background: linear-gradient(to bottom, #2a0845, #6441A5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   
 }
+
+.header-rank {
+  border: 1px solid yellow;
+}
+
+.col-rank {
+  display: block;
+  
+}
+
+/*
+.fst {
+  justify-content: flex-end;
+}
+
+.snd {
+  justify-content: center;
+}
+
+.trd {
+  justify-content: flex-start
+}
+*/
+
+.medal {
+  width: 8em;
+}
+
+.label-ranking {
+  --ion-font-family: Rancho;
+  font-size: 30px !important;
+}
+
+
+ion-chip {
+  --background: var(--ion-color-primary);
+  --color: var(--ion-color-warning);
+}
+
+.coin {
+  width: 30px;
+}
