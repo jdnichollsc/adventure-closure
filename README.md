@@ -73,6 +73,9 @@ $ yarn test
 - [ ] Manage game scaling and use `media queries` to support multiple resolutions and devices.
 - [ ] Use `Facebook Instant Games` SDK to integrate services like In-App Purchase and distribute the game in multiple platforms.
 - [ ] Support PWA and Offline mode (SQLite, Cache with Service Workers, etc) to improve the UX with other kind of games (Nice to have for fun).
+- [ ] Share the final results and inspire others with Open Source contributions.
+- [ ] Add semantic release to use Gitflow Workflow for better branching process.
+- [ ] Use tools like `Lerna` to optimizes the workflow managing a multi-package repository for shared logic between front-end and back-end.
 
 ## Credits 👍
 Some resources used here are part of my `Open Source` contributions:
