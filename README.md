@@ -23,7 +23,7 @@ The game is idle, so it progresses while you are away: If you have a manager, th
 ## The solution
 Do you want to see this awesome game in action? Visit https://jdnichollsc.github.io/adventure-closure yay! 🎉
 
-![Happy like Elon Musk](.img/happy-like-elon.gif)
+![Happy like Elon Musk](img/happy-like-elon.gif)
 
 ## Installation 📚
 
