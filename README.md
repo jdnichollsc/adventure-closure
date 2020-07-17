@@ -69,7 +69,7 @@ $ yarn test
 - [x] Use platform-agnostic tools to scale the system easily.
 - [x] Add authentication/authorization for security concerns (JWT, Basic Authorization, Role-based access control, etc).
 - [x] Add testing utilities like Enzyme to write better tests for the components and help to reduce the complexity of the code.
-- [x] Use `OpenAPI` specification with `Swagger` to describe the endpointS of the RESTful API.
+- [x] Use `OpenAPI` specification with `Swagger` to describe the endpoints of the RESTful API.
 - [x] Use a logger like `Winston` to track exceptions easily.
 - [x] Enable CORS to allow access to a list of domains for restricted resources.
 - [ ] Add default data (Businesses, Managers, etc) with database migrations.
