@@ -65,8 +65,9 @@ $ yarn test
 - [x] Use `Web Components` and `Web animations` to improve the UI/UX and build a high performance web app using web-standards.
 - [x] Use `TypeScript` to improve the quality of the code and reduce maintenance costs and technical debt of the project.
 - [x] Use patterns like `Repository design` and dependency injection to have a modular architecture.
+- [x] Use `SOLID` following Software principles like SRP, DRY, KISS, etc to create a system that is easy to maintain and extend over time.
 - [x] Use platform-agnostic tools to scale the system easily.
-- [x] Add authentication/authorization for security concerns.
+- [x] Add authentication/authorization for security concerns (JWT, Basic Authorization, Role-based access control, etc).
 - [x] Add testing utilities like Enzyme to write better tests for the components and help to reduce the complexity of the code.
 - [ ] Use `Websockets` to improve the communication with a Event-driven architecture.
 - [ ] Manage game scaling and use `media queries` to support multiple resolutions and devices.
