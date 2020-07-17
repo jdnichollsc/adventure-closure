@@ -1,6 +1,10 @@
 # Adventure Closure
 A decision making game, make a fortune and conquer the universe! 💰🚀
 
+<p align="center">
+  <img width="500px" alt="Be like Elon Musk" src="img/elon-musk.gif">
+</p>
+
 ## The problem
 Create an idle business sim-game. The basic idea is to purchase a business, win capital from that business, upgrade the business and then purchase more businesses.
 The way to win capital in `Adventure Closure` is once you’ve purchased a business, you need to click on the business and it takes some time to gain the capital. Once done, you can click again.
@@ -18,6 +22,8 @@ The game is idle, so it progresses while you are away: If you have a manager, th
 
 ## The solution
 Do you want to see this awesome game in action? Visit https://jdnichollsc.github.io/adventure-closure yay! 🎉
+
+![Happy like Elon Musk](.img/happy-like-elon.gif)
 
 ## Installation 📚
 
@@ -73,6 +79,9 @@ Some resources used here are part of my `Open Source` contributions:
 * **MyApi Template:** [A template to create awesome APIs easily ⚡️](https://github.com/proyecto26/MyAPI).
 * **Animatable:** [A Web Component to use WAAPI in a declarative way](https://github.com/proyecto26/animatable-component).
 * **Awesome JavaScript Games:** [A curated list of awesome JavaScript Games 🎮](https://github.com/proyecto26/awesome-jsgames).
+
+Other resources:
+* **Elon Musk image:** [By Algarifma](https://imgur.com/GeEHyCu).
 
 ## Happy coding 💯
 Made with <3
