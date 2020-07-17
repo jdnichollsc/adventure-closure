@@ -4,7 +4,9 @@ import {
   IonItem,
   IonThumbnail,
   IonLabel,
-  IonImg
+  IonImg,
+  IonChip,
+  IonIcon
 } from '@ionic/react'
 import {
   createAnimatableComponent
@@ -17,7 +19,8 @@ interface RankingCardProps {
   name: string
   points: number
   profileImg: string
-  rankingPosition: number
+  rankingPosition: number,
+  capital: number
 }
 
 const AnimatableIonCard = createAnimatableComponent(IonCard)
@@ -27,7 +30,8 @@ const RankingCard: React.FC<RankingCardProps> = ({
   name,
   points,
   profileImg,
-  rankingPosition
+  rankingPosition,
+  capital
 }) => {
   return (
     <AnimatableIonCard
@@ -40,18 +44,25 @@ const RankingCard: React.FC<RankingCardProps> = ({
       className='ranking-card'
     >
       <IonItem className="item">
-        <IonThumbnail slot="start">
+        <div className="ranking" slot="start">
+          <IonLabel color="danger" className="label-ranking">{rankingPosition}.</IonLabel>
+
+          {/**          <IonImg className="badge-img" src={require('../../assets/img/medal.png')}>
+          </IonImg> */}
+        </div>
+
+        <IonThumbnail>
           <img src={profileImg} />
         </IonThumbnail>
         <div>
-          <IonLabel className="label-name">{name}</IonLabel>
-          <IonLabel className="label-points">{points}</IonLabel>
+          <IonLabel color="primary" className="label-name">{name}</IonLabel>
+          <IonLabel color="primary" className="label-points">Score: {points} pts</IonLabel>
         </div>
-        <div className="ranking" slot="end">
-          <IonImg slot="end" className="badge-img" src={require('../../assets/img/medal.png')}>
+        <IonChip slot="end">
+          <IonImg className="coin" src={require('../../assets/img/coin.png')}>
           </IonImg>
-          <IonLabel className="label-ranking">{rankingPosition}</IonLabel>
-        </div>
+          <IonLabel color="warning" className="label-ranking">{capital}</IonLabel>
+        </IonChip>
       </IonItem>
     </AnimatableIonCard>
   )

@@ -3,9 +3,17 @@
  /* --background: rgb(172, 205, 255); */
 }
 
-.badge-img {
-  width: 50px;
+.ranking {
+  margin: 0;
 }
+
+ion-thumbnail {
+  margin: 0 0.5em;
+}
+
+/*.badge-img {
+  width: 50px;
+}*/
 
 .label-name, .label-points{
   --ion-font-family: Rancho;
@@ -23,11 +31,11 @@ Kalam
 */
 
 .label-name {
-  font-size: 2em !important;
+  font-size: 1.8em !important;
 }
 
 .label-points {
-  font-size: 1.4em !important;
+  font-size: 1em !important;
 }
 
 /*
@@ -36,16 +44,17 @@ Con scss juntar los dos estilos anteriores con el de font family para no repetir
 
 
 .label-ranking {
-  position: absolute;
-  top: 20px;
-  right: 35px;
-  --color: red;
-  /*Hay que centrarlo bien porque si es el puestoo por ej 14 que tiene 2 digitos 
-  no queda centrado, sino que como lo puse posicion absoluta para que el numero
-   quedara encima de la imagen no se como centrarlo bien*/
+  --ion-font-family: Rancho;
+  font-size: 30px !important;
 }
 
-.item.input-wrapper {
-  display: flex;
-  justify-content: space-between;
+
+ion-chip {
+  --background: var(--ion-color-primary);
+  --color: var(--ion-color-warning);
 }
+
+.coin {
+  width: 30px;
+}
+
