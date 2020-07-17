@@ -69,6 +69,7 @@ $ yarn test
 - [x] Use platform-agnostic tools to scale the system easily.
 - [x] Add authentication/authorization for security concerns (JWT, Basic Authorization, Role-based access control, etc).
 - [x] Add testing utilities like Enzyme to write better tests for the components and help to reduce the complexity of the code.
+- [x] Use `OpenAPI` specification with `Swagger` to describe the endpointS of the RESTful API.
 - [ ] Add default data (Businesses, Managers, etc) with database migrations.
 - [ ] Use `Websockets` to improve the communication with a Event-driven architecture.
 - [ ] Manage game scaling and use `media queries` to support multiple resolutions and devices.
