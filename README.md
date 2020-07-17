@@ -71,8 +71,8 @@ $ yarn test
 - [x] Add testing utilities like Enzyme to write better tests for the components and help to reduce the complexity of the code.
 - [ ] Use `Websockets` to improve the communication with a Event-driven architecture.
 - [ ] Manage game scaling and use `media queries` to support multiple resolutions and devices.
-- [ ] Support PWA and Offline mode to improve the UX with other kind of games.
 - [ ] Use `Facebook Instant Games` SDK to integrate services like In-App Purchase and distribute the game in multiple platforms.
+- [ ] Support PWA and Offline mode (SQLite, Cache with Service Workers, etc) to improve the UX with other kind of games (Nice to have for fun).
 
 ## Credits 👍
 Some resources used here are part of my `Open Source` contributions:
