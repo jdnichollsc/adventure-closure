@@ -18,8 +18,7 @@ import {
 } from '@nestjs/swagger'
 
 import { AuthService } from '../auth'
-import { AuthToken, AuthLogin } from '../models/auth'
-import { User } from '../models/user'
+import { AuthToken, AuthLogin, User } from '../models'
 
 @ApiTags('Authentication')
 @Controller('/api/auth')

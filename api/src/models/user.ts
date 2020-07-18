@@ -5,29 +5,34 @@ import {
   ManyToOne,
   PrimaryColumn,
   CreateDateColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
+  OneToMany
 } from 'typeorm'
 import { ApiProperty } from '@nestjs/swagger'
 import { IsEmail, IsNotEmpty } from 'class-validator'
 
 import { Role } from './role'
-import { DocumentType } from './documentType'
+import { UserBusiness } from './userBusiness'
+import { UserManager } from './userManager'
 
 export enum UserStatus {
   Inactive = 'INACTIVE',
   Active = 'ACTIVE'
 }
 
+/**
+ * An interface to extend the user with different models
+ * depending of the role
+ */
 export interface IUser {
   id: string
   firstName: string
   lastName: string
   status: UserStatus
-  documentType: DocumentType
   email: string
   role: Role
-  createDate: Date
-  updateDate: Date
+  createdAt: Date
+  updatedAt: Date
 }
 
 @Entity({ schema: 'public' })
@@ -36,29 +41,26 @@ export class User implements IUser {
     this.id = id
   }
 
-  /**
-   * User's document
-   */
-  @ApiProperty({ description: 'Document of the user' })
+  @ApiProperty({ description: 'Id of the user' })
   @PrimaryColumn('text')
   @IsNotEmpty({
     message: 'Identification number is required'
   })
-  id: string
+  id!: string
 
   @ApiProperty({ description: 'First name' })
   @Column('varchar', { length: 50, name: 'firstName' })
   @IsNotEmpty({
     message: 'First name is required'
   })
-  firstName: string
+  firstName!: string
 
   @ApiProperty({ description: 'Last name' })
   @Column('varchar', { length: 50, name: 'lastName' })
   @IsNotEmpty({
     message: 'Last name is required'
   })
-  lastName: string
+  lastName!: string
 
   @ApiProperty({ description: 'Birthday' })
   @Column({ type: 'timestamp without time zone' })
@@ -83,7 +85,7 @@ export class User implements IUser {
   @IsNotEmpty({
     message: 'Email is required'
   })
-  email: string
+  email!: string
 
   @ApiProperty({ description: 'Password' })
   @Column('text', { nullable: true })
@@ -98,28 +100,40 @@ export class User implements IUser {
   termsAndConditions?: boolean
 
   @ApiProperty({ description: 'Status' })
-  @Column('text', { default: UserStatus.Inactive })
+  @Column('text', { default: UserStatus.Active })
   @IsNotEmpty({
     message: 'The user status is required'
   })
-  status: UserStatus
+  status!: UserStatus
 
-  @CreateDateColumn({ type: 'timestamp without time zone' })
-  createDate: Date
+  @ApiProperty({ description: 'Money obtained from business sales' })
+  @Column('int', { default: 0 })
+  capital?: number
 
-  @UpdateDateColumn({ type: 'timestamp without time zone' })
-  updateDate: Date
+  @ApiProperty({ description: 'A value to determine the level of the player' })
+  @Column('int', { default: 0 })
+  score?: number
 
-  @ApiProperty({ description: 'Role associated with the user' })
-  @ManyToOne(() => Role, role => role.users)
-  role: Role
+  @CreateDateColumn({ type: 'timestamp without time zone', default: 'NOW()' })
+  createdAt!: Date
 
-  @ApiProperty({ description: 'Document type associated with the user' })
-  @IsNotEmpty({
-    message: 'The type of document is required'
-  })
-  @ManyToOne(() => DocumentType, documentType => documentType.users)
-  documentType: DocumentType
+  @UpdateDateColumn({ type: 'timestamp without time zone', onUpdate: 'NOW()', nullable: true })
+  updatedAt!: Date
+
+  @Column('int')
+  roleId!: number
+
+  @ApiProperty({ description: 'Role associated with the user', example: null })
+  @ManyToOne('Role', 'users')
+  role!: Role
+
+  @ApiProperty({ description: 'Business associated with the user' })
+  @OneToMany('UserBusiness', 'user')
+  businesses!: UserBusiness[]
+
+  @ApiProperty({ description: 'Managers associated with the user' })
+  @OneToMany('UserManager', 'user')
+  managers?: UserManager[]
 }
 
 export class UserPasswords {
@@ -127,11 +141,11 @@ export class UserPasswords {
   @IsNotEmpty({
     message: 'The password is required'
   })
-  password: string
+  password!: string
 
   @ApiProperty({ description: 'Repeat user password' })
   @IsNotEmpty({
     message: 'Repeat password is required'
   })
-  repeatPassword: string
+  repeatPassword!: string
 }

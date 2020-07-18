@@ -8,7 +8,7 @@ import { AppModule } from './app.module'
 import { createLogger } from './logger'
 import { setupSwagger } from './swagger'
 import { setupSecurity } from './security'
-import { PROD_ENV } from './constants'
+import { PROD_ENV, PORT } from './constants'
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -44,6 +44,6 @@ async function bootstrap() {
     if (ip === '127.0.0.1') return true // trusted IPs
     else return false
   })
-  await app.listen(process.env.PORT || 3000)
+  await app.listen(PORT)
 }
 bootstrap()

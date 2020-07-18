@@ -1,5 +1,6 @@
 import { Connection, Repository } from 'typeorm'
-import { Role } from '../../models/role'
+
+import { Role } from '../../models'
 import { DATABASE_CONNECTION, REPOSITORIES } from '../../constants'
 
 export const roleProviders = [

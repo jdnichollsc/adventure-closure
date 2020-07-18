@@ -8,10 +8,13 @@ import {
 export const FOREIGN_KEYS = {
   ROLE_ID: 'roleId',
   USER_ID: 'userId',
-  DOCUMENT_TYPE_ID: 'documentTypeId'
+  BUSINESS_ID: 'businessId',
+  MANAGER_ID: 'managerId'
 }
 export const INDICES = {
-  USER_EMAIL: 'IDX_USER_EMAIL'
+  USER_EMAIL: 'IDX_USER_EMAIL',
+  USER_BUSINESS: 'IDX_USER_BUSINESS',
+  USER_MANAGER: 'IDX_USER_MANAGER'
 }
 export const COLUMN_TYPES = {
   INT: 'int',
@@ -22,8 +25,8 @@ export const COLUMN_TYPES = {
 }
 
 export const createAndUpdateDates: TableColumnOptions[] = [
-  { name: 'createDate', type: COLUMN_TYPES.TIMESTAMP_UTC, default: 'NOW()' },
-  { name: 'updateDate', type: COLUMN_TYPES.TIMESTAMP_UTC }
+  { name: 'createdAt', type: COLUMN_TYPES.TIMESTAMP_UTC, default: 'NOW()' },
+  { name: 'updatedAt', type: COLUMN_TYPES.TIMESTAMP_UTC, default: 'NOW()' }
 ]
 
 export const createForeignKeyOption = (
@@ -42,7 +45,10 @@ export const createForeignKeyOption = (
 export const PUBLIC_TABLES = {
   USER: 'public.user',
   ROLE: 'public.role',
-  DOCUMENT_TYPE: 'public.document_type'
+  BUSINESS: 'public.business',
+  MANAGER: 'public.manager',
+  USER_BUSINESS: 'public.user_business',
+  USER_MANAGER: 'public.user_manager'
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types

@@ -2,8 +2,8 @@ import { Strategy } from 'passport-local'
 import { PassportStrategy } from '@nestjs/passport'
 import { Injectable, UnauthorizedException } from '@nestjs/common'
 
-import { User, UserStatus } from '../models/user'
 import { ERRORS } from '../constants'
+import { User, UserStatus } from '../models'
 import { AuthService } from './auth.service'
 
 /**

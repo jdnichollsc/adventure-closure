@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@nestjs/common'
 import { Repository, QueryRunner } from 'typeorm'
 import { get } from 'lodash'
 
-import { User, IUser } from '../../models/user'
+import { User, IUser } from '../../models'
 import { REPOSITORIES } from '../../constants'
 import { PUBLIC_TABLES } from '../../database'
 import { getParamValues, trimStringProps, stringToJSON } from '../utils'
@@ -15,16 +15,13 @@ export class UserService {
   ) { }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  preloadUser(user: User) {
+  preloadUser(user: IUser) {
     user.role = stringToJSON(user.role)
-    user.documentType = stringToJSON(user.documentType)
-    const roleId = get(user, 'role.id', user['roleId']) as string
-    const documentTypeId = get(user, 'documentType.id', user['documentTypeId']) as string
+    const roleId = get(user, 'role.id', user['roleId']) as number
     return {
       ...trimStringProps(user),
       roleId,
-      documentTypeId
-    }
+    } as User
   }
 
   async findAll(): Promise<User[]> {
@@ -38,13 +35,11 @@ export class UserService {
     search: string,
     offset: number,
     limit: number
-  ): Promise<IUser[]> {
+  ): Promise<User[]> {
     return this.repository.query(
       `SELECT u.*,
-        row_to_json(r) as "role",
-        row_to_json(dt) as "documentType"
+        row_to_json(r) as "role"
       FROM ${PUBLIC_TABLES.USER} u
-      LEFT OUTER JOIN document_type dt ON u."documentTypeId" = dt.id
       LEFT OUTER JOIN role r ON u."roleId" = r.id
       WHERE u."roleId" IN (${roles.toString()}) AND (
         LOWER(u."id") LIKE LOWER($1)
@@ -59,7 +54,8 @@ export class UserService {
 
   async findByEmail(email: string): Promise<User> {
     const rawData = await this.repository.query(
-      `SELECT * FROM ${PUBLIC_TABLES.USER} WHERE email = $1;`,
+      `SELECT * FROM ${PUBLIC_TABLES.USER}
+      WHERE email = $1;`,
       [ email ]
     )
     return rawData[0]
@@ -69,11 +65,9 @@ export class UserService {
     const rawData = await this.repository.query(
       `SELECT
           u.*,
-          row_to_json(r) as role,
-          row_to_json(dt) as "documentType"
+          row_to_json(r) as role
         FROM ${PUBLIC_TABLES.USER} u
         LEFT OUTER JOIN role r ON u."roleId" = r.id
-        LEFT OUTER JOIN document_type dt ON u."documentTypeId" = dt.id
         WHERE u.id=$1;`,
       [ document ]
     )
@@ -93,7 +87,6 @@ export class UserService {
       newUser.lastName,
       newUser.password,
       newUser.roleId,
-      newUser.documentTypeId,
       newUser.birthdate,
       newUser.address,
       newUser.phoneNumber,
@@ -110,14 +103,13 @@ export class UserService {
         "lastName",
         "password",
         "roleId",
-        "documentTypeId",
         "birthdate",
         "address",
         "phoneNumber",
         "termsAndConditions",
         "status",
-        "createDate",
-        "updateDate"
+        "createdAt",
+        "updatedAt"
       )
       VALUES (${getParamValues(parameters.length)});`,
       parameters
@@ -125,7 +117,7 @@ export class UserService {
   }
 
   async updateUser(user: IUser): Promise<User> {
-    const updateDate = new Date().toISOString()
+    const updatedAt = new Date().toISOString()
     const newUser = this.preloadUser(user)
     await this.repository.query(
       `UPDATE ${PUBLIC_TABLES.USER}
@@ -133,35 +125,34 @@ export class UserService {
         "firstName" = $3,
         "lastName" = $4,
         "roleId" = $5,
-        "documentTypeId" = $6,
-        "birthdate" = $7,
-        "address" = $8,
-        "phoneNumber" = $9,
-        "termsAndConditions" = $10,
-        "status" = $11,
-        "updateDate" = $12
+        "birthdate" = $6,
+        "address" = $7,
+        "phoneNumber" = $8,
+        "termsAndConditions" = $9,
+        "status" = $10,
+        "updatedAt" = $11
       WHERE id = $1;`, [
         newUser.id,
         newUser.email,
         newUser.firstName,
         newUser.lastName,
         newUser.roleId,
-        newUser.documentTypeId,
         newUser.birthdate,
         newUser.address,
         newUser.phoneNumber,
         newUser.termsAndConditions,
         newUser.status,
-        updateDate
+        updatedAt
       ]
     )
     return newUser
   }
 
-  deleteByDocument(document: string): Promise<void> {
+  delete(id: string): Promise<void> {
     return this.repository.query(
-      `DELETE FROM ${PUBLIC_TABLES.USER} WHERE id = $1;`,
-      [ document ]
+      `DELETE FROM ${PUBLIC_TABLES.USER}
+      WHERE id = $1;`,
+      [ id ]
     )
   }
 
@@ -169,25 +160,25 @@ export class UserService {
     document: string,
     newPassword: string
   ): Promise<void> {
-    const updateDate = new Date().toISOString()
+    const updatedAt = new Date().toISOString()
     await this.repository.query(
       `UPDATE ${PUBLIC_TABLES.USER}
       SET "password" = $2,
-        "updateDate" = $3
+        "updatedAt" = $3
       WHERE id = $1;`, [
         document,
         newPassword,
-        updateDate
+        updatedAt
       ]
     )
   }
 
-  async countByDocumentTypeId(documentTypeId: number = null): Promise<number> {
+  async countByRoleId(roleId: number = null): Promise<number> {
     const rawData = await this.repository.query(
       `SELECT COUNT(*) AS count
       FROM ${PUBLIC_TABLES.USER}
-      WHERE "documentTypeId" = $1;`,
-      [documentTypeId]
+      WHERE "roleId" = $1;`,
+      [roleId]
     )
     return Number(rawData[0].count)
   }

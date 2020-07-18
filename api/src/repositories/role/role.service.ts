@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@nestjs/common'
 import { Repository } from 'typeorm'
 import { get } from 'lodash'
 
-import { Role } from '../../models/role'
+import { Role } from '../../models'
 import { REPOSITORIES } from '../../constants'
 import { PUBLIC_TABLES } from '../../database'
 

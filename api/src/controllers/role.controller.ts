@@ -30,7 +30,7 @@ import {
 
 import { ERRORS, POSTGRES } from '../constants'
 import { RoleService } from '../repositories'
-import { Role, DefaultRole } from '../models/role'
+import { Role, DefaultRole } from '../models'
 import { Roles, RolesGuard } from '../auth'
 
 @ApiBearerAuth()

@@ -9,7 +9,7 @@ export class AuthPayload {
     type: String
   })
   @IsNotEmpty()
-  sub: string
+  sub!: string
 
   @ApiProperty({
     description: 'User role',
@@ -25,7 +25,7 @@ export class AuthToken {
     type: String
   })
   @IsNotEmpty()
-  access_token: string
+  access_token!: string
 }
 
 export class AuthLogin {
@@ -40,7 +40,7 @@ export class AuthLogin {
   @IsNotEmpty({
     message: 'Document is required'
   })
-  readonly document: string
+  readonly document!: string
 
   @ApiProperty({
     description: 'Password is required',
@@ -54,5 +54,5 @@ export class AuthLogin {
   @IsNotEmpty({
     message: 'Password is required'
   })
-  readonly password: string
+  readonly password!: string
 }

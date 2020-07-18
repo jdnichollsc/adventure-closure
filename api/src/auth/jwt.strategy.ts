@@ -3,7 +3,7 @@ import { PassportStrategy } from '@nestjs/passport'
 import { Injectable } from '@nestjs/common'
 
 import { AUTH_SECRET_TOKEN } from '../constants'
-import { AuthPayload } from '../models/auth'
+import { AuthPayload } from '../models'
 
 /**
  * JwtStrategy is passport JWT strategy.

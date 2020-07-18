@@ -7,23 +7,24 @@ import { User } from './user'
 @Entity({ schema: 'public' })
 export class Role {
 
-  constructor(id?: number) {
+  constructor(id?: number, name?: string) {
     this.id = id
+    this.name = name
   }
 
   @ApiProperty({ description: 'Id of the role', required: false })
   @PrimaryGeneratedColumn()
-  id: number
+  id!: number
 
   @ApiProperty({ description: 'Name of the role' })
   @IsNotEmpty({
     message: 'The name is required'
   })
   @Column({ length: 50, type: 'varchar' })
-  name: string
+  name!: string
 
-  @OneToMany(() => User, (user: User) => user.role)
-  users: User[]
+  @OneToMany('User', 'role')
+  users?: User[]
 }
 
 export enum DefaultRole {

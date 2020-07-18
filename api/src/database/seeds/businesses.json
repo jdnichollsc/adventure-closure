@@ -1,0 +1,39 @@
+{
+  "businesses": [
+    {
+      "name": "Solar panels",
+      "imageUrl": "/images/businesses/solar-panels.png",
+      "score": 1,
+      "income": 10,
+      "duration": 5
+    },
+    {
+      "name": "Cars",
+      "imageUrl": "/images/businesses/cars.png",
+      "score": 20,
+      "income": 100,
+      "duration": 10
+    },
+    {
+      "name": "Space suits",
+      "imageUrl": "/images/businesses/space-suits.png",
+      "score": 30,
+      "income": 1000,
+      "duration": 20
+    },
+    {
+      "name": "Satellites",
+      "imageUrl": "/images/businesses/satellites.png",
+      "score": 40,
+      "income": 100000,
+      "duration": 30
+    },
+    {
+      "name": "Rockets",
+      "imageUrl": "/images/businesses/rockets.png",
+      "score": 50,
+      "income": 10000000,
+      "duration": 100
+    }
+  ]
+}

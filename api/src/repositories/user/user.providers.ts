@@ -1,6 +1,6 @@
 import { Connection, Repository } from 'typeorm'
 
-import { User } from '../../models/user'
+import { User } from '../../models'
 import { DATABASE_CONNECTION, REPOSITORIES } from '../../constants'
 
 export const userProviders = [

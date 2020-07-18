@@ -39,9 +39,7 @@ import { isEmpty } from 'lodash'
 
 import { ERRORS, POSTGRES } from '../constants'
 import { UserService } from '../repositories'
-import { User, UserPasswords } from '../models/user'
-import { DefaultRole, Role } from '../models/role'
-import { AuthPayload } from '../models/auth'
+import { AuthPayload, User, UserPasswords, DefaultRole, Role } from '../models'
 import { encryptPassword, RolesGuard, Roles }  from '../auth'
 
 @ApiBearerAuth()
@@ -206,7 +204,7 @@ export class UserController {
     @Param('document') document: string
   ): Promise<void> {
     try {
-      await this.userService.deleteByDocument(document)
+      await this.userService.delete(document)
     } catch (error) {
       this.logger.error(error.message, 'DELETE_USER')
       throw new BadRequestException(error.message)

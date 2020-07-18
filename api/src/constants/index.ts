@@ -1,7 +1,10 @@
 import * as jwt from 'jsonwebtoken'
 
+export const PORT = process.env.PORT || 3000
 export const PROD_ENV = 'production'
-export const DOMAIN = 'https://my-production-api.domain'
+export const DOMAIN = process.env.NODE_ENV === PROD_ENV ?
+  'https://my-production-api.domain'
+  : `http://localhost:${PORT}`
 
 export const AUTH_SECRET_TOKEN = 'my_secret_token';
 export const AUTH_JWT_OPTIONS: jwt.SignOptions = {
@@ -12,7 +15,8 @@ export const DATABASE_CONNECTION = 'DATABASE_CONNECTION'
 export const REPOSITORIES = {
   USER: 'USER_REPOSITORY',
   ROLE: 'ROLE_REPOSITORY',
-  DOCUMENT_TYPE: 'DOCUMENT_TYPE'
+  BUSINESS: 'BUSINESS_REPOSITORY',
+  MANAGER: 'MANAGER_REPOSITORY'
 }
 
 export { default as ERRORS } from './errors'
