@@ -80,6 +80,7 @@ $ yarn test
 - [ ] Share the final results and inspire others with Open Source contributions.
 - [ ] Add semantic release to use Gitflow Workflow for better branching process.
 - [ ] Use tools like `Lerna` to optimizes the workflow managing a multi-package repository for shared logic between front-end and back-end.
+- [ ] Use a Secrets manager to retrieve database credentials, API keys, etc to avoid hardcoded credentials.
 
 ## Credits 👍
 Some resources used here are part of my `Open Source` contributions:
