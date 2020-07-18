@@ -76,12 +76,14 @@ $ yarn test
 - [ ] Use `Websockets` to improve the communication with a Event-driven architecture.
 - [ ] Manage game scaling and use `media queries` to support multiple resolutions and devices.
 - [ ] Use `Facebook Instant Games` SDK to integrate services like In-App Purchase and distribute the game in multiple platforms.
-- [ ] Support PWA and Offline mode (SQLite, Cache with Service Workers, etc) to improve the UX with other kind of games (Nice to have for fun).
-- [ ] Add semantic release to use `Gitflow` workflow for better branching process.
-- [ ] Use tools like `Lerna` to optimizes the workflow managing a multi-package repository for shared logic between front-end and back-end.
-- [ ] Use a `Secrets Manager` to retrieve database credentials, API keys, etc to avoid hardcoded credentials.
+- [ ] Use `Gitflow` workflow for better branching process.
+- [ ] Use a multi-package repository for shared logic between front-end and back-end (Lerna, etc).
+- [ ] Use `Cloud Storage` to store assets like images, audios, etc to be accessed via HTTPs with security mechanisms to control access to data (Google Cloud Storage, AWS S3, Azure Blob Storage, etc).
+- [ ] Use `Secrets Manager` to retrieve database credentials, API keys, etc to avoid hardcoded credentials.
 - [ ] Use in-memory data store like `Redis` to avoid many accesses to the database by using cache.
 - [ ] Use `Microservices` strategy for complex calculations and horizontal scaling, To infinity and beyond!
+- [ ] Create a `Docker` image with the configuration to run the project anywhere.
+- [ ] Support PWA and Offline mode (SQLite, Cache with Service Workers, etc) to improve the UX with other kind of games (Nice to have for fun).
 - [ ] Share the final results and inspire others with Open Source contributions.
 
 ## Credits 👍
