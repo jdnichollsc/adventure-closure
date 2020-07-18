@@ -72,8 +72,9 @@ $ yarn test
 - [x] Use `OpenAPI` specification with `Swagger` to describe the endpoints of the RESTful API.
 - [x] Use a logger like `Winston` to track exceptions easily.
 - [x] Enable CORS to allow access to a list of domains for restricted resources.
-- [ ] Add default data (Businesses, Managers, etc) with database migrations.
+- [x] Add default data (Businesses, Managers, etc) with database migrations.
 - [ ] Use `Websockets` to improve the communication with a Event-driven architecture.
+- [ ] Use functional programming (Option, Either, etc) for handling exceptions instead of try/catch.
 - [ ] Manage game scaling and use `media queries` to support multiple resolutions and devices.
 - [ ] Use `Facebook Instant Games` SDK to integrate services like In-App Purchase and distribute the game in multiple platforms.
 - [ ] Use `Gitflow` workflow for better branching process.
