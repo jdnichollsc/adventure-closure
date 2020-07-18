@@ -14,7 +14,6 @@ export const addDefaultData = async (queryRunner: QueryRunner) => {
   await queryRunner.manager.save(new Role(DefaultRole.User, 'User'))
 
   const encryptedPassword = await encryptPassword('1111')
-  const currentdate = new Date()
   const user = new User('1234')
   user.password = encryptedPassword
   user.email = 'jdnichollsc@hotmail.com'
@@ -22,12 +21,10 @@ export const addDefaultData = async (queryRunner: QueryRunner) => {
   user.lastName = 'Nicholls Cardona'
   user.address = 'XXX XX XX'
   user.phoneNumber = 'XXX-XX-XX'
-  user.birthdate = currentdate.toISOString()
+  user.birthdate = new Date(1991, 7, 26).toISOString()
   user.role = adminRole
   user.termsAndConditions = true
   user.status = UserStatus.Active
-  user.createdAt = currentdate
-  user.updatedAt = currentdate
   await queryRunner.manager.save(user)
 
   const newBusinesses = (businesses as Business[]).map(business => ({
