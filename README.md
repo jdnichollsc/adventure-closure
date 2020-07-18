@@ -81,6 +81,7 @@ $ yarn test
 - [ ] Use tools like `Lerna` to optimizes the workflow managing a multi-package repository for shared logic between front-end and back-end.
 - [ ] Use a `Secrets Manager` to retrieve database credentials, API keys, etc to avoid hardcoded credentials.
 - [ ] Use in-memory data store like `Redis` to avoid many accesses to the database by using cache.
+- [ ] Use `Microservices` strategy for complex calculations and horizontal scaling, To infinity and beyond!
 - [ ] Share the final results and inspire others with Open Source contributions.
 
 ## Credits 👍
