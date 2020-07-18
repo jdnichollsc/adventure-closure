@@ -1,6 +1,6 @@
 .ranking-card .item {
- --background: rgb(255, 252, 212); 
- /* --background: rgb(172, 205, 255); */
+  --background: rgb(255,231,76);
+  --background: linear-gradient(90deg, rgba(255,231,76,1) 0%, rgba(255,248,195,1) 47%, rgba(255,231,76,1) 100%);
 }
 
 .ranking {
@@ -10,10 +10,6 @@
 ion-thumbnail {
   margin: 0 0.5em;
 }
-
-/*.badge-img {
-  width: 50px;
-}*/
 
 .label-name, .label-points{
   --ion-font-family: Rancho;
@@ -37,11 +33,6 @@ Kalam
 .label-points {
   font-size: 1em !important;
 }
-
-/*
-Con scss juntar los dos estilos anteriores con el de font family para no repetir la clase
-*/
-
 
 .label-ranking {
   --ion-font-family: Rancho;

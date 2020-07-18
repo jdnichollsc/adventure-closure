@@ -11,6 +11,8 @@ import {
   IonImg,
   IonLabel,
   IonChip,
+  IonThumbnail,
+  IonAvatar,
   IonCard,
   IonButtons,
   IonToggle
@@ -91,22 +93,69 @@ const Ranking: React.FC = () => {
           <IonRow className="backgnd-ranking">
             <IonCol>
               <IonRow className="header-rank">
-                <IonCol className="fst col-rank">
+                <IonCol className="space-img" size="2">
+                  <IonThumbnail>
+                    <IonImg src={require('../../assets/img/planet.png')}></IonImg>
+                  </IonThumbnail>
+                </IonCol>
+                <IonCol className="col-rank">
                   <IonRow>
-                    <IonImg className="medal" src={require('../../assets/img/first.png')}></IonImg>
+                    <IonImg className="medal" src={require('../../assets/img/second.png')}></IonImg>
+                    <IonThumbnail className="character-img">
+                      <img src={require('../../assets/img/character1.png')} />
+                    </IonThumbnail>
                   </IonRow>
                   <IonRow>
-                    <IonChip>
+                    <IonLabel className="name-rank" color="light">#2 - Pepito Pérez</IonLabel>
+                  </IonRow>
+                  <IonRow>
+                    <IonChip className="ranking-chip">
+                      <IonLabel color="light">546467 pts - </IonLabel>
                       <IonImg className="coin" src={require('../../assets/img/coin.png')}></IonImg>
-                      <IonLabel color="warning" className="label-ranking">546467</IonLabel>
+                      <IonLabel color="light">546467</IonLabel>
                     </IonChip>
                   </IonRow>
                 </IonCol>
-                <IonCol className="snd col-rank">
-                  <IonImg className="medal" src={require('../../assets/img/second.png')}></IonImg>
+                <IonCol className="col-rank">
+                  <IonRow>
+                    <IonImg className="medal first" src={require('../../assets/img/first.png')}></IonImg>
+                    <IonThumbnail className="character-img">
+                      <img src={require('../../assets/img/character2.png')} />
+                    </IonThumbnail>
+                  </IonRow>
+                  <IonRow>
+                    <IonLabel className="name-rank" color="light">#1 - Pepito Pérez</IonLabel>
+                  </IonRow>
+                  <IonRow>
+                    <IonChip className="ranking-chip">
+                      <IonLabel color="light">546467 pts - </IonLabel>
+                      <IonImg className="coin" src={require('../../assets/img/coin.png')}></IonImg>
+                      <IonLabel color="light">546467</IonLabel>
+                    </IonChip>
+                  </IonRow>
                 </IonCol>
-                <IonCol className="trd col-rank">
-                  <IonImg className="medal" src={require('../../assets/img/third.png')}></IonImg>
+                <IonCol className="col-rank">
+                  <IonRow>
+                    <IonImg className="medal" src={require('../../assets/img/third.png')}></IonImg>
+                    <IonThumbnail className="character-img">
+                      <img src={require('../../assets/img/character3.png')} />
+                    </IonThumbnail>
+                  </IonRow>
+                  <IonRow>
+                    <IonLabel className="name-rank" color="light">#3 -Pepito Pérez</IonLabel>
+                  </IonRow>
+                  <IonRow>
+                    <IonChip className="ranking-chip">
+                      <IonLabel color="light">546467 pts - </IonLabel>
+                      <IonImg className="coin" src={require('../../assets/img/coin.png')}></IonImg>
+                      <IonLabel color="light">546467</IonLabel>
+                    </IonChip>
+                  </IonRow>
+                </IonCol>
+                <IonCol className="space-img" size="2">
+                  <IonThumbnail>
+                    <IonImg src={require('../../assets/img/rocket.png')}></IonImg>
+                  </IonThumbnail>
                 </IonCol>
               </IonRow>
               <IonRow>

@@ -6,50 +6,73 @@ ion-content {
   margin: 2em;
   padding: 2em;
   border-radius: 2em;
-  background: #6441A5;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to bottom, #2a0845, #6441A5);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #2a0845, #6441A5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  
-}
+  /*
+  background: #6441A5;  
+  background: -webkit-linear-gradient(to bottom, #2a0845, #6441A5); 
+  background: linear-gradient(to bottom, #2a0845, #6441A5); 
+  */
+  background: #0f0c29;  
+  background: -webkit-linear-gradient(to top, #24243e, #302b63, #0f0c29);  
+  background: linear-gradient(to top, #24243e, #302b63, #0f0c29); 
+  opacity: 0.9;
 
-.header-rank {
-  border: 1px solid yellow;
+  -webkit-box-shadow: 2px 2px 16px 8px rgba(53,167,255,0.5);
+  -moz-box-shadow: 2px 2px 16px 8px rgba(53,167,255,0.5);
+  box-shadow: 2px 2px 16px 8px rgba(53,167,255,0.5);
+  
 }
 
 .col-rank {
   display: block;
-  
+  ion-row{
+    display: flex;
+    justify-content: center;
+  }
 }
-
-/*
-.fst {
-  justify-content: flex-end;
-}
-
-.snd {
-  justify-content: center;
-}
-
-.trd {
-  justify-content: flex-start
-}
-*/
 
 .medal {
   width: 8em;
 }
 
-.label-ranking {
+.first {
+  width: 10em;
+}
+
+.name-rank {
+  font-size: 24px !important;
+}
+
+.ranking-chip {
+  /*--background: rgba(97, 152, 255, 0.815);*/
+  --background: rgb(53,167,255);
+  --background: linear-gradient(196deg, rgba(53,167,255,1) 0%, rgba(166,207,238,1) 25%, rgba(126,197,252,1) 50%, rgba(166,207,238,1) 75%, rgba(53,167,255,1) 100%);   
+
+  ion-label {
+    font-size: 18px !important;
+  }
+  .coin {
+    width: 30px;
+  }
+}
+
+ion-label {
   --ion-font-family: Rancho;
-  font-size: 30px !important;
+  text-align: center;
 }
 
-
-ion-chip {
-  --background: var(--ion-color-primary);
-  --color: var(--ion-color-warning);
+.character-img {
+  position: absolute;
+  top: 34px;
+  left: 70px;
 }
 
-.coin {
-  width: 30px;
+.space-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  ion-thumbnail {
+    --size: 100px;
+    --border-radius: 2em;
+  }
 }
