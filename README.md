@@ -87,7 +87,7 @@ $ yarn test
 - [ ] Use `Microservices` strategy for complex calculations and horizontal scaling, To infinity and beyond!
 - [ ] Create a `Docker` image with the configuration to run the project anywhere.
 - [ ] Support PWA and Offline mode (SQLite, Cache with Service Workers, etc) to improve the UX with other kind of games (Nice to have for fun).
-- [ ] Share the final results and inspire others with Open Source contributions.
+- [ ] Share the end results and inspire others with Open Source contributions.
 
 ## Credits 👍
 Some resources used here are part of my `Open Source` contributions:
