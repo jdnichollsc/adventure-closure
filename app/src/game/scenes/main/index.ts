@@ -1,24 +1,42 @@
 import { Scene, GameObjects } from 'phaser'
 
-export class MainScene extends Scene {
-  private helloWorld!: GameObjects.Text
+import { PlayerCard, BusinessCard } from '../../containers'
+import { StateManager, BusinessManager } from '../../managers'
 
+export class MainScene extends Scene {
+  private playerCard!: PlayerCard
+  private businessCards!: Array<BusinessCard>
   init () {
     this.cameras.main.setBackgroundColor('#24252A')
+    // Required to initialize shared resources
+    StateManager.setCurrentScene(this)
   }
 
   create () {
-    this.helloWorld = this.add.text(
-      this.cameras.main.centerX, 
-      this.cameras.main.centerY, 
-      "Hello World", { 
-        font: "40px Arial", 
-        fill: "#ffffff" 
-      }
-    );
-    this.helloWorld.setOrigin(0.5);
+    const player = {
+      name: 'Eliana Musk',
+      capital: 0
+    }
+    this.playerCard = new PlayerCard(this, player)
+    this.loadBusinessCards(this.playerCard.y + this.playerCard.height)
   }
+
   update () {
-    this.helloWorld.angle += 1;
+    
+  }
+
+  loadBusinessCards (lastPosition: number) {
+    const businesses = BusinessManager.loadBusinesses()
+    this.businessCards = businesses.reduce((list, business, index) => {
+      const newBusinessCard = new BusinessCard(
+        this,
+        business
+      )
+      newBusinessCard.setPosition(50, newBusinessCard.height * index + lastPosition)
+      return [
+        ...list,
+        newBusinessCard
+      ]
+    }, [] as BusinessCard[])
   }
 }

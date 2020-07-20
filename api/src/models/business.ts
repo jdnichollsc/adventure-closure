@@ -30,15 +30,19 @@ export class Business {
   @Column({ length: 50, type: 'varchar' })
   imageUrl!: string
 
-  @ApiProperty({ description: 'The score to obtain for purchase this business' })
+  @ApiProperty({ description: 'The cost of purchasing the business' })
+  @Column('int')
+  investment!: number
+
+  @ApiProperty({ description: 'The score for purchasing the business' })
   @Column('int', { default: 0 })
   score!: number
 
-  @ApiProperty({ description: 'The income to obtain from the business' })
+  @ApiProperty({ description: 'The income for running the business' })
   @Column('int', { default: 0 })
   income!: number
 
-  @ApiProperty({ description: 'Time needed to earn an income' })
+  @ApiProperty({ description: 'Time needed to gain the capital' })
   @Column('int', { default: 0 })
   duration!: number
 

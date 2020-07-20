@@ -3,27 +3,27 @@
     {
       "name": "Pepito Pérez",
       "imageUrl": "/images/managers/manager1.png",
-      "cost": 1000
+      "investment": 1000
     },
     {
       "name": "Sara Jaramillo",
       "imageUrl": "/images/managers/manager2.png",
-      "cost": 3000
+      "investment": 3000
     },
     {
       "name": "Lucas Cardona",
       "imageUrl": "/images/managers/manager3.png",
-      "cost": 5000
+      "investment": 5000
     },
     {
       "name": "Laura B",
       "imageUrl": "/images/managers/manager4.png",
-      "cost": 7000
+      "investment": 7000
     },
     {
       "name": "Sofia D",
       "imageUrl": "/images/managers/manager5.png",
-      "cost": 9000
+      "investment": 9000
     }
   ]
 }

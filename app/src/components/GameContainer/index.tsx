@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 
-import { useGame } from '../../hooks/useGame'
-import { gameConfig } from '../../game'
+import { useRealtimeGame } from '../../hooks'
+import gameConfig from '../../game'
 
 interface ContainerProps {
   onStartGame: () => void
@@ -10,7 +10,7 @@ interface ContainerProps {
 
 const GameContainer: React.FC<ContainerProps> = () => {
   const parentEl = useRef<HTMLDivElement>(null)
-  useGame(gameConfig, parentEl.current)
+  useRealtimeGame(gameConfig, parentEl.current)
 
   return (
     <div ref={parentEl} className="container">
@@ -18,4 +18,4 @@ const GameContainer: React.FC<ContainerProps> = () => {
   );
 };
 
-export default GameContainer;
+export default GameContainer

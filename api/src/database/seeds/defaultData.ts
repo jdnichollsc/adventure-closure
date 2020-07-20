@@ -2,7 +2,7 @@ import { QueryRunner } from 'typeorm'
 
 import { DOMAIN } from '../../constants'
 import { encryptPassword } from '../../auth'
-import { Role, DefaultRole, User, UserStatus, Manager, Business } from '../../models'
+import { Role, DefaultRole, User, UserStatus } from '../../models'
 import { PUBLIC_TABLES } from '../utils'
 import { businesses } from './businesses.json'
 import { managers } from './managers.json'
@@ -27,7 +27,7 @@ export const addDefaultData = async (queryRunner: QueryRunner) => {
   user.status = UserStatus.Active
   await queryRunner.manager.save(user)
 
-  const newBusinesses = (businesses as Business[]).map(business => ({
+  const newBusinesses = businesses.map(business => ({
     ...business,
     imageUrl: DOMAIN + business.imageUrl
   }))
@@ -40,7 +40,7 @@ export const addDefaultData = async (queryRunner: QueryRunner) => {
     .values(newBusinesses)
     .execute()
 
-  const newManagers = (managers as Manager[]).map((manager, index) => ({
+  const newManagers = managers.map((manager, index) => ({
     ...manager,
     imageUrl: DOMAIN + manager.imageUrl,
     business: newBusinesses[index]

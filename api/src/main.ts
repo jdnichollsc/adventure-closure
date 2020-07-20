@@ -10,9 +10,9 @@ import { setupSwagger } from './swagger'
 import { setupSecurity } from './security'
 import { PROD_ENV, PORT } from './constants'
 
-async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-    logger: process.env.NODE_ENV === PROD_ENV ? createLogger() : ['error', 'warn']
+async function bootstrap () {
+  const app = await NestFactory.create < NestExpressApplication > (AppModule, {
+    logger: process.env.NODE_ENV === PROD_ENV ? createLogger() : ['error', 'warn', 'debug']
   })
 
   // BASIC CONFIGURATION
@@ -40,10 +40,10 @@ async function bootstrap() {
   setupSwagger(app)
 
   // Register the proxy’s IP address (load balancer or reverse proxy)
-  app.set('trust proxy', function (ip: string) {
-    if (ip === '127.0.0.1') return true // trusted IPs
-    else return false
-  })
+  // app.set('trust proxy', function (ip: string) {
+  //   if (ip === '127.0.0.1') return true // trusted IPs
+  //   else return false
+  // })
   await app.listen(PORT)
 }
 bootstrap()

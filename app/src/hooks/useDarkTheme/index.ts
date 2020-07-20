@@ -8,7 +8,7 @@ function toggleDarkTheme(shouldAdd: boolean) {
 const enabledTheme = true
 toggleDarkTheme(enabledTheme);
 
-export const useDarkTheme = function () {
+export function useDarkTheme () {
   const [enabled, setEnabled] = useState<boolean>(enabledTheme)
 
   const onToggle = useCallback((enabled: boolean) => {
@@ -16,16 +16,15 @@ export const useDarkTheme = function () {
     setEnabled(enabled)
   }, [])
 
-  const prefersDarkToggle = (mediaQuery: MediaQueryListEvent): any => onToggle(mediaQuery.matches)
-
   useEffect(() => {
     // Use matchMedia to check the user preference
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)')
+    const prefersDarkToggle = (mediaQuery: MediaQueryListEvent): any => onToggle(mediaQuery.matches)
     // Listen for changes to the prefers-color-scheme media query
     prefersDark.addListener(prefersDarkToggle)
 
     return () => prefersDark.removeListener(prefersDarkToggle)
-  }, [])
+  }, [onToggle])
 
   return {
     enabled,

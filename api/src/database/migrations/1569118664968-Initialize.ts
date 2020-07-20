@@ -35,6 +35,7 @@ export class Initialize1569118664968 implements MigrationInterface {
         { name: 'id', type: COLUMN_TYPES.INT, isPrimary: true, isGenerated: true },
         { name: 'name', type: COLUMN_TYPES.VARCHAR, length: '50' },
         { name: 'imageUrl', type: COLUMN_TYPES.VARCHAR, length: '100' },
+        { name: 'investment', type: COLUMN_TYPES.INT },
         { name: 'score', type: COLUMN_TYPES.INT },
         { name: 'income', type: COLUMN_TYPES.INT },
         { name: 'duration', type: COLUMN_TYPES.INT }
@@ -47,7 +48,7 @@ export class Initialize1569118664968 implements MigrationInterface {
         { name: 'id', type: COLUMN_TYPES.INT, isPrimary: true, isGenerated: true },
         { name: 'name', type: COLUMN_TYPES.VARCHAR, length: '50' },
         { name: 'imageUrl', type: COLUMN_TYPES.VARCHAR, length: '100' },
-        { name: 'cost', type: COLUMN_TYPES.INT },
+        { name: 'investment', type: COLUMN_TYPES.INT },
         { name: FOREIGN_KEYS.BUSINESS_ID, type: COLUMN_TYPES.INT },
       ],
       foreignKeys: [

@@ -1,14 +1,16 @@
 import { Types } from 'phaser'
 
-import { BootScene } from './scenes/boot'
+import { BootScene } from './scenes'
 
-export const gameConfig: Types.Core.GameConfig = {
+const gameConfig: Types.Core.GameConfig = {
   width: "100%",
   height: "100%",
   type: Phaser.AUTO,
   scale: {
-    mode: Phaser.Scale.FIT,
-    autoCenter: Phaser.Scale.CENTER_BOTH,
+    mode: Phaser.Scale.WIDTH_CONTROLS_HEIGHT,
+    // TODO: With RESIZE mode width/height are zero
+    // mode: Phaser.Scale.RESIZE,
+    // autoCenter: Phaser.Scale.CENTER_BOTH,
     width: '100%',
     height: '100%'
   },
@@ -17,12 +19,7 @@ export const gameConfig: Types.Core.GameConfig = {
     pixelArt: false,
     roundPixels: false
   },
-  physics: {
-    default: 'arcade',
-    arcade: {
-      gravity: { y: 400 },
-      debug: true
-    }
-  },
   scene: BootScene
 }
+
+export default gameConfig

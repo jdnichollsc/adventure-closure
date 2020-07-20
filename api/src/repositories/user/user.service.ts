@@ -2,8 +2,9 @@ import { Injectable, Inject } from '@nestjs/common'
 import { Repository, QueryRunner } from 'typeorm'
 import { get } from 'lodash'
 
-import { User, IUser } from '../../models'
 import { REPOSITORIES } from '../../constants'
+import { IUser } from '../../types'
+import { User } from '../../models'
 import { PUBLIC_TABLES } from '../../database'
 import { getParamValues, trimStringProps, stringToJSON } from '../utils'
 

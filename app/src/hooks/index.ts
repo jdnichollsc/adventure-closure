@@ -1,3 +1,5 @@
 export * from './useDarkTheme'
 export * from './useFBInstant'
 export * from './useGame'
+export * from './useSocket'
+export * from './useRealtimeGame'

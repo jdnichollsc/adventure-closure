@@ -1,0 +1,10 @@
+runtime: nodejs10
+entrypoint: npm run start:prod
+env_variables:
+  SQL_USER: postgres
+  SQL_PASSWORD: ADVENTURE_PASSWORD
+  SQL_DATABASE: ADVENTURE_DATABASE
+  INSTANCE_CONNECTION_NAME: ADVENTURE_CONNECTION_NAME
+  GOOGLE_APPLICATION_CREDENTIALS: "gcloud-key.json"
+beta_settings:
+  cloud_sql_instances: ADVENTURE_CONNECTION_NAME

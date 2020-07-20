@@ -1,12 +1,12 @@
-import { Reducer, useEffect, useReducer, useCallback } from 'react'
+import { useEffect, useReducer, useCallback } from 'react'
 
-import { FBInstantState, FBInstantAction, Action } from './types';
-import { reducer, initialState } from './reducer';
+import { FBInstantReducer, Action } from './types'
+import { reducer, initialState } from './reducer'
 
 const ERROR_NOT_INITIALIZED = 'FBInstant is not initialized'
 
 export function useFBInstant (initState = initialState) {
-  const [state, dispatch] = useReducer<Reducer<FBInstantState, FBInstantAction>>(reducer, initState)
+  const [state, dispatch] = useReducer<FBInstantReducer>(reducer, initState)
 
   useEffect(function() {
     FBInstant.initializeAsync()

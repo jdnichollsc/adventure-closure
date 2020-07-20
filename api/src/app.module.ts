@@ -1,8 +1,12 @@
 import { Logger, Module } from '@nestjs/common'
+import { ScheduleModule } from '@nestjs/schedule'
 
 import { AuthModule } from './auth'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
+
+import { NotificationsService } from './tasks'
+import { GameGateway } from './gateways'
 
 import {
   UserModule,
@@ -19,6 +23,7 @@ import {
     AuthModule,
     UserModule,
     RoleModule,
+    ScheduleModule.forRoot()
   ],
   controllers: [
     AuthController,
@@ -26,6 +31,11 @@ import {
     UserController,
     RoleController,
   ],
-  providers: [Logger, AppService],
+  providers: [
+    Logger,
+    AppService,
+    NotificationsService,
+    GameGateway
+  ],
 })
 export class AppModule {}

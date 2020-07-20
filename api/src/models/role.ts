@@ -2,10 +2,11 @@ import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm'
 import { ApiProperty } from '@nestjs/swagger'
 import { IsNotEmpty } from 'class-validator'
 
+import { IRole } from '../types'
 import { User } from './user'
 
 @Entity({ schema: 'public' })
-export class Role {
+export class Role implements IRole {
 
   constructor(id?: number, name?: string) {
     this.id = id

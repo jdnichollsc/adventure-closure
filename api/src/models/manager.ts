@@ -30,9 +30,9 @@ export class Manager {
   @Column({ length: 50, type: 'varchar' })
   imageUrl!: string
 
-  @ApiProperty({ description: 'the cost to hire the manager' })
+  @ApiProperty({ description: 'The cost of hiring the manager' })
   @Column('int')
-  cost!: number
+  investment!: number
 
   @ApiProperty({ description: 'Business associated with the manager' })
   @ManyToOne(() => Business, business => business.managers)

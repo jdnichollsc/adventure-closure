@@ -1,3 +1,5 @@
+import { Reducer } from "react"
+
 export enum Action {
   Initialize,
   Start,
@@ -18,3 +20,5 @@ export type FBInstantState = {
   error?: Error,
   playerData?: { [key: string]: string }
 }
+
+export type FBInstantReducer = Reducer<FBInstantState, FBInstantAction>

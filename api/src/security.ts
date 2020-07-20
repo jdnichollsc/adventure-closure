@@ -6,12 +6,15 @@ import * as rateLimit from 'express-rate-limit'
 const allowedOrigins = [
   // WEBSITES
   'http://localhost',
+  'https://localhost',
   // MOBILE APPS
   'capacitor://localhost',
   'ionic://localhost',
 ]
 
-export function setupSecurity (app: INestApplication): void {
+export function setupSecurity (
+  app: INestApplication
+): void {
   // Set security-related HTTP headers
   app.use(helmet())
   // Enable Cross-origin resource sharing for a list of domains
@@ -24,7 +27,14 @@ export function setupSecurity (app: INestApplication): void {
       }
     },
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    credentials: true
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+    credentials: true,
+    allowedHeaders: [
+      'Accept',
+      'Content-Type',
+      'Authorization',
+    ]
   })
   // Limit repeated requests for brute-force attacks
   app.use(

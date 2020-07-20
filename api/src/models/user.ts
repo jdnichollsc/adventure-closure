@@ -11,6 +11,7 @@ import {
 import { ApiProperty } from '@nestjs/swagger'
 import { IsEmail, IsNotEmpty } from 'class-validator'
 
+import { IUser } from '../types'
 import { Role } from './role'
 import { UserBusiness } from './userBusiness'
 import { UserManager } from './userManager'
@@ -18,21 +19,6 @@ import { UserManager } from './userManager'
 export enum UserStatus {
   Inactive = 'INACTIVE',
   Active = 'ACTIVE'
-}
-
-/**
- * An interface to extend the user with different models
- * depending of the role
- */
-export interface IUser {
-  id: string
-  firstName: string
-  lastName: string
-  status: UserStatus
-  email: string
-  role: Role
-  createdAt: Date
-  updatedAt: Date
 }
 
 @Entity({ schema: 'public' })

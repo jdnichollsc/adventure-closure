@@ -15,13 +15,17 @@
     "react-dom": "^16.13.0",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "rxjs": "^6.6.0",
+    "socket.io-client": "^2.3.0",
+    "webfontloader": "^1.6.28"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "npm run build && firebase deploy"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -51,6 +55,8 @@
     "@types/react-dom": "^16.9.4",
     "@types/react-router": "^5.1.4",
     "@types/react-router-dom": "^5.1.3",
+    "@types/socket.io-client": "^1.4.33",
+    "@types/webfontloader": "^1.6.32",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "react-test-renderer": "^16.13.1",
