@@ -21,9 +21,8 @@ The game is idle, so it progresses while you are away: If you have a manager, th
 </details>
 
 ## The solution
-Do you want to see this awesome game in action? Visit https://jdnichollsc.github.io/adventure-closure yay! 🎉
-
-![Happy like Elon Musk](img/happy-like-elon.gif)
+This is a Work in progress, loading...
+<!--- Do you want to see this awesome game in action? Visit https://jdnichollsc.github.io/adventure-closure yay! 🎉 --->
 
 ## Installation 📚
 
@@ -39,6 +38,8 @@ $ yarn
 $ yarn start
 ```
 
+* Url: http://localhost:8080
+
 ### Running the api
 
 ```bash
@@ -50,6 +51,8 @@ $ yarn
 # development
 $ yarn start
 ```
+
+* Url: http://localhost:3000/api
 
 ## Test 🕵️
 
@@ -88,6 +91,8 @@ $ yarn test
 - [ ] Create a `Docker` image with the configuration to run the project anywhere.
 - [ ] Support PWA and Offline mode (SQLite, Cache with Service Workers, etc) to improve the UX with other kind of games (Nice to have for fun).
 - [ ] Share the end results and inspire others with Open Source contributions.
+
+![Happy like Elon Musk](img/happy-like-elon.gif)
 
 ## Credits 👍
 Some resources used here are part of my `Open Source` contributions:
