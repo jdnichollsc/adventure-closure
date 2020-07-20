@@ -76,6 +76,7 @@ $ yarn test
 - [ ] Use `Websockets` to improve the communication with a Event-driven architecture.
 - [ ] Use `Atlasses` instead of `sprites-sheets` to reduce memory and bandwidth loading textures.
 - [ ] Use functional programming (Option, Either, etc) for handling exceptions instead of try/catch.
+- [ ] Use `RxJS` for Observer pattern handling requests, events, etc.
 - [ ] Manage game scaling and use `media queries` to support multiple resolutions and devices.
 - [ ] Use `Facebook Instant Games` SDK to integrate services like In-App Purchase and distribute the game in multiple platforms.
 - [ ] Use `Gitflow` workflow for better branching process.
