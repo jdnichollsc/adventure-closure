@@ -2,27 +2,26 @@ import { Display, Scene } from 'phaser'
 
 /**
  * Global Game State
- * Relative to the world
  */
-export class StateManager {
-  private static CURRENT_SCENE: Scene
-  private static MASK_BUSINESS_CARD: Display.Masks.GeometryMask
+export class GameStore {
+  private static currentScene: Scene
+  private static maskForBusinessCards: Display.Masks.GeometryMask
 
   // TODO: Fix configuration to support scaling
   public static get maskBusinessCard () {
-    if (!this.MASK_BUSINESS_CARD) {
-      const scene = this.CURRENT_SCENE
+    if (!GameStore.maskForBusinessCards) {
+      const scene = GameStore.currentScene
       const { width, height } = scene.sys.game.scale.gameSize
       const mask = scene.make.graphics({ fillStyle: { color: 0x000000 }, add: false})
         .fillRect(153, 100, width, height)
         .createGeometryMask()
       mask.invertAlpha = false
-      this.MASK_BUSINESS_CARD = mask
+      GameStore.maskForBusinessCards = mask
     }
-    return this.MASK_BUSINESS_CARD
+    return GameStore.maskForBusinessCards
   }
 
   public static setCurrentScene (scene: Scene) {
-    this.CURRENT_SCENE = scene
+    GameStore.currentScene = scene
   }
 }

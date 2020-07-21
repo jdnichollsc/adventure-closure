@@ -21,8 +21,8 @@ export class UserManager {
     public manager!: Manager
 
     @CreateDateColumn({ type: 'timestamp without time zone', default: 'NOW()' })
-    createdAt: Date
+    createdAt!: Date
 
     @UpdateDateColumn({ type: 'timestamp without time zone', onUpdate: 'NOW()', nullable: true })
-    updatedAt: Date
+    updatedAt!: Date
 }

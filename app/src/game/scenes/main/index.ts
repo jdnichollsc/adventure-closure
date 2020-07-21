@@ -1,7 +1,7 @@
-import { Scene, GameObjects } from 'phaser'
+import { Scene } from 'phaser'
 
 import { PlayerCard, BusinessCard } from '../../containers'
-import { StateManager, BusinessManager } from '../../managers'
+import { GameStore, BusinessStore } from '../../stores'
 
 export class MainScene extends Scene {
   private playerCard!: PlayerCard
@@ -9,7 +9,7 @@ export class MainScene extends Scene {
   init () {
     this.cameras.main.setBackgroundColor('#24252A')
     // Required to initialize shared resources
-    StateManager.setCurrentScene(this)
+    GameStore.setCurrentScene(this)
   }
 
   create () {
@@ -25,8 +25,8 @@ export class MainScene extends Scene {
     
   }
 
-  loadBusinessCards (lastPosition: number) {
-    const businesses = BusinessManager.loadBusinesses()
+  async loadBusinessCards (lastPosition: number) {
+    const businesses = await BusinessStore.getBusinesses()
     this.businessCards = businesses.reduce((list, business, index) => {
       const newBusinessCard = new BusinessCard(
         this,

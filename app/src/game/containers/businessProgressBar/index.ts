@@ -1,7 +1,7 @@
 import { GameObjects, Scene, Tweens } from 'phaser'
 
 import { BUSINESS_SPRITES } from '../../constants'
-import { StateManager } from '../../managers'
+import { GameStore } from '../../stores'
 
 export class BusinessProgressBar extends GameObjects.Container {
   private progressBar!: GameObjects.Sprite
@@ -17,8 +17,8 @@ export class BusinessProgressBar extends GameObjects.Container {
       .setOrigin(1, 0)
     this.add(this.progressBar)
     this.setSize(this.progressBar.width, this.progressBar.height)
-    this.progressBar.setMask(StateManager.maskBusinessCard)
-    
+    this.progressBar.setMask(GameStore.maskBusinessCard)
+
     // TODO: Review masks from containers for scaling
     // const mask = scene.add.graphics()
     //   .fillStyle(0xff00ff, 0.2)
