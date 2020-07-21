@@ -2,23 +2,31 @@ import { GameObjects, Scene } from 'phaser'
 
 import { BUSINESS_SPRITES } from '../../constants'
 
+const {
+  PURCHASE_BUSINESS_BUTTON,
+  PURCHASE_BUSINESS_OVER_BUTTON,
+  PURCHASE_BUSINESS_PRESSED_BUTTON,
+  PURCHASE_BUSINESS_DISABLED_BUTTON
+} = BUSINESS_SPRITES
+
 export class PurchaseBusinessButton extends GameObjects.Sprite {
+  private isPressed = false
   constructor (
     scene: Scene,
     x: number,
     y: number
   ) {
-    super(scene, x, y, BUSINESS_SPRITES.BUY_DISABLED_BUTTON)
+    super(scene, x, y, BUSINESS_SPRITES.PURCHASE_BUSINESS_DISABLED_BUTTON)
     this.scene.add.existing(this)
-    const hitArea = new Phaser.Geom.Rectangle(0, 0, this.width, this.height)
-    this.setInteractive(hitArea, Phaser.Geom.Rectangle.Contains)
-      .on('pointerdown', this.purchaseBusiness)
-
+    this
+      .setInteractive()
+      .on('pointermove', this.onPointerOver, this)
+      .on('pointerover', this.onPointerOver, this)
+      .on('pointerdown', this.onPointerDown, this)
+      .on('pointerup', this.onPointerUp, this)
+      .on('pointerout', this.onPointerOut, this)
+      .on('dragend', this.onPointerUp, this)
     this.disabled = true
-  }
-
-  purchaseBusiness () {
-    alert('TODO: Buy business!')
   }
 
   get disabled () {
@@ -29,10 +37,30 @@ export class PurchaseBusinessButton extends GameObjects.Sprite {
     this.active = !value
     if (this.active) {
       this.setInteractive()
-      this.setTexture(BUSINESS_SPRITES.BUY_BUTTON)
+      this.setTexture(PURCHASE_BUSINESS_BUTTON)
     } else {
       this.disableInteractive()
-      this.setTexture(BUSINESS_SPRITES.BUY_DISABLED_BUTTON)
+      this.setTexture(PURCHASE_BUSINESS_DISABLED_BUTTON)
     }
+  }
+
+  onPointerDown () {
+    if (this.active) {
+      this.isPressed = true
+      this.setTexture(PURCHASE_BUSINESS_PRESSED_BUTTON)
+    }
+  }
+
+  onPointerUp () {
+    this.isPressed = false
+    this.setTexture(PURCHASE_BUSINESS_OVER_BUTTON)
+  }
+
+  onPointerOver() {
+    this.active && !this.isPressed && this.setTexture(PURCHASE_BUSINESS_OVER_BUTTON)
+  }
+
+  onPointerOut() {
+    this.setTexture(this.active ? PURCHASE_BUSINESS_BUTTON : PURCHASE_BUSINESS_DISABLED_BUTTON)
   }
 }

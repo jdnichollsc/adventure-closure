@@ -14,7 +14,7 @@ export class StateManager {
       const scene = this.CURRENT_SCENE
       const { width, height } = scene.sys.game.scale.gameSize
       const mask = scene.make.graphics({ fillStyle: { color: 0x000000 }, add: false})
-        .fillRect(135, 100, width, height)
+        .fillRect(153, 100, width, height)
         .createGeometryMask()
       mask.invertAlpha = false
       this.MASK_BUSINESS_CARD = mask

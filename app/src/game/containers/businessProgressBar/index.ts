@@ -18,6 +18,7 @@ export class BusinessProgressBar extends GameObjects.Container {
     this.add(this.progressBar)
     this.setSize(this.progressBar.width, this.progressBar.height)
     this.progressBar.setMask(StateManager.maskBusinessCard)
+    
     // TODO: Review masks from containers for scaling
     // const mask = scene.add.graphics()
     //   .fillStyle(0xff00ff, 0.2)

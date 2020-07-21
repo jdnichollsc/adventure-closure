@@ -11,6 +11,7 @@ export class LoadScene extends Scene {
     this.progressBar = this.add.sprite(centerX, centerY, PROGRESS_BAR)
     this.progressBar.setOrigin(0)
     this.load.setPath(IMAGES_PATH)
+    this.load.setCORS('Anonymous')
     this.load.on('progress', this.onLoadProgress, this)
     this.load.once('complete', this.onLoadComplete, this)
 

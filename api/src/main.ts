@@ -40,6 +40,7 @@ async function bootstrap () {
   setupSwagger(app)
 
   // Register the proxy’s IP address (load balancer or reverse proxy)
+  app.set('trust proxy', true)
   // app.set('trust proxy', function (ip: string) {
   //   if (ip === '127.0.0.1') return true // trusted IPs
   //   else return false

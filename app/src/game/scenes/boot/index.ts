@@ -27,6 +27,5 @@ export class BootScene extends Scene {
 
   resize (gameSize: GameObjects.Components.Size) {
     this.cameras.resize(gameSize.width, gameSize.height)
-    // this.scale.setGameSize(gameSize.width, gameSize.height)
   }
 }

@@ -32,6 +32,11 @@ export class MainScene extends Scene {
         this,
         business
       )
+      if (index === 0) {
+        newBusinessCard
+          .enableRunButton()
+          .enablePurchaseButton()
+      }
       newBusinessCard.setPosition(50, newBusinessCard.height * index + lastPosition)
       return [
         ...list,

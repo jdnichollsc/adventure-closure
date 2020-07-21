@@ -6,8 +6,11 @@ export const BUSINESS_SPRITES = {
   CARD_BG: 'businessCardBg',
   PROGRESS_BAR: 'businessProgressBar',
   PROGRESS_BAR_BOX: 'businessProgressBarBox',
-  BUY_BUTTON: 'buyButton',
-  BUY_DISABLED_BUTTON: 'buyDisabledButton',
+  RUN_BUSINESS_DISABLED_BUTTON: 'runBusinessDisabledButton',
+  PURCHASE_BUSINESS_BUTTON: 'purchaseBusinessButton',
+  PURCHASE_BUSINESS_OVER_BUTTON: 'purchaseBusinessOverButton',
+  PURCHASE_BUSINESS_PRESSED_BUTTON: 'purchaseBusinessPressedButton',
+  PURCHASE_BUSINESS_DISABLED_BUTTON: 'purchaseBusinessDisabledButton',
   MANAGER_BUTTON: 'managerButton',
   MANAGER_DISABLED_BUTTON: 'managerDisabledButton'
 }

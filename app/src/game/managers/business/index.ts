@@ -12,24 +12,24 @@ const loadBusinesses = (): Array<Business> => {
       'income': 10,
       'duration': 5
     },
-    // {
-    //   'id': 2,
-    //   'name': 'Cars',
-    //   'imageUrl': `${API_DOMAIN}/images/businesses/cars.png`,
-    //   'investment': 50,
-    //   'score': 20,
-    //   'income': 100,
-    //   'duration': 10
-    // },
-    // {
-    //   'id': 3,
-    //   'name': 'Space suits',
-    //   'imageUrl': `${API_DOMAIN}/images/businesses/space-suits.png`,
-    //   'investment': 500,
-    //   'score': 30,
-    //   'income': 1000,
-    //   'duration': 20
-    // }
+    {
+      'id': 2,
+      'name': 'Cars',
+      'imageUrl': `${API_DOMAIN}/images/businesses/cars.png`,
+      'investment': 50,
+      'score': 20,
+      'income': 100,
+      'duration': 10
+    },
+    {
+      'id': 3,
+      'name': 'Space suits',
+      'imageUrl': `${API_DOMAIN}/images/businesses/space-suits.png`,
+      'investment': 500,
+      'score': 30,
+      'income': 1000,
+      'duration': 20
+    }
   ]
 }
 

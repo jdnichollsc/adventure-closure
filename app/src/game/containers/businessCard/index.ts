@@ -7,10 +7,11 @@ import { Business } from '../../models'
 
 export class BusinessCard extends GameObjects.Container {
   private background!: GameObjects.Image
+  private progressBar!: GameObjects.Container
   private runButton!: RunBusinessButton
   private purchaseButton!: PurchaseBusinessButton
   private hireButton!: HireManagerButton
-  private progressBar!: GameObjects.Container
+  private purchaseLabel: GameObjects.Text
   constructor (
     scene: Scene,
     business: Business,
@@ -20,8 +21,8 @@ export class BusinessCard extends GameObjects.Container {
     super(scene)
     this.scene.add.existing(this)
 
-    const hitArea = new Phaser.Geom.Rectangle(0, 0, width, height)
-    this.setInteractive(hitArea, Phaser.Geom.Rectangle.Contains)
+    // const hitArea = new Phaser.Geom.Rectangle(0, 0, width, height)
+    // this.setInteractive(hitArea, Phaser.Geom.Rectangle.Contains)
     this.setSize(width, height)
 
     // TESTING
@@ -34,22 +35,58 @@ export class BusinessCard extends GameObjects.Container {
     this.background.setDisplaySize(width, height).setOrigin(0)
     this.add(this.background)
 
-    this.runButton = new RunBusinessButton(this.scene, width - 20, height/2, business)
-      .setOrigin(1, 0.5)
+    this.runButton = new RunBusinessButton(this.scene, 20, height/2, business)
+      .setOrigin(0, 0.5)
+      .on('pointerdown', this.runBusiness, this)
     this.add(this.runButton)
 
-    this.purchaseButton = new PurchaseBusinessButton(this.scene, width/2, height - 26)
-      .setOrigin(0.5, 1)
-      .setScale(0.4)
+    this.progressBar = new BusinessProgressBar(this.scene)
+      .setPosition(100, 26)
+      .setScale(0.9)
+    this.add(this.progressBar)
+
+    this.purchaseButton = new PurchaseBusinessButton(this.scene, width/2, height)
+      .setOrigin(0.5, 1.3)
+      .setScale(0.5)
+      .on('pointerdown', this.purchaseBusiness, this)
     this.add(this.purchaseButton)
 
     this.hireButton = new HireManagerButton(this.scene, width - 20, height/2)
       .setOrigin(1, 0.5)
-      .setScale(0.5)
+      .on('pointerdown', this.hireManager, this)
     this.add(this.hireButton)
 
-    this.progressBar = new BusinessProgressBar(this.scene)
-      .setPosition(80, 26)
-    this.add(this.progressBar)
+    // LABELS
+    this.purchaseLabel = this.scene.add.text(
+      width/2 - 40,
+      height - 28,
+      `Buy`, {
+      fontFamily: 'Rancho',
+      fontSize: 30
+    }).setOrigin(0.5, 1)
+    this.add(this.purchaseLabel)
+  }
+
+  public enableRunButton() {
+    this.runButton.disabled = false
+    this.runButton.setDisplaySize(20, 20)
+    return this
+  }
+
+  public enablePurchaseButton() {
+    this.purchaseButton.disabled = false
+    return this
+  }
+
+  runBusiness () {
+    console.log('TODO: Run business!')
+  }
+
+  purchaseBusiness () {
+    console.log('TODO: Buy business!')
+  }
+
+  hireManager () {
+    console.log('TODO: Hire manager!')
   }
 }

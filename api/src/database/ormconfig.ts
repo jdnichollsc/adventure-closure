@@ -3,28 +3,13 @@ import { ConnectionOptions } from 'typeorm'
 
 import { PROD_ENV } from '../constants'
 
-const config = {
-  host: 'localhost',
-  user: process.env.SQL_USER,
-  password: process.env.SQL_PASSWORD,
-  database: process.env.SQL_DATABASE,
-}
-
-// FOR GOOGLE CLOUD SQL
-if (
-  process.env.INSTANCE_CONNECTION_NAME &&
-  process.env.NODE_ENV === PROD_ENV
-) {
-  config.host = `/cloudsql/${process.env.INSTANCE_CONNECTION_NAME}`
-}
-
 const connectionOptions: ConnectionOptions = {
   type: 'postgres',
-  host: config.host,
+  host: process.env.SQL_HOST || 'localhost',
   port: 5432,
-  username: config.user || 'postgres',
-  password: config.password || 'postgres',
-  database: config.database || 'my_database',
+  username: process.env.SQL_USER || 'postgres',
+  password: process.env.SQL_PASSWORD || 'postgres',
+  database: process.env.SQL_DATABASE || 'my_database',
   entities: [
     join(__dirname, '../models/*{.ts,.js}'),
   ],
