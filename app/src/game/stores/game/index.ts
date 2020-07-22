@@ -4,7 +4,7 @@ import { Display, Scene } from 'phaser'
  * Global Game State
  */
 export class GameStore {
-  private static currentScene: Scene
+  public static currentScene: Scene
   private static maskForBusinessCards: Display.Masks.GeometryMask
 
   // TODO: Fix configuration to support scaling

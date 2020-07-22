@@ -1,9 +1,10 @@
 import { API_DOMAIN } from '../../../contants'
-import { Business } from '../../models'
+import { Business, RealTimeGame, ClientMessage } from '../../models'
+import { GameStore } from '../game'
 
 export class BusinessStore {
   private static businesses: Array<Business>
-  public static getBusinesses: () => Promise<Array<Business>> = async () => {
+  public static async getBusinesses(): Promise<Array<Business>> {
     if (!BusinessStore.businesses) {
       // TODO: Load businesses info
       BusinessStore.businesses = [
@@ -37,5 +38,12 @@ export class BusinessStore {
       ]
     }
     return BusinessStore.businesses
+  }
+
+  public static async runBusiness(business: Business) {
+    const { socket } = GameStore.currentScene.game as RealTimeGame
+    if (socket) {
+      socket.emit(ClientMessage.RUN_BUSINESS, business)
+    }
   }
 }

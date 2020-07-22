@@ -15,8 +15,7 @@ export class RunBusinessButton extends GameObjects.Sprite {
     super(scene, x, y, BUSINESS_SPRITES.RUN_BUSINESS_DISABLED_BUTTON)
     this.business = business
     this.scene.add.existing(this)
-    const hitArea = new Phaser.Geom.Rectangle(0, 0, 250, 250)
-    this.setInteractive(hitArea, Phaser.Geom.Rectangle.Contains)
+    this.setInteractive({ useHandCursor: true })
     this.disabled = true
 
     scene.load.once('complete', this.loadImage, this)

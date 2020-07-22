@@ -37,7 +37,7 @@ export class BusinessProgressBar extends GameObjects.Container {
       repeat: -1,
       completeDelay: 200,
       onComplete: () => this.progressBar.x = 0,
-      // paused: false
+      paused: true
     })
   }
 

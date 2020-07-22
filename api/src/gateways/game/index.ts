@@ -16,7 +16,7 @@ import {
 import { Server, Socket } from 'socket.io'
 
 import { WEBSOCKET_PORT } from '../../constants'
-import { UserBusiness, UserManager, Business } from '../../models'
+import { Business, Manager } from '../../models'
 
 export enum ClientMessage {
   STATUS = 'Status',
@@ -44,59 +44,62 @@ export class GameGateway
   private logger: Logger = new Logger(GameGateway.name)
 
   afterInit(server: Server) {
-    this.logger.log(`Init: ${server}`)
+    this.logger.debug(`Init: ${server}`)
   }
 
   handleConnection(client: Socket, ...args: any[]) {
-    this.logger.log(`New client connected: ${client.id} args: ${args}`)
+    this.logger.debug(`New client connected: ${client.id} args: ${args}`)
     client.emit("connection", "Successfully connected to server")
   }
 
   handleDisconnect(client: Socket) {
-    this.logger.log(`Client disconnected: ${client.id}`)
+    this.logger.debug(`Client disconnected: ${client.id}`)
   }
 
   @SubscribeMessage(ClientMessage.STATUS)
   handleStatus(
-    @MessageBody() data: string,
     @ConnectedSocket() client: Socket,
-  ): string {
-    this.logger.log(`Client: ${client.connected}, Status: OK`)
-    return data;
+  ) {
+    const statusMessage = `Status Client: ${ client.connected ? 'OK' : 'ERROR' }`
+    this.logger.debug(statusMessage)
+    return statusMessage
   }
 
   @SubscribeMessage(ClientMessage.RUN_BUSINESS)
   async handleRunBusiness(
-    @MessageBody() data: string
+    @MessageBody() business: Business
   ) {
-    if (!data) return ERROR_MESSAGE
+    if (!business) return ERROR_MESSAGE
     try {
-      const { businessId }: UserBusiness = JSON.parse(data)
+      this.logger.warn('BUSINESS: ' + business.id)
     } catch (error) {
-      this.server.emit(ServerMessage.PURCHASE_BUSINESS_ERROR, error.toString());
+      this.logger.error(error)
+      this.server.emit(ServerMessage.PURCHASE_BUSINESS_ERROR, error.toString())
     }
   }
 
   @SubscribeMessage(ClientMessage.PURCHASE_BUSINESS)
   async handlePurchaseBusiness(
-    @MessageBody() data: string
+    @MessageBody() business: Business
   ) {
-    if (!data) return ERROR_MESSAGE
+    if (!business) return ERROR_MESSAGE
     try {
-      const { id }: Business = JSON.parse(data)
+      this.logger.warn('BUSINESS: ' + business.id)
     } catch (error) {
-      this.server.emit(ServerMessage.PURCHASE_BUSINESS_ERROR, error.toString());
+      this.logger.error(error)
+      this.server.emit(ServerMessage.PURCHASE_BUSINESS_ERROR, error.toString())
     }
   }
 
   @SubscribeMessage(ClientMessage.PURCHASE_BUSINESS)
   async handleHireManager(
-    @MessageBody() data: string
+    @MessageBody() manager: Manager
   ) {
     try {
-      const { managerId }: UserManager = JSON.parse(data)
+      this.logger.warn('MANAGER: ' + manager.id)
     } catch (error) {
-      this.server.emit(ServerMessage.PURCHASE_BUSINESS_ERROR, error.toString());
+      this.logger.error(error)
+      this.server.emit(ServerMessage.PURCHASE_BUSINESS_ERROR, error.toString())
     }
   }
 }

@@ -19,7 +19,7 @@ export class PurchaseBusinessButton extends GameObjects.Sprite {
     super(scene, x, y, BUSINESS_SPRITES.PURCHASE_BUSINESS_DISABLED_BUTTON)
     this.scene.add.existing(this)
     this
-      .setInteractive()
+      .setInteractive({ useHandCursor: true })
       .on('pointermove', this.onPointerOver, this)
       .on('pointerover', this.onPointerOver, this)
       .on('pointerdown', this.onPointerDown, this)

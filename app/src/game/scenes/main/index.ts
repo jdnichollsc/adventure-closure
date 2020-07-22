@@ -1,7 +1,9 @@
 import { Scene } from 'phaser'
 
+import { RealTimeGame, ServerMessage, ClientMessage } from '../../models'
 import { PlayerCard, BusinessCard } from '../../containers'
 import { GameStore, BusinessStore } from '../../stores'
+import { BusinessUtils } from '../../utils'
 
 export class MainScene extends Scene {
   private playerCard!: PlayerCard
@@ -10,6 +12,16 @@ export class MainScene extends Scene {
     this.cameras.main.setBackgroundColor('#24252A')
     // Required to initialize shared resources
     GameStore.setCurrentScene(this)
+    const { socket } = (this.game as RealTimeGame)
+    // TODO: Validate retry connection
+    if (!socket) throw new Error('Socket not initialized')
+    socket.emit(ClientMessage.STATUS, null, this.onStatus)
+    socket.on(ServerMessage.RUN_BUSINESS_UPDATE, this.onRunBusinessUpdate)
+    socket.on(ServerMessage.RUN_BUSINESS_ERROR, this.onRunBusinessError)
+    socket.on(ServerMessage.PURCHASE_BUSINESS_UPDATE, this.onPurchaseBusinessUpdate)
+    socket.on(ServerMessage.PURCHASE_BUSINESS_ERROR, this.onPurchaseBusinessError)
+    socket.on(ServerMessage.HIRE_MANAGER_UPDATE, this.onHireManagerUpdate)
+    socket.on(ServerMessage.HIRE_MANAGER_ERROR, this.onHireManagerError)
   }
 
   create () {
@@ -25,23 +37,36 @@ export class MainScene extends Scene {
     
   }
 
+  onStatus = (data: any) => {
+    console.debug(data)
+  }
+
+  onRunBusinessUpdate = () => {
+    alert('RUN_BUSINESS_UPDATE')
+  }
+
+  onRunBusinessError = () => {
+    alert('RUN_BUSINESS_ERROR')
+  }
+
+  onPurchaseBusinessUpdate = () => {
+    alert('PURCHASE_BUSINESS_UPDATE')
+  }
+
+  onPurchaseBusinessError = () => {
+    alert('PURCHASE_BUSINESS_ERROR')
+  }
+
+  onHireManagerUpdate = () => {
+    alert('HIRE_MANAGER_UPDATE')
+  }
+
+  onHireManagerError = () => {
+    alert('HIRE_MANAGER_ERROR')
+  }
+
   async loadBusinessCards (lastPosition: number) {
     const businesses = await BusinessStore.getBusinesses()
-    this.businessCards = businesses.reduce((list, business, index) => {
-      const newBusinessCard = new BusinessCard(
-        this,
-        business
-      )
-      if (index === 0) {
-        newBusinessCard
-          .enableRunButton()
-          .enablePurchaseButton()
-      }
-      newBusinessCard.setPosition(50, newBusinessCard.height * index + lastPosition)
-      return [
-        ...list,
-        newBusinessCard
-      ]
-    }, [] as BusinessCard[])
+    this.businessCards = await BusinessUtils.loadCards(this, lastPosition, businesses)
   }
 }
