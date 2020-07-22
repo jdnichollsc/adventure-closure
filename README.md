@@ -90,7 +90,7 @@ $ yarn test
 - [x] Use a logger like `Winston` to track exceptions easily.
 - [x] Enable CORS to allow access to a list of domains for restricted resources.
 - [x] Add default data (Businesses, Managers, etc) with database migrations.
-- [ ] Use `Websockets` to have a real-time communication with a Event-driven architecture.
+- [x] Use `Websockets` to have a real-time communication with a Event-driven architecture.
 - [ ] Use `Atlasses` instead of `sprites-sheets` to reduce memory and bandwidth loading textures.
 - [ ] Use functional programming (Option, Either, etc) for handling exceptions instead of try/catch.
 - [ ] Use `RxJS` for Observer pattern handling requests, events, etc.
