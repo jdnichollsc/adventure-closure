@@ -28,7 +28,7 @@ Do you want to see this awesome game in action?
 - APP: https://adventure-closure.firebaseapp.com yay! 🎉
 - API: http://proyecto-26-244415.ue.r.appspot.com/api (Websockets are not working from GCP)
 
-About `Websockets`, migrating from `Standard` to the `Flexible` environment can solve this issue but `CORS` is not working as expected loading assets with that configuration (It would be better moving the assets to a Cloud Storage service like Azure Blob Storage, AWS S3, Firebase Storage, etc), also this incurs costs to run on the App Engine flexible 🤔)
+About `Websockets`, migrating from `Standard` to the `Flexible` environment can solve this issue but `CORS` is not working as expected loading assets with that configuration (It would be better moving static files to a Cloud Storage service like Azure Blob Storage, AWS S3, Firebase Storage, etc), also this incurs costs to run on the App Engine flexible 🤔)
 
 ## Installation 📚
 
