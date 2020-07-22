@@ -21,8 +21,14 @@ The game is idle, so it progresses while you are away: If you have a manager, th
 </details>
 
 ## The solution
-This is a Work in progress, loading...
-<!--- Do you want to see this awesome game in action? Visit https://jdnichollsc.github.io/adventure-closure yay! 🎉 --->
+
+**This is a Work in progress, loading...**
+
+Do you want to see this awesome game in action? 
+- APP: https://adventure-closure.firebaseapp.com yay! 🎉
+- API: http://proyecto-26-244415.ue.r.appspot.com/api (Websockets are not working from GCP)
+
+About `Websockets`, migrating from `Standard` to the `Flexible` environment can solve this issue but `CORS` is not working as expected loading assets with that configuration (It would be better moving the assets to a Cloud Storage service like Azure Blob Storage, AWS S3, Firebase Storage, etc), also this incurs costs to run on the App Engine flexible 🤔)
 
 ## Installation 📚
 
@@ -34,11 +40,12 @@ cd app
 # install dependencies
 $ yarn
 
-# development
+# development (https://localhost:8080)
 $ yarn start
-```
 
-* Url: http://localhost:8080
+# deploy to production (Firebase Hosting)
+$ yarn deploy
+```
 
 ### Running the api
 
@@ -54,11 +61,12 @@ $ npx createdbjs my_database --user=postgres --password=postgres
 # install dependencies
 $ yarn
 
-# development
+# development (http://localhost:3000/api)
 $ yarn start:debug
-```
 
-* Url: http://localhost:3000/api
+# deploy to production (Google Cloud Hosting API)
+$ yarn deploy
+```
 
 ## Test 🕵️
 
