@@ -6,7 +6,7 @@
       "name": "vscode",
       "password": "postgres",
       "pgOptions": {
-        "ssl": {}
+        "ssl": false
       },
       "port": 5432,
       "previewLimit": 50,

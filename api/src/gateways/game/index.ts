@@ -17,6 +17,7 @@ import { Server, Socket } from 'socket.io'
 
 import { WEBSOCKET_PORT } from '../../constants'
 import { Business, Manager } from '../../models'
+import { BusinessService } from '../../repositories'
 
 export enum ClientMessage {
   STATUS = 'Status',
@@ -35,6 +36,7 @@ export enum ServerMessage {
 }
 
 export const ERROR_MESSAGE = 'MESSAGE NOT VALID'
+export const TASK_RUNNING = 'THE TASK IS RUNNING'
 
 @UseInterceptors(ClassSerializerInterceptor)
 @WebSocketGateway(WEBSOCKET_PORT)
@@ -42,6 +44,10 @@ export class GameGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer() server: Server
   private logger: Logger = new Logger(GameGateway.name)
+
+  constructor(
+    private readonly businessService: BusinessService
+  ) { }
 
   afterInit(server: Server) {
     this.logger.debug(`Init: ${server}`)
@@ -69,12 +75,24 @@ export class GameGateway
   async handleRunBusiness(
     @MessageBody() business: Business
   ) {
+    const lastRunAt = new Date()
     if (!business) return ERROR_MESSAGE
     try {
-      this.logger.warn('BUSINESS: ' + business.id)
+      // FIXME: LOAD USER INFO USING JWT TOKEN
+      const userId = '1234'
+      const canRun = await this.businessService.canRunBusiness(userId, business.id, lastRunAt)
+      if (canRun) {
+        this.server.emit(ServerMessage.RUN_BUSINESS_UPDATE, {
+          businessId: business.id,
+          lastRunAt
+        })
+        await this.businessService.updateUserBusiness(userId, business.id, lastRunAt)
+      } else {
+        this.server.emit(ServerMessage.RUN_BUSINESS_ERROR, TASK_RUNNING)
+      }
     } catch (error) {
       this.logger.error(error)
-      this.server.emit(ServerMessage.PURCHASE_BUSINESS_ERROR, error.toString())
+      this.server.emit(ServerMessage.RUN_BUSINESS_ERROR, error.toString())
     }
   }
 
@@ -99,7 +117,7 @@ export class GameGateway
       this.logger.warn('MANAGER: ' + manager.id)
     } catch (error) {
       this.logger.error(error)
-      this.server.emit(ServerMessage.PURCHASE_BUSINESS_ERROR, error.toString())
+      this.server.emit(ServerMessage.HIRE_MANAGER_ERROR, error.toString())
     }
   }
 }

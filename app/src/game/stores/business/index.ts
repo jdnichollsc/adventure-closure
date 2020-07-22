@@ -15,7 +15,7 @@ export class BusinessStore {
           'investment': 5,
           'score': 1,
           'income': 10,
-          'duration': 5
+          'duration': 5000
         },
         {
           'id': 2,
@@ -24,7 +24,7 @@ export class BusinessStore {
           'investment': 50,
           'score': 20,
           'income': 100,
-          'duration': 10
+          'duration': 10000
         },
         {
           'id': 3,
@@ -33,7 +33,7 @@ export class BusinessStore {
           'investment': 500,
           'score': 30,
           'income': 1000,
-          'duration': 20
+          'duration': 20000
         }
       ]
     }

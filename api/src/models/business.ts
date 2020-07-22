@@ -42,7 +42,7 @@ export class Business {
   @Column('int', { default: 0 })
   income!: number
 
-  @ApiProperty({ description: 'Time needed to gain the capital' })
+  @ApiProperty({ description: 'Time needed to gain the capital, in milliseconds' })
   @Column('int', { default: 0 })
   duration!: number
 

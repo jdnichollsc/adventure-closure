@@ -1,4 +1,4 @@
-import { times, isString, trim } from 'lodash'
+import { times, isString, trim, snakeCase } from 'lodash'
 
 type Model = {
   name: string
@@ -17,7 +17,7 @@ export const lowerCaseFirstLetter = (text: string): string => {
  * @param model - Model of the table
  */
 export const getTableName = (model: Model): string => {
-  return `${model.name}`.toLowerCase()
+  return snakeCase(model.name)
 }
 
 /**

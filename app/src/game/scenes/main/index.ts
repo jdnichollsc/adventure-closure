@@ -1,6 +1,7 @@
 import { Scene } from 'phaser'
+import { find } from 'lodash'
 
-import { RealTimeGame, ServerMessage, ClientMessage } from '../../models'
+import { RealTimeGame, ServerMessage, ClientMessage, UserBusiness } from '../../models'
 import { PlayerCard, BusinessCard } from '../../containers'
 import { GameStore, BusinessStore } from '../../stores'
 import { BusinessUtils } from '../../utils'
@@ -41,12 +42,13 @@ export class MainScene extends Scene {
     console.debug(data)
   }
 
-  onRunBusinessUpdate = () => {
-    alert('RUN_BUSINESS_UPDATE')
+  onRunBusinessUpdate = (ub: UserBusiness) => {
+    const card = find(this.businessCards, { business: {id: ub.businessId}})
+    card?.playProgressBar()
   }
 
   onRunBusinessError = () => {
-    alert('RUN_BUSINESS_ERROR')
+    console.error('RUN_BUSINESS_ERROR')
   }
 
   onPurchaseBusinessUpdate = () => {
@@ -54,7 +56,7 @@ export class MainScene extends Scene {
   }
 
   onPurchaseBusinessError = () => {
-    alert('PURCHASE_BUSINESS_ERROR')
+    console.error('PURCHASE_BUSINESS_ERROR')
   }
 
   onHireManagerUpdate = () => {
@@ -62,7 +64,7 @@ export class MainScene extends Scene {
   }
 
   onHireManagerError = () => {
-    alert('HIRE_MANAGER_ERROR')
+    console.error('HIRE_MANAGER_ERROR')
   }
 
   async loadBusinessCards (lastPosition: number) {

@@ -14,11 +14,14 @@ export class UserBusiness {
     @Column('int')
     public businessId!: number
 
-    @Column('int')
+    @Column('int', { default: 1 })
     public inventory!: number
 
-    @Column('int')
+    @Column('int', { default: 1 })
     public speed!: number
+
+    @Column({ type: 'timestamp without time zone', nullable: true })
+    lastRunAt!: Date
 
     @ManyToOne('User', 'businesses')
     public user!: User

@@ -11,6 +11,8 @@ import { GameGateway } from './gateways'
 import {
   UserModule,
   RoleModule,
+  BusinessModule,
+  ManagerModule
 } from './repositories'
 import {
   AuthController,
@@ -23,6 +25,8 @@ import {
     AuthModule,
     UserModule,
     RoleModule,
+    BusinessModule,
+    ManagerModule,
     ScheduleModule.forRoot()
   ],
   controllers: [

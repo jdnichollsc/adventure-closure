@@ -14,6 +14,8 @@ export class UserBusiness {
 
   public speed!: number
 
+  public lastRunAt!: Date
+
   createdAt!: Date
 
   updatedAt!: Date

@@ -7,7 +7,8 @@ export class BusinessProgressBar extends GameObjects.Container {
   private progressBar!: GameObjects.Sprite
   private progressTween!: Tweens.Tween
   constructor (
-    scene: Scene
+    scene: Scene,
+    duration: number
   ) {
     super(scene)
     scene.add.existing(this)
@@ -33,15 +34,14 @@ export class BusinessProgressBar extends GameObjects.Container {
 
     this.progressTween = scene.tweens.add({
       targets: this.progressBar,
-      x: { value: this.width + 4, duration: 2000, ease: 'Linear' },
-      repeat: -1,
-      completeDelay: 200,
+      x: { value: this.width + 4, duration, ease: 'Linear' },
+      completeDelay: 0,
       onComplete: () => this.progressBar.x = 0,
       paused: true
     })
   }
 
-  play() {
+  public play() {
     this.progressTween.play(true)
   }
 

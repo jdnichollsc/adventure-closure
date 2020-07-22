@@ -8,12 +8,12 @@ import { BusinessStore } from '../../stores'
 
 export class BusinessCard extends GameObjects.Container {
   private background!: GameObjects.Image
-  private progressBar!: GameObjects.Container
+  private progressBar!: BusinessProgressBar
   private runButton!: RunBusinessButton
   private purchaseButton!: PurchaseBusinessButton
   private hireButton!: HireManagerButton
   private purchaseLabel!: GameObjects.Text
-  private business!: Business
+  public business!: Business
   constructor (
     scene: Scene,
     business: Business,
@@ -35,7 +35,7 @@ export class BusinessCard extends GameObjects.Container {
     this.background.setDisplaySize(width, height).setOrigin(0)
     this.add(this.background)
 
-    this.progressBar = new BusinessProgressBar(this.scene)
+    this.progressBar = new BusinessProgressBar(this.scene, business.duration)
       .setPosition(100, 26)
       .setScale(0.9)
     this.add(this.progressBar)
@@ -80,15 +80,19 @@ export class BusinessCard extends GameObjects.Container {
     return this
   }
 
+  public playProgressBar() {
+    this.progressBar.play()
+  }
+
   onRunBusiness () {
     BusinessStore.runBusiness(this.business)
   }
 
   onPurchaseBusiness () {
-    console.log('TODO: Buy business!')
+    console.warn('TODO: Buy business!')
   }
 
   onHireManager () {
-    console.log('TODO: Hire manager!')
+    console.warn('TODO: Hire manager!')
   }
 }

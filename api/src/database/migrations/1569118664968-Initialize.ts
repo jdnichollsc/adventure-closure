@@ -86,8 +86,9 @@ export class Initialize1569118664968 implements MigrationInterface {
       name: PUBLIC_TABLES.USER_BUSINESS,
       columns: [
         { name: 'id', type: COLUMN_TYPES.INT, isPrimary: true, isGenerated: true },
-        { name: 'inventory', type: COLUMN_TYPES.INT },
-        { name: 'speed', type: COLUMN_TYPES.INT },
+        { name: 'inventory', type: COLUMN_TYPES.INT, default: 1 },
+        { name: 'speed', type: COLUMN_TYPES.INT, default: 1 },
+        { name: 'lastRunAt', type: COLUMN_TYPES.TIMESTAMP_UTC, isNullable: true },
         {
           name: FOREIGN_KEYS.USER_ID,
           type: COLUMN_TYPES.TEXT,
