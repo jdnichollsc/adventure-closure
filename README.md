@@ -42,14 +42,20 @@ $ yarn start
 
 ### Running the api
 
+- Install [PostgreSQL](https://www.postgresql.org/download) with default configuration **(using PORT 5432)**.
+
 ```bash
 cd api
+
+# create a new database called "my_database"
+$ yarn global add pgtools
+$ npx createdbjs my_database --user=postgres --password=postgres
 
 # install dependencies
 $ yarn
 
 # development
-$ yarn start
+$ yarn start:debug
 ```
 
 * Url: http://localhost:3000/api
