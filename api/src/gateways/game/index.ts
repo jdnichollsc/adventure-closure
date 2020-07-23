@@ -130,7 +130,7 @@ export class GameGateway
     }
   }
 
-  @SubscribeMessage(ClientMessage.PURCHASE_BUSINESS)
+  @SubscribeMessage(ClientMessage.HIRE_MANAGER)
   async handleHireManager(
     @MessageBody() manager: Manager,
     @ConnectedSocket() client: Socket,

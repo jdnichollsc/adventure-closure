@@ -6,7 +6,8 @@ import {
   PrimaryColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany
+  OneToMany,
+  Check
 } from 'typeorm'
 import { ApiProperty } from '@nestjs/swagger'
 import { IsEmail, IsNotEmpty } from 'class-validator'
@@ -22,6 +23,7 @@ export enum UserStatus {
 }
 
 @Entity({ schema: 'public' })
+@Check(`"capital" >= 0`)
 export class User implements IUser {
   constructor (id?: string) {
     this.id = id

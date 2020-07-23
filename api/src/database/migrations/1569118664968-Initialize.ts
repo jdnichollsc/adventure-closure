@@ -1,7 +1,8 @@
 import {
   Table,
   QueryRunner,
-  MigrationInterface
+  MigrationInterface,
+  TableCheck
 } from 'typeorm'
 
 import { UserStatus } from '../../models'
@@ -81,6 +82,15 @@ export class Initialize1569118664968 implements MigrationInterface {
         { name: INDICES.USER_EMAIL, columnNames: ['email'], isUnique: true }
       ]
     }), true)
+
+    // Prevent negative values
+    const { driver } = queryRunner.connection
+    await queryRunner.createCheckConstraint(
+      PUBLIC_TABLES.USER,
+      new TableCheck({
+        expression: `${driver.escape('capital')} >= 0`
+      })
+    )
 
     await queryRunner.createTable(new Table({
       name: PUBLIC_TABLES.USER_BUSINESS,
