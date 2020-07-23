@@ -13,6 +13,8 @@ export class BusinessCard extends GameObjects.Container {
   private purchaseButton!: PurchaseBusinessButton
   private hireButton!: HireManagerButton
   private purchaseLabel!: GameObjects.Text
+  private incomeLabel!: GameObjects.Text
+  private durationLabel!: GameObjects.Text
   public business!: Business
   constructor (
     scene: Scene,
@@ -46,7 +48,7 @@ export class BusinessCard extends GameObjects.Container {
     this.add(this.runButton)
 
     this.purchaseButton = new PurchaseBusinessButton(this.scene, width/2, height)
-      .setOrigin(0.5, 1.3)
+      .setOrigin(0.65, 1.3)
       .setScale(0.5)
       .on('pointerdown', this.onPurchaseBusiness, this)
     this.add(this.purchaseButton)
@@ -58,13 +60,36 @@ export class BusinessCard extends GameObjects.Container {
 
     // LABELS
     this.purchaseLabel = this.scene.add.text(
-      width/2 - 40,
+      width/2 - 80,
       height - 28,
-      `Buy`, {
+      `Buy x1`, {
       fontFamily: 'Rancho',
       fontSize: 30
-    }).setOrigin(0.5, 1)
+    }).setOrigin(0, 1)
     this.add(this.purchaseLabel)
+
+    const price = Number(business.income).toLocaleString('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    })
+
+    this.incomeLabel = this.scene.add.text(
+      width/2,
+      30,
+      price, {
+      fontFamily: 'Rancho',
+      fontSize: 20
+    }).setOrigin(0.5, 0)
+    this.add(this.incomeLabel)
+
+    this.durationLabel = this.scene.add.text(
+      width/2 + 70,
+      height - 28,
+      `${business.duration/1000}s`, {
+      fontFamily: 'Rancho',
+      fontSize: 30
+    }).setOrigin(0, 1)
+    this.add(this.durationLabel)
   }
 
   public enableRunButton() {
@@ -74,6 +99,19 @@ export class BusinessCard extends GameObjects.Container {
     // TESTING
     // this.scene.input.enableDebug(this.runButton, 0xff00ff)
     return this
+  }
+
+  preUpdate() {
+    if (this.runButton.active) {
+      const { duration } = this.business
+      const progress = duration * this.progressBar.getProgress()
+      if (progress !== duration) {
+        const newDuration = ((duration - progress)/1000).toFixed(0)
+        this.durationLabel.text = `${newDuration}s`
+      } else {
+        this.durationLabel.text = `${duration/1000}s`
+      }
+    }
   }
 
   public enablePurchaseButton() {
@@ -90,7 +128,7 @@ export class BusinessCard extends GameObjects.Container {
   }
 
   onPurchaseBusiness () {
-    console.warn('TODO: Buy business!')
+    BusinessStore.purchaseBusiness(this.business)
   }
 
   onHireManager () {

@@ -13,11 +13,6 @@ const loadCards = async (
       scene,
       business
     )
-    if (index === 0) {
-      newBusinessCard
-        .enableRunButton()
-        .enablePurchaseButton()
-    }
     newBusinessCard
       .setPosition(x, newBusinessCard.height * index + y)
     return [

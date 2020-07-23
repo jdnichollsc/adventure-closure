@@ -41,10 +41,6 @@ export class BusinessProgressBar extends GameObjects.Container {
     })
   }
 
-  public play() {
-    this.progressTween.play(true)
-  }
-
   get duration () {
     return this.progressTween.duration
   }
@@ -52,5 +48,13 @@ export class BusinessProgressBar extends GameObjects.Container {
   set duration (value: number) {
     if (this.progressTween)
       this.progressTween.duration = value
+  }
+
+  public play() {
+    this.progressTween.play(true)
+  }
+
+  public getProgress() {
+    return this.progressTween.progress
   }
 }

@@ -32,7 +32,7 @@ export class MainScene extends Scene {
 
   create () {
     const player = {
-      name: 'Eliana Musk',
+      name: 'Eliana Mask',
       capital: 0
     }
     this.playerCard = new PlayerCard(this, player)
@@ -41,7 +41,6 @@ export class MainScene extends Scene {
       y: this.playerCard.y + this.playerCard.height
     }
     this.loadBusinessCards(carPosition.x, carPosition.y)
-
     
     this.input
       .on('wheel', this.onWhell, this)
@@ -108,5 +107,8 @@ export class MainScene extends Scene {
   async loadBusinessCards (x: number, y: number) {
     const businesses = await BusinessStore.getBusinesses()
     this.businessCards = await BusinessUtils.loadCards(this, businesses, x, y)
+    const firstBusinessCard = this.businessCards[0]
+    firstBusinessCard
+      .enableRunButton()
   }
 }

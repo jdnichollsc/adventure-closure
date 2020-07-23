@@ -58,10 +58,13 @@ export class BusinessStore {
     return BusinessStore.businesses
   }
 
-  public static async runBusiness(business: Business) {
+  public static runBusiness(business: Business) {
     const { socket } = GameStore.currentScene.game as RealTimeGame
-    if (socket) {
-      socket.emit(ClientMessage.RUN_BUSINESS, business)
-    }
+    if (socket) socket.emit(ClientMessage.RUN_BUSINESS, business)
+  }
+
+  public static purchaseBusiness(business: Business) {
+    const { socket } = GameStore.currentScene.game as RealTimeGame
+    if (socket) socket.emit(ClientMessage.PURCHASE_BUSINESS, business)
   }
 }
