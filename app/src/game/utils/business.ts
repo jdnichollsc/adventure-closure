@@ -2,6 +2,15 @@ import { Business } from '../models'
 import { Scene } from 'phaser'
 import { BusinessCard } from '../containers'
 
+const getPrice = (value: number) => {
+  return Number(value).toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 1
+  })
+}
+
 const loadCards = async (
   scene: Scene,
   businesses: Array<Business>,
@@ -23,5 +32,6 @@ const loadCards = async (
 }
 
 export const BusinessUtils = {
-  loadCards
+  getPrice,
+  loadCards,
 }

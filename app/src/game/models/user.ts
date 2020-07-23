@@ -54,9 +54,9 @@ export class User {
 
   status!: UserStatus
 
-  capital?: number
+  capital!: number
 
-  score?: number
+  score!: number
 
   createdAt!: Date
 

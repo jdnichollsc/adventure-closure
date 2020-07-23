@@ -1,10 +1,11 @@
 import { GameObjects, Scene } from 'phaser'
 
+import { Business } from '../../models'
+import { BusinessStore } from '../../stores'
+import { BusinessUtils } from '../../utils'
 import { BUSINESS_SPRITES, BUSINESS_CARD_SIZE } from '../../constants'
 import { RunBusinessButton, PurchaseBusinessButton, HireManagerButton } from '../../sprites'
 import { BusinessProgressBar } from '../businessProgressBar'
-import { Business } from '../../models'
-import { BusinessStore } from '../../stores'
 
 export class BusinessCard extends GameObjects.Container {
   private background!: GameObjects.Image
@@ -15,6 +16,7 @@ export class BusinessCard extends GameObjects.Container {
   private purchaseLabel!: GameObjects.Text
   private incomeLabel!: GameObjects.Text
   private durationLabel!: GameObjects.Text
+  private investmentLabel!: GameObjects.Text
   public business!: Business
   constructor (
     scene: Scene,
@@ -60,23 +62,18 @@ export class BusinessCard extends GameObjects.Container {
 
     // LABELS
     this.purchaseLabel = this.scene.add.text(
-      width/2 - 80,
+      width/2 - 85,
       height - 28,
       `Buy x1`, {
       fontFamily: 'Rancho',
-      fontSize: 30
+      fontSize: 26
     }).setOrigin(0, 1)
     this.add(this.purchaseLabel)
-
-    const price = Number(business.income).toLocaleString('en-US', {
-      style: 'currency',
-      currency: 'USD',
-    })
 
     this.incomeLabel = this.scene.add.text(
       width/2,
       30,
-      price, {
+      BusinessUtils.getPrice(business.income), {
       fontFamily: 'Rancho',
       fontSize: 20
     }).setOrigin(0.5, 0)
@@ -90,6 +87,15 @@ export class BusinessCard extends GameObjects.Container {
       fontSize: 30
     }).setOrigin(0, 1)
     this.add(this.durationLabel)
+
+    this.investmentLabel = this.scene.add.text(
+      width/2 + 40,
+      height - 28,
+      BusinessUtils.getPrice(business.investment), {
+      fontFamily: 'Rancho',
+      fontSize: 16
+    }).setOrigin(1, 1)
+    this.add(this.investmentLabel)
   }
 
   public enableRunButton() {
@@ -114,8 +120,8 @@ export class BusinessCard extends GameObjects.Container {
     }
   }
 
-  public enablePurchaseButton() {
-    this.purchaseButton.disabled = false
+  public enablePurchaseButton(enable = true) {
+    this.purchaseButton.disabled = !enable
     return this
   }
 

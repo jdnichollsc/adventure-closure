@@ -1,15 +1,14 @@
 import { Scene, Cameras } from 'phaser'
 import { find } from 'lodash'
 
-import { RealTimeGame, ServerMessage, ClientMessage, UserBusiness } from '../../models'
+import { RealTimeGame, ServerMessage, ClientMessage, UserBusiness, User } from '../../models'
 import { PlayerCard, BusinessCard } from '../../containers'
 import { GameStore, BusinessStore } from '../../stores'
 import { BusinessUtils } from '../../utils'
 
 export class MainScene extends Scene {
-  private currentCapital = 0
   private playerCard!: PlayerCard
-  private businessCards!: Array<BusinessCard>
+  private businessCards: Array<BusinessCard> = []
   private camera!: Cameras.Scene2D.Camera
   private LIMIT_CAMERA_SIZE = 200
   init () {
@@ -31,10 +30,10 @@ export class MainScene extends Scene {
   }
 
   create () {
-    const player = {
-      name: 'Eliana Mask',
-      capital: 0
-    }
+    const player = new User()
+    player.firstName = 'Eliana'
+    player.lastName = 'Mask'
+    player.capital = 0
     this.playerCard = new PlayerCard(this, player)
     const carPosition = {
       x: 25,
@@ -75,8 +74,11 @@ export class MainScene extends Scene {
   }
 
   onUpdateCapital = (newCapital: number) => {
-    this.currentCapital = newCapital
+    this.playerCard.player.capital = newCapital
     this.playerCard.setCapital(newCapital)
+    this.businessCards.forEach((card) => {
+      card.enablePurchaseButton(card.business.investment <= newCapital)
+    })
   }
 
   onRunBusinessUpdate = (ub: UserBusiness) => {
