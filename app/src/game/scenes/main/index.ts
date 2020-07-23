@@ -1,4 +1,4 @@
-import { Scene } from 'phaser'
+import { Scene, Cameras } from 'phaser'
 import { find } from 'lodash'
 
 import { RealTimeGame, ServerMessage, ClientMessage, UserBusiness } from '../../models'
@@ -7,10 +7,14 @@ import { GameStore, BusinessStore } from '../../stores'
 import { BusinessUtils } from '../../utils'
 
 export class MainScene extends Scene {
+  private currentCapital = 0
   private playerCard!: PlayerCard
   private businessCards!: Array<BusinessCard>
+  private camera!: Cameras.Scene2D.Camera
+  private LIMIT_CAMERA_SIZE = 200
   init () {
-    this.cameras.main.setBackgroundColor('#24252A')
+    this.camera = this.cameras.main
+    this.camera.setBackgroundColor('#24252A')
     // Required to initialize shared resources
     GameStore.setCurrentScene(this)
     const { socket } = (this.game as RealTimeGame)
@@ -23,6 +27,7 @@ export class MainScene extends Scene {
     socket.on(ServerMessage.PURCHASE_BUSINESS_ERROR, this.onPurchaseBusinessError)
     socket.on(ServerMessage.HIRE_MANAGER_UPDATE, this.onHireManagerUpdate)
     socket.on(ServerMessage.HIRE_MANAGER_ERROR, this.onHireManagerError)
+    socket.on(ServerMessage.USER_CAPITAL, this.onUpdateCapital)
   }
 
   create () {
@@ -31,7 +36,35 @@ export class MainScene extends Scene {
       capital: 0
     }
     this.playerCard = new PlayerCard(this, player)
-    this.loadBusinessCards(this.playerCard.y + this.playerCard.height)
+    const carPosition = {
+      x: 25,
+      y: this.playerCard.y + this.playerCard.height
+    }
+    this.loadBusinessCards(carPosition.x, carPosition.y)
+
+    
+    this.input
+      .on('wheel', this.onWhell, this)
+      .on('pointermove', this.onPointerMove, this)
+  }
+
+  onScrollCamera(newScrollY: number, camera = this.camera) {
+    if (newScrollY < 0)
+      camera.scrollY = 0
+    else if (newScrollY > this.LIMIT_CAMERA_SIZE)
+      camera.scrollY = this.LIMIT_CAMERA_SIZE
+    else camera.scrollY = newScrollY
+  }
+
+  onWhell({ deltaY }: { deltaY: number }) {
+    const newScrollY = this.camera.scrollY + deltaY / this.camera.zoom
+    this.onScrollCamera(newScrollY)
+  }
+
+  onPointerMove({ isDown, y, prevPosition }: any) {
+    if (!isDown) return
+    const newScrollY = this.camera.scrollY - (y - prevPosition.y) / this.camera.zoom
+    this.onScrollCamera(newScrollY)
   }
 
   update () {
@@ -40,6 +73,11 @@ export class MainScene extends Scene {
 
   onStatus = (data: any) => {
     console.debug(data)
+  }
+
+  onUpdateCapital = (newCapital: number) => {
+    this.currentCapital = newCapital
+    this.playerCard.setCapital(newCapital)
   }
 
   onRunBusinessUpdate = (ub: UserBusiness) => {
@@ -67,8 +105,8 @@ export class MainScene extends Scene {
     console.error('HIRE_MANAGER_ERROR')
   }
 
-  async loadBusinessCards (lastPosition: number) {
+  async loadBusinessCards (x: number, y: number) {
     const businesses = await BusinessStore.getBusinesses()
-    this.businessCards = await BusinessUtils.loadCards(this, lastPosition, businesses)
+    this.businessCards = await BusinessUtils.loadCards(this, businesses, x, y)
   }
 }

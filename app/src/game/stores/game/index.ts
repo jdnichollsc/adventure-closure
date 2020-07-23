@@ -13,7 +13,7 @@ export class GameStore {
       const scene = GameStore.currentScene
       const { width, height } = scene.sys.game.scale.gameSize
       const mask = scene.make.graphics({ fillStyle: { color: 0x000000 }, add: false})
-        .fillRect(153, 100, width, height)
+        .fillRect(130, 100, width, height)
         .createGeometryMask()
       mask.invertAlpha = false
       GameStore.maskForBusinessCards = mask

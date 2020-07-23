@@ -7,12 +7,14 @@ const gameConfig: Types.Core.GameConfig = {
   height: "100%",
   type: Phaser.AUTO,
   scale: {
-    mode: Phaser.Scale.WIDTH_CONTROLS_HEIGHT,
+    // mode: Phaser.Scale.WIDTH_CONTROLS_HEIGHT,
     // TODO: With RESIZE mode width/height are zero
     // mode: Phaser.Scale.RESIZE,
     // autoCenter: Phaser.Scale.CENTER_BOTH,
-    width: '100%',
-    height: '100%'
+    width: 440,
+    // height: '100%'
+    mode: Phaser.Scale.FIT,
+    autoCenter: Phaser.Scale.CENTER_BOTH
   },
   render: {
     antialias: false,

@@ -34,4 +34,8 @@ export class PlayerCard extends GameObjects.Container {
     })
     this.add(this.capital)
   }
+
+  setCapital(capital: number) {
+    this.capital.text = '$' + capital
+  }
 }

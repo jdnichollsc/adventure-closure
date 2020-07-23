@@ -200,4 +200,17 @@ export class UserService {
       await queryRunner.release()
     }
   }
+
+  async incrementAndGetCapital(
+    userId: string,
+    addToCapital: number
+  ): Promise<number> {
+    const rawData = await this.repository.query(`
+      UPDATE ${PUBLIC_TABLES.USER}
+        SET capital = capital + $2
+      WHERE id = $1
+      RETURNING capital;
+    `, [ userId, addToCapital ])
+    return get(rawData, '0.0.capital', 0)
+  }
 }

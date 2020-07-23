@@ -11,5 +11,6 @@ export enum ServerMessage {
   PURCHASE_BUSINESS_UPDATE = 'PurchaseBusinessUpdate',
   PURCHASE_BUSINESS_ERROR = 'PurchaseBusinessError',
   HIRE_MANAGER_UPDATE = 'HireManagerUpdate',
-  HIRE_MANAGER_ERROR = 'HireManagerError'
+  HIRE_MANAGER_ERROR = 'HireManagerError',
+  USER_CAPITAL = 'UserCapital'
 }

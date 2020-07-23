@@ -5,7 +5,7 @@ import { AuthModule } from './auth'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 
-import { NotificationsService } from './tasks'
+import { TasksService } from './tasks'
 import { GameGateway } from './gateways'
 
 import {
@@ -38,7 +38,7 @@ import {
   providers: [
     Logger,
     AppService,
-    NotificationsService,
+    TasksService,
     GameGateway
   ],
 })

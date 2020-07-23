@@ -4,8 +4,9 @@ import { BusinessCard } from '../containers'
 
 const loadCards = async (
   scene: Scene,
-  initialPosition: number,
-  businesses: Array<Business>
+  businesses: Array<Business>,
+  x: number,
+  y: number
 ) => {
   return businesses.reduce((list, business, index) => {
     const newBusinessCard = new BusinessCard(
@@ -18,7 +19,7 @@ const loadCards = async (
         .enablePurchaseButton()
     }
     newBusinessCard
-      .setPosition(50, newBusinessCard.height * index + initialPosition)
+      .setPosition(x, newBusinessCard.height * index + y)
     return [
       ...list,
       newBusinessCard

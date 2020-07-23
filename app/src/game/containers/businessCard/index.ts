@@ -71,7 +71,8 @@ export class BusinessCard extends GameObjects.Container {
     this.runButton.disabled = false
     this.runButton.setDisplaySize(20, 20)
     this.runButton.input.hitArea.setTo(0, 0, 250, 250)
-    this.scene.input.enableDebug(this.runButton, 0xff00ff)
+    // TESTING
+    // this.scene.input.enableDebug(this.runButton, 0xff00ff)
     return this
   }
 

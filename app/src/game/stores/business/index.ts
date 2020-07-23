@@ -15,7 +15,7 @@ export class BusinessStore {
           'investment': 5,
           'score': 1,
           'income': 10,
-          'duration': 5000
+          'duration': 1000
         },
         {
           'id': 2,
@@ -24,7 +24,7 @@ export class BusinessStore {
           'investment': 50,
           'score': 20,
           'income': 100,
-          'duration': 10000
+          'duration': 4000
         },
         {
           'id': 3,
@@ -33,7 +33,25 @@ export class BusinessStore {
           'investment': 500,
           'score': 30,
           'income': 1000,
-          'duration': 20000
+          'duration': 8000
+        },
+        {
+          "id": 4,
+          "name": "Satellites",
+          "imageUrl": `${API_DOMAIN}/images/businesses/satellites.png`,
+          "investment": 50000,
+          "score": 40,
+          "income": 100000,
+          "duration": 12000
+        },
+        {
+          "id": 5,
+          "name": "Rockets",
+          "imageUrl": `${API_DOMAIN}/images/businesses/rockets.png`,
+          "investment": 5000000,
+          "score": 50,
+          "income": 10000000,
+          "duration": 20000
         }
       ]
     }

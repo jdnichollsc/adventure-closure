@@ -35,7 +35,7 @@ export class BusinessProgressBar extends GameObjects.Container {
     this.progressTween = scene.tweens.add({
       targets: this.progressBar,
       x: { value: this.width + 4, duration, ease: 'Linear' },
-      completeDelay: 0,
+      completeDelay: 10,
       onComplete: () => this.progressBar.x = 0,
       paused: true
     })
