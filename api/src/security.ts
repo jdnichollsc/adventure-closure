@@ -7,6 +7,7 @@ const allowedOrigins = [
   // WEBSITES
   'http://localhost',
   'https://localhost',
+  'https://adventure-closure.firebaseapp.com',
   // MOBILE APPS
   'capacitor://localhost',
   'ionic://localhost',
