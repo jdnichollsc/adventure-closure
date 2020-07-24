@@ -8,6 +8,7 @@ import { RunBusinessButton, PurchaseBusinessButton, HireManagerButton } from '..
 import { BusinessProgressBar } from '../businessProgressBar'
 
 export class BusinessCard extends GameObjects.Container {
+  public business!: Business
   private background!: GameObjects.Image
   private progressBar!: BusinessProgressBar
   private runButton!: RunBusinessButton
@@ -17,7 +18,13 @@ export class BusinessCard extends GameObjects.Container {
   private incomeLabel!: GameObjects.Text
   private durationLabel!: GameObjects.Text
   private investmentLabel!: GameObjects.Text
-  public business!: Business
+  private inventoryLabel!: GameObjects.Text
+  private inventoryProgress!: GameObjects.Graphics
+  private readonly INV_PROGRESS_X = 20
+  private readonly INV_PROGRESS_Y = 100
+  private readonly INV_PROGRESS_WIDTH = 65
+  private readonly INV_PROGRESS_HEIGHT = 30
+  private readonly INV_PROGRESS_BORDER = 5
   constructor (
     scene: Scene,
     business: Business,
@@ -44,7 +51,7 @@ export class BusinessCard extends GameObjects.Container {
       .setScale(0.9)
     this.add(this.progressBar)
 
-    this.runButton = new RunBusinessButton(this.scene, 20, height/2, business)
+    this.runButton = new RunBusinessButton(this.scene, 20, height/2 - 20, business)
       .setOrigin(0, 0.5)
       .on('pointerdown', this.onRunBusiness, this)
     this.add(this.runButton)
@@ -60,7 +67,6 @@ export class BusinessCard extends GameObjects.Container {
       .on('pointerdown', this.onHireManager, this)
     this.add(this.hireButton)
 
-    // LABELS
     this.purchaseLabel = this.scene.add.text(
       width/2 - 85,
       height - 28,
@@ -96,6 +102,45 @@ export class BusinessCard extends GameObjects.Container {
       fontSize: 16
     }).setOrigin(1, 1)
     this.add(this.investmentLabel)
+
+    const inventoryBg = this.scene.add.graphics({
+      fillStyle: { color: 0x22282e, alpha: 1 }
+    }).fillRect(
+      this.INV_PROGRESS_X,
+      this.INV_PROGRESS_Y,
+      this.INV_PROGRESS_WIDTH,
+      this.INV_PROGRESS_HEIGHT
+    )
+    this.add(inventoryBg)
+    this.inventoryProgress = this.scene.add.graphics({
+      fillStyle: { color: 0xfb7301, alpha: 1 }
+    }).fillRect(
+      this.INV_PROGRESS_X,
+      this.INV_PROGRESS_Y,
+      0,
+      this.INV_PROGRESS_HEIGHT
+    )
+    this.add(this.inventoryProgress)
+    const inventoryBox = this.scene.add.graphics({
+      lineStyle: { width: 3, color: 0x00ff00 },
+    }).strokeRoundedRect(
+      this.INV_PROGRESS_X,
+      this.INV_PROGRESS_Y,
+      this.INV_PROGRESS_WIDTH,
+      this.INV_PROGRESS_HEIGHT,
+      this.INV_PROGRESS_BORDER
+    )
+    this.add(inventoryBox)
+    
+    this.inventoryLabel = this.scene.add.text(
+      50,
+      height - 20,
+      '', {
+      fontFamily: 'Rancho',
+      fontSize: 25,
+      color: 'white'
+    }).setOrigin(0.5, 1)
+    this.add(this.inventoryLabel)
   }
 
   public enableRunButton() {
@@ -127,6 +172,19 @@ export class BusinessCard extends GameObjects.Container {
 
   public playProgressBar() {
     this.progressBar.play()
+  }
+
+  public setInventory(inventory: number) {
+    this.inventoryLabel.text = inventory + ''
+    const mod10 = inventory % 10
+    this.inventoryProgress
+      .clear()
+      .fillRect(
+        this.INV_PROGRESS_X,
+        this.INV_PROGRESS_Y,
+        mod10 * this.INV_PROGRESS_WIDTH / 10,
+        this.INV_PROGRESS_HEIGHT
+      )
   }
 
   onRunBusiness () {

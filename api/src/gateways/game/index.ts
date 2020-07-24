@@ -87,25 +87,26 @@ export class GameGateway
 
   @SubscribeMessage(ClientMessage.RUN_BUSINESS)
   async handleRunBusiness(
-    @MessageBody() business: Business,
+    @MessageBody() { id: businessId } = new Business(),
     @ConnectedSocket() client: Socket,
   ): Promise<string> {
-    if (!business) return ERROR_MESSAGE
+    if (!businessId) return ERROR_MESSAGE
     const lastRunAt = new Date()
     try {
       // FIXME: LOAD USER INFO USING JWT TOKEN
       const userId = '1234'
-      const businessToProcess = await this.businessService.getIfCanRunBusiness(userId, business.id, lastRunAt)
-      if (businessToProcess) {
+      const business = await this.businessService.getIfCanRunBusiness(userId, businessId, lastRunAt)
+      if (business) {
         client.emit(ServerMessage.RUN_BUSINESS_UPDATE, {
-          businessId: business.id,
+          businessId,
           lastRunAt
         })
         this.businessService.updateUserBusiness(userId, business.id, lastRunAt)
         // TODO: Use queue for pending tasks instead of timeouts
+        // Create 
         setTimeout(
           () => this.incrementCapitalAndUpdateClient(userId, business.income, client),
-          businessToProcess.duration
+          business.duration
         )
       } else {
         client.emit(ServerMessage.RUN_BUSINESS_ERROR, TASK_RUNNING)
@@ -118,12 +119,20 @@ export class GameGateway
 
   @SubscribeMessage(ClientMessage.PURCHASE_BUSINESS)
   async handlePurchaseBusiness(
-    @MessageBody() business: Business,
+    @MessageBody() { id: businessId } = new Business(),
     @ConnectedSocket() client: Socket,
   ): Promise<string> {
-    if (!business) return ERROR_MESSAGE
+    if (!businessId) return ERROR_MESSAGE
     try {
-      this.logger.warn('BUSINESS: ' + business.id)
+      // FIXME: LOAD USER INFO USING JWT TOKEN
+      const userId = '1234'
+      const business = await this.businessService.findOne(businessId)
+      const newCapital = await this.userService.reduceCapitalAndUpdateBusiness(userId, business)
+      if (newCapital !== null) {
+        client.emit(ServerMessage.USER_CAPITAL, newCapital)
+        const userBusiness = await this.businessService.getUserBusiness(userId, businessId)
+        client.emit(ServerMessage.PURCHASE_BUSINESS_UPDATE, userBusiness)
+      }
     } catch (error) {
       this.logger.error(error)
       client.emit(ServerMessage.PURCHASE_BUSINESS_ERROR, error.toString())

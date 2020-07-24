@@ -4,7 +4,7 @@ import { get } from 'lodash'
 
 import { REPOSITORIES } from '../../constants'
 import { IUser } from '../../types'
-import { User } from '../../models'
+import { User, Business } from '../../models'
 import { PUBLIC_TABLES } from '../../database'
 import { getParamValues, trimStringProps, stringToJSON } from '../utils'
 
@@ -212,5 +212,39 @@ export class UserService {
       RETURNING capital;
     `, [ userId, addToCapital ])
     return get(rawData, '0.0.capital', 0)
+  }
+
+  async reduceCapitalAndUpdateBusiness(
+    userId: string,
+    business: Business,
+  ): Promise<number | null> {
+    const { connection } = this.repository.manager
+    const queryRunner = connection.createQueryRunner()
+    await queryRunner.connect()
+    await queryRunner.startTransaction('READ COMMITTED')
+    try {
+      const rawData = await queryRunner.query(`
+        UPDATE ${PUBLIC_TABLES.USER}
+          SET capital = capital - $2
+        WHERE id = $1
+        RETURNING capital;
+      `, [ userId, business.investment ])
+      await queryRunner.query(`
+        INSERT INTO ${PUBLIC_TABLES.USER_BUSINESS} ("userId", "businessId")
+        VALUES ($1, $2)
+        ON CONFLICT("userId", "businessId") DO UPDATE
+        SET "userId" = excluded."userId",
+          "businessId" = excluded."businessId",
+          inventory = ${PUBLIC_TABLES.USER_BUSINESS}.inventory + 1;
+      `, [ userId, business.id ])
+      await queryRunner.commitTransaction()
+      const newCapital = get(rawData, '0.0.capital', 0)
+      return newCapital
+    } catch {
+      await queryRunner.rollbackTransaction()
+      return null
+    } finally {
+      await queryRunner.release()
+    }
   }
 }

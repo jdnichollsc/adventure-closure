@@ -12,7 +12,7 @@ export class BusinessProgressBar extends GameObjects.Container {
   ) {
     super(scene)
     scene.add.existing(this)
-    this.duration = 2000
+    this.duration = duration
 
     this.progressBar = scene.add.sprite(0, 0, BUSINESS_SPRITES.PROGRESS_BAR)
       .setOrigin(1, 0)
@@ -20,17 +20,18 @@ export class BusinessProgressBar extends GameObjects.Container {
     this.setSize(this.progressBar.width, this.progressBar.height)
     this.progressBar.setMask(GameStore.maskBusinessCard)
 
-    // TODO: Review masks from containers for scaling
-    // const mask = scene.add.graphics()
-    //   .fillStyle(0xff00ff, 0.2)
-    //   .fillRect(0, 0, this.width, this.height)
-    // this.mask = new Phaser.Display.Masks.GeometryMask(scene, mask)
-    // this.mask.invertAlpha = true
-
     const box = scene.add.image(0, 0, BUSINESS_SPRITES.PROGRESS_BAR_BOX)
       .setOrigin(0).setScale(1, 0.8)
     this.add(box)
-    // this.mask = new Phaser.Display.Masks.BitmapMask(scene, box);
+    // TODO: Review masks from containers for scaling
+    // const bounds = box.getBounds()
+    // console.log('BOUNDS', bounds, this.getBounds())
+    // const mask = scene.add.graphics({ fillStyle: { color: 0xffff00, alpha: 0.5 } })
+    //     .fillRect(bounds.x, bounds.y, bounds.width/2, bounds.height)
+    //     .createGeometryMask()
+    // // this.add(mask)
+    // mask.invertAlpha = false
+    // this.progressBar.mask = mask
 
     this.progressTween = scene.tweens.add({
       targets: this.progressBar,

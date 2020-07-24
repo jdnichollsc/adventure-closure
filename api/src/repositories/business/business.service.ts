@@ -4,14 +4,20 @@ import { get } from 'lodash'
 
 import { Business, UserBusiness } from '../../models'
 import { REPOSITORIES } from '../../constants'
-import { getTableName } from '../utils'
+import { PUBLIC_TABLES } from '../../database'
 
 @Injectable()
 export class BusinessService {
   constructor(
     @Inject(REPOSITORIES.BUSINESS)
     private readonly repository: Repository<Business>,
+    @Inject(REPOSITORIES.USER_BUSINESS)
+    private readonly repositoryUB: Repository<UserBusiness>,
   ) { }
+
+  findOne(id: number): Promise<Business> {
+    return this.repository.findOneOrFail(id)
+  }
 
   getAll(): Promise<Business[]> {
     return this.repository.find()
@@ -34,12 +40,10 @@ export class BusinessService {
     businessId: number,
     currentDate: Date
   ): Promise<Business> {
-    const businessTableName = getTableName(Business)
-    const userBusinessTableName = getTableName(UserBusiness)
     const rawData = (await this.repository.query(`
       SELECT b.*, ub."lastRunAt"
-      FROM ${businessTableName} as b
-      LEFT OUTER JOIN ${userBusinessTableName} ub 
+      FROM ${PUBLIC_TABLES.BUSINESS} as b
+      LEFT OUTER JOIN ${PUBLIC_TABLES.USER_BUSINESS} ub 
         ON b.id = ub."businessId" AND ub."userId" = $1
       WHERE b.id = $2;
     `,
@@ -59,14 +63,20 @@ export class BusinessService {
     businessId: number,
     lastRunAt: Date
   ): Promise<void> {
-    const userBusinessTableName = getTableName(UserBusiness)
     return this.repository.query(`
-      INSERT INTO ${userBusinessTableName} ("userId", "businessId", "lastRunAt")
+      INSERT INTO ${PUBLIC_TABLES.USER_BUSINESS} ("userId", "businessId", "lastRunAt")
       VALUES ($1, $2, $3)
       ON CONFLICT("userId", "businessId") DO UPDATE
       SET "userId" = excluded."userId",
         "businessId" = excluded."businessId",
         "lastRunAt" = excluded."lastRunAt";
     `, [userId, businessId, lastRunAt])
+  }
+
+  async getUserBusiness(
+    userId: string,
+    businessId: number
+  ): Promise<UserBusiness> {
+    return this.repositoryUB.findOneOrFail({ userId, businessId })
   }
 }

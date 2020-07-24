@@ -7,10 +7,6 @@ import './style.scss'
 
 const Game: React.FC = () => {
   const {
-    initialized,
-    started,
-    error,
-    progress,
     onStartGame,
     onLoadingProgress,
   } = useFBInstant()

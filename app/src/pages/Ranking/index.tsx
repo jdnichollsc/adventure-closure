@@ -12,9 +12,6 @@ import {
   IonLabel,
   IonChip,
   IonThumbnail,
-  IonAvatar,
-  IonCard,
-  IonButtons,
   IonToggle
 } from '@ionic/react'
 
@@ -28,7 +25,7 @@ const Ranking: React.FC = () => {
       id: 1,
       name: 'Pepito Pérez',
       points: 37657625,
-      profileImg: require('../../assets/img/character1.png'),
+      profileImg: '/assets/img/character1.png',
       rankingPosition: 1,
       capital: 38657
     },
@@ -36,7 +33,7 @@ const Ranking: React.FC = () => {
       id: 2,
       name: 'Sara Jaramillo',
       points: 62525252,
-      profileImg: require('../../assets/img/character5.png'),
+      profileImg: '/assets/img/character5.png',
       rankingPosition: 2,
       capital: 56324
     },
@@ -44,7 +41,7 @@ const Ranking: React.FC = () => {
       id: 3,
       name: 'Lucas Cardona',
       points: 72627862,
-      profileImg: require('../../assets/img/character2.png'),
+      profileImg: '/assets/img/character2.png',
       rankingPosition: 3,
       capital: 42434
     },
@@ -52,7 +49,7 @@ const Ranking: React.FC = () => {
       id: 4,
       name: 'Laura B',
       points: 23538694,
-      profileImg: require('../../assets/img/character4.png'),
+      profileImg: '/assets/img/character4.png',
       rankingPosition: 4,
       capital: 51467
     },
@@ -60,7 +57,7 @@ const Ranking: React.FC = () => {
       id: 5,
       name: 'Sofia D',
       points: 49386501,
-      profileImg: require('../../assets/img/character3.png'),
+      profileImg: '/assets/img/character3.png',
       rankingPosition: 5,
       capital: 21467
     },
@@ -68,7 +65,7 @@ const Ranking: React.FC = () => {
       id: 6,
       name: 'Juliana L',
       points: 34459350,
-      profileImg: require('../../assets/img/character6.png'),
+      profileImg: '/assets/img/character6.png',
       rankingPosition: 6,
       capital: 39815
     }
@@ -95,14 +92,14 @@ const Ranking: React.FC = () => {
               <IonRow className="header-rank">
                 <IonCol className="space-img" size="2">
                   <IonThumbnail>
-                    <IonImg src={require('../../assets/img/planet.png')}></IonImg>
+                    <IonImg src={'/assets/img/planet.png'}></IonImg>
                   </IonThumbnail>
                 </IonCol>
                 <IonCol className="col-rank">
                   <IonRow>
-                    <IonImg className="medal" src={require('../../assets/img/second.png')}></IonImg>
+                    <IonImg className="medal" src={'/assets/img/second.png'}></IonImg>
                     <IonThumbnail className="character-img">
-                      <img src={require('../../assets/img/character1.png')} />
+                      <img src={'/assets/img/character1.png'} alt='Second position' />
                     </IonThumbnail>
                   </IonRow>
                   <IonRow>
@@ -111,16 +108,16 @@ const Ranking: React.FC = () => {
                   <IonRow>
                     <IonChip className="ranking-chip">
                       <IonLabel color="light">546467 pts - </IonLabel>
-                      <IonImg className="coin" src={require('../../assets/img/coin.png')}></IonImg>
+                      <IonImg className="coin" src={'/assets/img/coin.png'}></IonImg>
                       <IonLabel color="light">546467</IonLabel>
                     </IonChip>
                   </IonRow>
                 </IonCol>
                 <IonCol className="col-rank">
                   <IonRow>
-                    <IonImg className="medal first" src={require('../../assets/img/first.png')}></IonImg>
+                    <IonImg className="medal first" src={'/assets/img/first.png'}></IonImg>
                     <IonThumbnail className="character-img">
-                      <img src={require('../../assets/img/character2.png')} />
+                      <img src={'/assets/img/character2.png'} alt='First position' />
                     </IonThumbnail>
                   </IonRow>
                   <IonRow>
@@ -129,16 +126,16 @@ const Ranking: React.FC = () => {
                   <IonRow>
                     <IonChip className="ranking-chip">
                       <IonLabel color="light">546467 pts - </IonLabel>
-                      <IonImg className="coin" src={require('../../assets/img/coin.png')}></IonImg>
+                      <IonImg className="coin" src={'/assets/img/coin.png'}></IonImg>
                       <IonLabel color="light">546467</IonLabel>
                     </IonChip>
                   </IonRow>
                 </IonCol>
                 <IonCol className="col-rank">
                   <IonRow>
-                    <IonImg className="medal" src={require('../../assets/img/third.png')}></IonImg>
+                    <IonImg className="medal" src={'/assets/img/third.png'}></IonImg>
                     <IonThumbnail className="character-img">
-                      <img src={require('../../assets/img/character3.png')} />
+                      <img src={'/assets/img/character3.png'} alt='Third position' />
                     </IonThumbnail>
                   </IonRow>
                   <IonRow>
@@ -147,14 +144,14 @@ const Ranking: React.FC = () => {
                   <IonRow>
                     <IonChip className="ranking-chip">
                       <IonLabel color="light">546467 pts - </IonLabel>
-                      <IonImg className="coin" src={require('../../assets/img/coin.png')}></IonImg>
+                      <IonImg className="coin" src={'/assets/img/coin.png'}></IonImg>
                       <IonLabel color="light">546467</IonLabel>
                     </IonChip>
                   </IonRow>
                 </IonCol>
                 <IonCol className="space-img" size="2">
                   <IonThumbnail>
-                    <IonImg src={require('../../assets/img/rocket.png')}></IonImg>
+                    <IonImg src={'/assets/img/rocket.png'}></IonImg>
                   </IonThumbnail>
                 </IonCol>
               </IonRow>

@@ -5,8 +5,7 @@ import {
   IonThumbnail,
   IonLabel,
   IonImg,
-  IonChip,
-  IonIcon
+  IonChip
 } from '@ionic/react'
 import {
   createAnimatableComponent
@@ -46,20 +45,20 @@ const RankingCard: React.FC<RankingCardProps> = ({
       <IonItem className="item">
         <div className="ranking" slot="start">
           <IonLabel color="danger" className="label-ranking">{rankingPosition}.</IonLabel>
-
-          {/**          <IonImg className="badge-img" src={require('../../assets/img/medal.png')}>
+          {/**
+           * <IonImg className="badge-img" src={require('../../assets/img/medal.png')}>
           </IonImg> */}
         </div>
 
         <IonThumbnail>
-          <img src={profileImg} />
+          <img src={profileImg} alt='Profile' />
         </IonThumbnail>
         <div>
           <IonLabel color="primary" className="label-name">{name}</IonLabel>
           <IonLabel color="primary" className="label-points">Score: {points} pts</IonLabel>
         </div>
         <IonChip slot="end">
-          <IonImg className="coin" src={require('../../assets/img/coin.png')}>
+          <IonImg className="coin" src={'/assets/img/coin.png'}>
           </IonImg>
           <IonLabel color="warning" className="label-ranking">{capital}</IonLabel>
         </IonChip>

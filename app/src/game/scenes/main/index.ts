@@ -1,5 +1,5 @@
 import { Scene, Cameras } from 'phaser'
-import { find } from 'lodash'
+import { find, unionBy } from 'lodash'
 
 import { RealTimeGame, ServerMessage, ClientMessage, UserBusiness, User } from '../../models'
 import { PlayerCard, BusinessCard } from '../../containers'
@@ -65,10 +65,6 @@ export class MainScene extends Scene {
     this.onScrollCamera(newScrollY)
   }
 
-  update () {
-    
-  }
-
   onStatus = (data: any) => {
     console.debug(data)
   }
@@ -86,20 +82,23 @@ export class MainScene extends Scene {
     card?.playProgressBar()
   }
 
+  onPurchaseBusinessUpdate = (ub: UserBusiness) => {
+    const card = find(this.businessCards, { business: {id: ub.businessId}})
+    card?.setInventory(ub.inventory)
+    const { businesses } = this.playerCard.player
+    this.playerCard.player.businesses = unionBy([ub], businesses, 'id') 
+  }
+
+  onHireManagerUpdate = () => {
+    console.debug('HIRE_MANAGER_UPDATE')
+  }
+
   onRunBusinessError = () => {
     console.error('RUN_BUSINESS_ERROR')
   }
 
-  onPurchaseBusinessUpdate = () => {
-    alert('PURCHASE_BUSINESS_UPDATE')
-  }
-
   onPurchaseBusinessError = () => {
     console.error('PURCHASE_BUSINESS_ERROR')
-  }
-
-  onHireManagerUpdate = () => {
-    alert('HIRE_MANAGER_UPDATE')
   }
 
   onHireManagerError = () => {
@@ -112,5 +111,6 @@ export class MainScene extends Scene {
     const firstBusinessCard = this.businessCards[0]
     firstBusinessCard
       .enableRunButton()
+      .setInventory(1)
   }
 }

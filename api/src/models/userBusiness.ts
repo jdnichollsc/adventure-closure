@@ -9,7 +9,7 @@ export class UserBusiness {
     public id!: number
 
     @Column('text')
-    public userId!: number
+    public userId!: string
 
     @Column('int')
     public businessId!: number
