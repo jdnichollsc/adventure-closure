@@ -4,7 +4,7 @@ import { find, unionBy } from 'lodash'
 import { RealTimeGame, ServerMessage, ClientMessage, UserBusiness, User } from '../../models'
 import { PlayerCard, BusinessCard } from '../../containers'
 import { GameStore, BusinessStore } from '../../stores'
-import { BusinessUtils } from '../../utils'
+import { BusinessUtils, sleep } from '../../utils'
 
 export class MainScene extends Scene {
   private playerCard!: PlayerCard
@@ -84,7 +84,11 @@ export class MainScene extends Scene {
 
   onPurchaseBusinessUpdate = (ub: UserBusiness) => {
     const card = find(this.businessCards, { business: {id: ub.businessId}})
-    card?.setInventory(ub.inventory)
+    if (card) {
+      card
+        .enableRunButton()
+        .setInventory(ub.inventory)
+    }
     const { businesses } = this.playerCard.player
     this.playerCard.player.businesses = unionBy([ub], businesses, 'id') 
   }
@@ -108,6 +112,8 @@ export class MainScene extends Scene {
   async loadBusinessCards (x: number, y: number) {
     const businesses = await BusinessStore.getBusinesses()
     this.businessCards = await BusinessUtils.loadCards(this, businesses, x, y)
+    // TODO: Remove this delay and fix an issue loading the texture
+    await sleep(100)
     const firstBusinessCard = this.businessCards[0]
     firstBusinessCard
       .enableRunButton()

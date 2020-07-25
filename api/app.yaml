@@ -24,7 +24,6 @@ manual_scaling:
 
 # ENVIRONMENT VARIABLES
 env_variables:
-  WEBSOCKET_PORT: 80
   SQL_HOST: ruby.db.elephantsql.com
   SQL_USER: xdstzbvq
   SQL_PASSWORD: KnnbbTF-Zudk-OrqTvNgHh0I8da79xSq

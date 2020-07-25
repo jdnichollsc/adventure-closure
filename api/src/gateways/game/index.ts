@@ -41,7 +41,7 @@ export const ERROR_MESSAGE = 'MESSAGE NOT VALID'
 export const TASK_RUNNING = 'THE TASK IS RUNNING'
 
 @UseInterceptors(ClassSerializerInterceptor)
-@WebSocketGateway()
+@WebSocketGateway(WEBSOCKET_PORT)
 export class GameGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer() server: Server
@@ -101,11 +101,10 @@ export class GameGateway
           businessId,
           lastRunAt
         })
-        this.businessService.updateUserBusiness(userId, business.id, lastRunAt)
+        const inventory = await this.businessService.updateUserBusinessAndGetInventory(userId, business.id, lastRunAt)
         // TODO: Use queue for pending tasks instead of timeouts
-        // Create 
         setTimeout(
-          () => this.incrementCapitalAndUpdateClient(userId, business.income, client),
+          () => this.incrementCapitalAndUpdateClient(userId, business.income * inventory, client),
           business.duration
         )
       } else {

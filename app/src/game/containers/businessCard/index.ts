@@ -145,7 +145,7 @@ export class BusinessCard extends GameObjects.Container {
 
   public enableRunButton() {
     this.runButton.disabled = false
-    this.runButton.setDisplaySize(20, 20)
+    this.runButton.setDisplaySize(70, 70)
     this.runButton.input.hitArea.setTo(0, 0, 250, 250)
     // TESTING
     // this.scene.input.enableDebug(this.runButton, 0xff00ff)
@@ -175,6 +175,7 @@ export class BusinessCard extends GameObjects.Container {
   }
 
   public setInventory(inventory: number) {
+    this.incomeLabel.text = BusinessUtils.getPrice(this.business.income * inventory)
     this.inventoryLabel.text = inventory + ''
     const mod10 = inventory % 10
     this.inventoryProgress
@@ -185,6 +186,7 @@ export class BusinessCard extends GameObjects.Container {
         mod10 * this.INV_PROGRESS_WIDTH / 10,
         this.INV_PROGRESS_HEIGHT
       )
+    return this
   }
 
   onRunBusiness () {

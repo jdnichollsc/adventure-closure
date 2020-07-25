@@ -58,19 +58,21 @@ export class BusinessService {
     return null
   }
 
-  async updateUserBusiness(
+  async updateUserBusinessAndGetInventory(
     userId: string,
     businessId: number,
     lastRunAt: Date
-  ): Promise<void> {
-    return this.repository.query(`
+  ): Promise<number> {
+    const rawData = await this.repositoryUB.query(`
       INSERT INTO ${PUBLIC_TABLES.USER_BUSINESS} ("userId", "businessId", "lastRunAt")
       VALUES ($1, $2, $3)
       ON CONFLICT("userId", "businessId") DO UPDATE
       SET "userId" = excluded."userId",
         "businessId" = excluded."businessId",
-        "lastRunAt" = excluded."lastRunAt";
+        "lastRunAt" = excluded."lastRunAt"
+      RETURNING inventory;
     `, [userId, businessId, lastRunAt])
+    return get(rawData, '0.inventory', 1)
   }
 
   async getUserBusiness(
