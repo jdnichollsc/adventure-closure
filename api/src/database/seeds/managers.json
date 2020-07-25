@@ -2,27 +2,27 @@
   "managers": [
     {
       "name": "Pepito Pérez",
-      "imageUrl": "/images/managers/manager1.png",
+      "imageUrl": "/assets/managers/manager1.png",
       "investment": 1000
     },
     {
       "name": "Sara Jaramillo",
-      "imageUrl": "/images/managers/manager2.png",
+      "imageUrl": "/assets/managers/manager2.png",
       "investment": 3000
     },
     {
       "name": "Lucas Cardona",
-      "imageUrl": "/images/managers/manager3.png",
+      "imageUrl": "/assets/managers/manager3.png",
       "investment": 5000
     },
     {
       "name": "Laura B",
-      "imageUrl": "/images/managers/manager4.png",
+      "imageUrl": "/assets/managers/manager4.png",
       "investment": 7000
     },
     {
       "name": "Sofia D",
-      "imageUrl": "/images/managers/manager5.png",
+      "imageUrl": "/assets/managers/manager5.png",
       "investment": 9000
     }
   ]

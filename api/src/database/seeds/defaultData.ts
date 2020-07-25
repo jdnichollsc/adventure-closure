@@ -7,7 +7,7 @@ import { PUBLIC_TABLES } from '../utils'
 import { businesses } from './businesses.json'
 import { managers } from './managers.json'
 
-export const addDefaultData = async (queryRunner: QueryRunner) => {
+export const addDefaultData = async (queryRunner: QueryRunner): Promise<void> => {
 
   const adminRole = new Role(DefaultRole.Admin, 'Admin')
   await queryRunner.manager.save(adminRole)
@@ -27,23 +27,17 @@ export const addDefaultData = async (queryRunner: QueryRunner) => {
   user.status = UserStatus.Active
   await queryRunner.manager.save(user)
 
-  const newBusinesses = businesses.map(business => ({
-    ...business,
-    imageUrl: DOMAIN + business.imageUrl
-  }))
-
   await queryRunner
     .manager
     .createQueryBuilder()
     .insert()
     .into(PUBLIC_TABLES.BUSINESS)
-    .values(newBusinesses)
+    .values(businesses)
     .execute()
 
   const newManagers = managers.map((manager, index) => ({
     ...manager,
-    imageUrl: DOMAIN + manager.imageUrl,
-    business: newBusinesses[index]
+    business: businesses[index]
   }))
 
   await queryRunner

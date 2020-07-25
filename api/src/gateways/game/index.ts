@@ -41,9 +41,7 @@ export const ERROR_MESSAGE = 'MESSAGE NOT VALID'
 export const TASK_RUNNING = 'THE TASK IS RUNNING'
 
 @UseInterceptors(ClassSerializerInterceptor)
-@WebSocketGateway(WEBSOCKET_PORT, {
-  transports: ['websocket']
-})
+@WebSocketGateway()
 export class GameGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer() server: Server
