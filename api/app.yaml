@@ -1,20 +1,31 @@
+# STANDARD ENVIRONMENT
+
 # runtime: nodejs10
 # entrypoint: npm run start:prod
+# handlers:
+#   - url: /images
+#     static_dir: dist/public/images
+#     http_headers:
+#       Access-Control-Allow-Origin: '*'
+
+# FLEXIBLE ENVIRONMENT
 runtime: nodejs
 env: flex
 entrypoint: npm run start:prod
-manual_scaling:
-  instances: 1
 network:
   session_affinity: true
+
+# This sample incurs costs to run on the App Engine flexible environment.
+# The settings below are to reduce costs during testing and are not appropriate
+# for production use. For more information, see:
+# https://cloud.google.com/appengine/docs/flexible/nodejs/configuring-your-app-with-app-yaml
+manual_scaling:
+  instances: 1
+
+# ENVIRONMENT VARIABLES
 env_variables:
   WEBSOCKET_PORT: 80
   SQL_HOST: ruby.db.elephantsql.com
   SQL_USER: xdstzbvq
   SQL_PASSWORD: KnnbbTF-Zudk-OrqTvNgHh0I8da79xSq
   SQL_DATABASE: xdstzbvq
-handlers:
-  - url: /images
-    static_dir: dist/public/images
-    http_headers:
-      Access-Control-Allow-Origin: '*'
