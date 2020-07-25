@@ -26,9 +26,11 @@ The game is idle, so it progresses while you are away: If you have a manager, th
 
 Do you want to see this awesome game in action? 
 - APP: https://adventure-closure.firebaseapp.com yay! 🎉
-- API: http://proyecto-26-244415.ue.r.appspot.com/api (Websockets are not working from GCP)
-
-About `Websockets`, migrating from `Standard` to the `Flexible` environment can solve this issue but `CORS` is not working as expected loading assets with that configuration (It would be better moving static files to a Cloud Storage service like Azure Blob Storage, AWS S3, Firebase Storage, etc), also this incurs costs to run on the App Engine flexible 🤔)
+- API (Exist 2 options and both support WebSockets for real-time communication) 👯
+  * Google Cloud App Engine with Flexible environment: http://proyecto-26-244415.ue.r.appspot.com/api
+  * Heroku with session affinity: https://adventure-closure.herokuapp.com/api
+  
+There're some tasks as work in progress (Check TODO) because this example is using real-time communication with `WebSockets` in order to have all business logic from Backend, in this way we can provide better security for our apps, scaling on demand and managing money the right way, never trusting in your users 😅
 
 ## Installation 📚
 
