@@ -113,7 +113,7 @@ export class MainScene extends Scene {
     const businesses = await BusinessStore.getBusinesses()
     this.businessCards = await BusinessUtils.loadCards(this, businesses, x, y)
     // TODO: Remove this delay and fix an issue loading the texture
-    await sleep(100)
+    await sleep(300)
     const firstBusinessCard = this.businessCards[0]
     firstBusinessCard
       .enableRunButton()

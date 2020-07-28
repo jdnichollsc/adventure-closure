@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import {
   IonApp,
   IonIcon,
@@ -11,8 +11,6 @@ import {
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { gameControllerOutline, golfOutline } from 'ionicons/icons';
-import Game from './pages/Game';
-import Ranking from './pages/Ranking';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -32,29 +30,40 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.scss';
+import { StoreProvider } from './context';
+import { PrivateRoute } from './components'; 
+import { Login, Game, Ranking } from './pages';
 
-const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonTabs>
-        <IonRouterOutlet>
-          <Route path="/game" component={Game} exact={true} />
-          <Route path="/ranking" component={Ranking} exact={true} />
-          <Route path="/" render={() => <Redirect to="/game" />} exact={true} />
-        </IonRouterOutlet>
-        <IonTabBar slot="bottom">
-          <IonTabButton tab="game" href="/game">
-            <IonIcon icon={gameControllerOutline} />
-            <IonLabel>Game</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="ranking" href="/ranking">
-            <IonIcon icon={golfOutline} />
-            <IonLabel>Ranking</IonLabel>
-          </IonTabButton>
-        </IonTabBar>
-      </IonTabs>
-    </IonReactRouter>
-  </IonApp>
-);
+
+const App: React.FC = () => {
+  return (
+    <StoreProvider>
+      <IonApp>
+        <IonReactRouter>
+          <Switch>
+            <Route path="/login" component={Login} exact />
+            <Route path="/" render={() => <Redirect to="/login" />} exact />
+            <IonTabs>
+              <IonRouterOutlet>
+                <PrivateRoute path="/game" component={Game} exact />
+                <PrivateRoute path="/ranking" component={Ranking} exact />
+              </IonRouterOutlet>
+              <IonTabBar slot="bottom">
+                <IonTabButton tab="game" href="/game">
+                  <IonIcon icon={gameControllerOutline} />
+                  <IonLabel>Game</IonLabel>
+                </IonTabButton>
+                <IonTabButton tab="ranking" href="/ranking">
+                  <IonIcon icon={golfOutline} />
+                  <IonLabel>Ranking</IonLabel>
+                </IonTabButton>
+              </IonTabBar>
+            </IonTabs>
+          </Switch>
+        </IonReactRouter>
+      </IonApp>
+    </StoreProvider>
+  );
+};
 
 export default App;
