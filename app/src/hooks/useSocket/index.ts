@@ -10,7 +10,9 @@ export function useSocket (
   const [socket, setSocket] = useState<typeof Socket | null>(null)
 
   useEffect(function () {
-    const newSocket = io.connect(WS_DOMAIN)
+    const newSocket = io.connect(WS_DOMAIN, {
+      transports: ['websocket']
+    })
     setSocket(newSocket)
     for (const key in events) {
       newSocket.on(key, events[key])

@@ -6,15 +6,14 @@ export function useGame (
   container: HTMLDivElement | null
 ): Game | undefined {
   const [game, setGame] = useState<Game>()
-  useEffect(function () {
-    if (container && !game) {
+  useEffect(() => {
+    if (container) {
       const newGame = new Game({ ...config, parent: container })
       setGame(newGame)
+
+      return () => newGame.destroy(true)
     }
-    return () => {
-      game?.destroy(false)
-    }
-  }, [config, container, game])
+  }, [config, container])
 
   return game
 }
