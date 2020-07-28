@@ -43,7 +43,7 @@ const LoginContainer: React.FC<LoginContainerProps> = ({
     (slide: number) => {
       slidesRef.current?.slideTo(slide)
     },
-    [slidesRef.current],
+    [slidesRef],
   )
 
   return (

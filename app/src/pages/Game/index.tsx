@@ -27,7 +27,7 @@ const Game: React.FC = () => {
   const onLogOut = useCallback(async () => {
     await onSignOut()
     history.replace('/login')
-  }, [])
+  }, [onSignOut, history])
   return (
     <IonPage>
       <IonHeader>

@@ -17,7 +17,7 @@ const Login: React.FC = () => {
   const history = useHistory()
   const onNavigateToHome = useCallback(() => {
     history.replace('/game')
-  }, [])
+  }, [history])
   return (
     <IonPage>
       <IonHeader>

@@ -21,11 +21,11 @@ export function useAuth () {
       { document, password }
     )).data;
     dispatch({ type: Action.LoadToken, value: accessToken });
-  }, []);
+  }, [dispatch]);
 
   const onSignOut = useCallback(async () => {
     dispatch({ type: Action.ClearTokens })
-  }, []);
+  }, [dispatch]);
 
   const onRegister = useCallback(async (user: any) => {
     alert('register user')
@@ -39,7 +39,7 @@ export function useAuth () {
       type: Action.LoadUser,
       value: user
     });
-  }, [state.token]);
+  }, [state.token, dispatch]);
 
   return {
     state,
