@@ -16,7 +16,7 @@ import {
 } from '@ionic/react'
 
 import { useDarkTheme } from '../../hooks'
-import RankingCard from '../../components/RankingCard'
+import { RankingCard } from '../../components'
 import './style.scss'
 
 const Ranking: React.FC = () => {

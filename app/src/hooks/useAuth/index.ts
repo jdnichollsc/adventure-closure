@@ -1,10 +1,12 @@
 import {
   useCallback,
 } from 'react';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
+import { isArray } from 'lodash';
 
 import { API_DOMAIN } from '../../contants';
-import { Action, useStore } from '../../context';
+import { Action, useStore } from '../../store';
+import { IUser } from '../../models';
 
 const authEndpoint = `${API_DOMAIN}/auth`;
 const userEndpoint = `${API_DOMAIN}/users`;
@@ -14,12 +16,12 @@ export function useAuth () {
 
   const onSignIn = useCallback(async (
     document: string,
-    password: string
+    password: string,
   ) => {
-    const { access_token: accessToken } = (await axios.post(
+    const { data: { access_token: accessToken } } = await axios.post(
       authEndpoint,
       { document, password }
-    )).data;
+    );
     dispatch({ type: Action.LoadToken, value: accessToken });
   }, [dispatch]);
 
@@ -27,14 +29,20 @@ export function useAuth () {
     dispatch({ type: Action.ClearTokens })
   }, [dispatch]);
 
-  const onRegister = useCallback(async (user: any) => {
-    alert('register user')
+  const onRegister = useCallback(async (user: IUser) => {
+    try {
+      await axios.post(userEndpoint, user)
+    } catch (error) {
+      const { message } = (error as AxiosError).response?.data || {}
+      const errorMessage = isArray(message) ? message[0] : message
+      throw new Error(errorMessage)
+    }
   }, []);
 
   const onLoadUser = useCallback(async () => {
-    const user = (await axios.get(`${userEndpoint}/me`, {
+    const { data: user } = await axios.get(`${userEndpoint}/me`, {
       headers: { 'Authorization': `Bearer ${state.token}` }
-    })).data;
+    });
     dispatch({
       type: Action.LoadUser,
       value: user

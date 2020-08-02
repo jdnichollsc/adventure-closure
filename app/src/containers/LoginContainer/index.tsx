@@ -4,15 +4,15 @@ import {
   IonSlide,
 } from '@ionic/react';
 
-import SignIn from './SignIn';
-import Register from './Register';
+import { IUser } from '../../models';
+import { SignIn, Register } from '../../components';
 import './style.scss';
 
 interface LoginContainerProps {
   token?: string
   onSignIn: (document: string, password: string) => Promise<void>
   onLoadUser: () => Promise<void>
-  onRegister: (user: any) => Promise<void>
+  onRegister: (user: IUser) => Promise<void>
   onNavigateToHome: () => void
 }
 

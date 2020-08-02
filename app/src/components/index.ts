@@ -1,4 +1,6 @@
-export { default as LoginContainer } from './LoginContainer'
-export { default as GameContainer } from './GameContainer'
 export { default as PrivateRoute } from './PrivateRoute'
+export { default as SignIn } from './SignIn'
+export { default as Register } from './Register'
+export { default as Input } from './Input'
 export { default as RankingCard } from './RankingCard'
+export { default as TermsAndConditions } from './TermsAndConditions'

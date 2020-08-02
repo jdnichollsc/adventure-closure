@@ -53,7 +53,7 @@ export class GameGateway
   ) { }
 
   afterInit(server: Server): void {
-    this.logger.debug(`Init: ${server}`)
+    this.logger.debug(`Init: ${server.path()}`)
   }
 
   handleConnection(client: Socket): void {

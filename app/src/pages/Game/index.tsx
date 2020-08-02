@@ -13,7 +13,7 @@ import { useHistory } from 'react-router-dom'
 import { logOutOutline } from 'ionicons/icons'
 
 import { useFBInstant, useAuth } from '../../hooks'
-import { GameContainer } from '../../components'
+import { GameContainer } from '../../containers'
 import './style.scss'
 
 const Game: React.FC = () => {

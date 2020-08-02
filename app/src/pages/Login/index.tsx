@@ -9,7 +9,7 @@ import {
 import { useHistory } from "react-router-dom";
 
 import { useAuth } from '../../hooks';
-import { LoginContainer } from '../../components';
+import { LoginContainer } from '../../containers';
 import './style.scss';
 
 const Login: React.FC = () => {

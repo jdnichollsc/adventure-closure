@@ -18,7 +18,7 @@ import {
   ParseIntPipe,
   ParseArrayPipe,
   DefaultValuePipe,
-  NotFoundException
+  NotFoundException,
 } from '@nestjs/common'
 import {
   ApiTags,
@@ -39,12 +39,10 @@ import { isEmpty } from 'lodash'
 
 import { ERRORS, POSTGRES } from '../constants'
 import { UserService } from '../repositories'
-import { AuthPayload, User, UserPasswords, DefaultRole, Role } from '../models'
+import { AuthPayload, User, UserPasswords, DefaultRole, Role, UserStatus } from '../models'
 import { encryptPassword, RolesGuard, Roles }  from '../auth'
 
-@ApiBearerAuth()
 @ApiTags('Users')
-@UseGuards(AuthGuard())
 @Controller('/api/users')
 export class UserController {
   constructor(
@@ -71,6 +69,8 @@ export class UserController {
     required: false,
     type: Number
   })
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard())
   @UseGuards(RolesGuard)
   @Roles(DefaultRole.Admin)
   @Get()
@@ -105,6 +105,8 @@ export class UserController {
     type: User,
     description: 'Current user information',
   })
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard())
   @Get('me')
   @HttpCode(HttpStatus.OK)
   async getProfile(
@@ -120,6 +122,8 @@ export class UserController {
     type: User,
     description: 'User information'
   })
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard())
   @UseGuards(RolesGuard)
   @Roles(DefaultRole.Admin)
   @Get(':document')
@@ -139,15 +143,18 @@ export class UserController {
   @ApiBody({ type: User, description: 'User information' })
   @ApiCreatedResponse({ description: 'The user was created successfully' })
   @ApiBadRequestResponse({ description: 'The user could not be created' })
-  @ApiForbiddenResponse({ description: 'You do not have the necessary role to perform this action' })
-  @UseGuards(RolesGuard)
-  @Roles(DefaultRole.Admin)
   @Post()
   @HttpCode(HttpStatus.CREATED)
   async addUser(
     @Body() user: User
   ): Promise<void> {
+    if (isEmpty(user.password))
+      throw new BadRequestException(ERRORS.USER_PASSWORD_REQUIRED)
+    if (user.password !== (user as any).repeatPassword)
+      throw new BadRequestException(ERRORS.USER_PASSWORD_MISMATCH)
     try {
+      user.password = await encryptPassword(user.password)
+      user.status = UserStatus.Active
       user.role = new Role(DefaultRole.User)
       await this.userService.addUser(user)
     } catch (error) {
@@ -169,6 +176,8 @@ export class UserController {
   @ApiOkResponse({ description: 'The user was updated successfully' })
   @ApiBadRequestResponse({ description: 'The user could not be updated' })
   @ApiForbiddenResponse({ description: 'You do not have the necessary role to perform this action' })
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard())
   @UseGuards(RolesGuard)
   @Roles(DefaultRole.Admin)
   @Put()
@@ -196,6 +205,8 @@ export class UserController {
   @ApiOkResponse({ description: 'User deleted' })
   @ApiBadRequestResponse({ description: 'The user could not be deleted' })
   @ApiForbiddenResponse({ description: 'You do not have the necessary role to perform this action' })
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard())
   @UseGuards(RolesGuard)
   @Roles(DefaultRole.Admin)
   @Delete(':document')
@@ -215,6 +226,8 @@ export class UserController {
   @ApiBody({ type: UserPasswords, description: 'User password' })
   @ApiOkResponse({ description: 'Updated password' })
   @ApiBadRequestResponse({ description: 'The password could not be updated' })
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard())
   @Put('update-password')
   @HttpCode(HttpStatus.OK)
   async updatePassword (
@@ -240,6 +253,8 @@ export class UserController {
   @ApiCreatedResponse({ description: 'The users were created successfully' })
   @ApiBadRequestResponse({ description: 'The users could not be created' })
   @ApiForbiddenResponse({ description: 'You do not have the necessary role to perform this action' })
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard())
   @UseGuards(RolesGuard)
   @Roles(DefaultRole.Admin)
   @Post('bulk')

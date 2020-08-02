@@ -64,7 +64,7 @@ export class Initialize1569118664968 implements MigrationInterface {
         { name: 'password', type: COLUMN_TYPES.TEXT, isNullable: true },
         { name: 'firstName', type: COLUMN_TYPES.VARCHAR, length: '50' },
         { name: 'lastName', type: COLUMN_TYPES.VARCHAR, length: '50' },
-        { name: 'email', type: COLUMN_TYPES.VARCHAR, length: '50' },
+        { name: 'email', type: COLUMN_TYPES.VARCHAR, length: '50', isNullable: false },
         { name: 'status', type: COLUMN_TYPES.TEXT, enum: EnumToArray(UserStatus) },
         { name: 'birthdate', type: COLUMN_TYPES.TIMESTAMP_UTC, isNullable: true },
         { name: 'address', type: COLUMN_TYPES.VARCHAR, length: '50', isNullable: true },

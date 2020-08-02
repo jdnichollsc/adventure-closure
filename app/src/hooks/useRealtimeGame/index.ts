@@ -7,9 +7,9 @@ import { useSocket } from '../useSocket'
 
 export function useRealtimeGame (
   config: Types.Core.GameConfig,
-  container: HTMLDivElement | null
+  containerRef: React.RefObject<HTMLDivElement>
 ) {
-  const game = useGame(config, container)
+  const game = useGame(config, containerRef)
   const { socket } = useSocket()
   useEffect(() => {
     if (game && socket) {

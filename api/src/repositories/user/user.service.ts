@@ -77,7 +77,7 @@ export class UserService {
 
   async addUser(
     user: IUser,
-    queryRunner: QueryRunner = this.repository.queryRunner
+    queryRunner?: QueryRunner
   ): Promise<void> {
     const currentDate = new Date().toISOString()
     const newUser = this.preloadUser(user)
@@ -96,7 +96,7 @@ export class UserService {
       currentDate,
       currentDate
     ]
-    await queryRunner.query(
+    await (queryRunner || this.repository).query(
       `INSERT INTO ${PUBLIC_TABLES.USER} (
         "id",
         "email",
