@@ -93,10 +93,10 @@ $ yarn test
 - [x] Enable CORS to allow access to a list of domains for restricted resources.
 - [x] Add default data (Businesses, Managers, etc) with database migrations.
 - [x] Use `Websockets` to have a real-time communication with a Event-driven architecture.
+- [x] Add login/register screens or use Facebook Instant games instead to authenticate users.
+- [x] Load the info of the current user
+- [x] Enable buttons purchasing a new business and improve the user experience/gamification.
 - [ ] Enable hiring managers to run business automatically.
-- [ ] Add login/register screens or use Facebook Instant games instead to authenticate users.
-- [ ] Load the info of the current user (Endpoints already exist)
-- [ ] Enable buttons purchasing a new business and improve the user experience/gamification.
 - [ ] Use `Atlasses` instead of images or `sprites-sheets` to reduce memory and bandwidth loading textures.
 - [ ] Use `RxJS` for Observer pattern handling requests, events, etc.
 - [ ] Manage game scaling and use `media queries` to support multiple resolutions and devices.
