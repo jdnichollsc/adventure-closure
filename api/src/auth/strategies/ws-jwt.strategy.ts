@@ -2,21 +2,21 @@ import { ExtractJwt, Strategy } from 'passport-jwt'
 import { PassportStrategy } from '@nestjs/passport'
 import { Injectable } from '@nestjs/common'
 
-import { AUTH_SECRET_TOKEN } from '../constants'
-import { AuthPayload } from '../models'
+import { AUTH_SECRET_TOKEN } from '../../constants'
+import { AuthPayload } from '../../models'
 
 /**
- * JwtStrategy is passport JWT strategy.
+ * WsJwtStrategy is passport WS-JWT strategy.
  * 
  * @export
- * @class JwtStrategy
+ * @class WsJwtStrategy
  * @extends {PassportStrategy(Strategy)}
  */
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
+export class WsJwtStrategy extends PassportStrategy(Strategy, 'ws-jwt') {
   constructor() {
     super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      jwtFromRequest: ExtractJwt.fromUrlQueryParameter('token'),
       ignoreExpiration: false,
       secretOrKey: AUTH_SECRET_TOKEN,
     })
@@ -27,7 +27,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
    * @param payload - Payload with the info of the user
    * 
    * @returns
-   * @memberof JwtStrategy
+   * @memberof WsJwtStrategy
    */
   validate(payload: AuthPayload): AuthPayload {
     return payload
