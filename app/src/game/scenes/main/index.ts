@@ -1,10 +1,10 @@
 import { Scene, Cameras } from 'phaser'
-import { find } from 'lodash'
+import { find, forEach } from 'lodash'
 
 import { RealTimeGame, ServerMessage, ClientMessage, UserBusiness, User } from '../../models'
 import { PlayerCard, BusinessCard } from '../../containers'
-import { GameStore, BusinessStore } from '../../stores'
-import { BusinessUtils, sleep } from '../../utils'
+import { GameStore, BusinessStore, UserStore } from '../../stores'
+import { BusinessUtils } from '../../utils'
 
 const SOCKET_ERROR = 'WebSockets not initialized'
 type GameState = { user: User }
@@ -33,7 +33,8 @@ export class MainScene extends Scene {
   }
 
   create () {
-    this.playerCard = new PlayerCard(this, new User())
+    const user = UserStore.currentUser()
+    this.playerCard = new PlayerCard(this, user)
     const carPosition = {
       x: 25,
       y: this.playerCard.y + this.playerCard.height
@@ -72,22 +73,29 @@ export class MainScene extends Scene {
 
   onGameState = ({ user }: GameState) => {
     this.playerCard.setPlayer(user)
+    forEach(user.businesses, (ub) => {
+      const card = find(this.businessCards, { id: ub.businessId }) as BusinessCard
+      card
+        .enableRunButton()
+        .setInventory(ub.inventory)
+        .enablePurchaseButton(card.getInvestment() <= user.capital)
+    })
   } 
 
   onUpdateCapital = (newCapital: number) => {
     this.playerCard.setCapital(newCapital)
     this.businessCards.forEach((card) => {
-      card.enablePurchaseButton(card.business.investment <= newCapital)
+      card.enablePurchaseButton(card.getInvestment() <= newCapital)
     })
   }
 
   onRunBusinessUpdate = (ub: UserBusiness) => {
-    const card = find(this.businessCards, { business: {id: ub.businessId}})
+    const card = find(this.businessCards, { id: ub.businessId })
     card?.playProgressBar()
   }
 
   onPurchaseBusinessUpdate = (ub: UserBusiness) => {
-    const card = find(this.businessCards, { business: {id: ub.businessId}})
+    const card = find(this.businessCards, { id: ub.businessId })
     if (card) {
       card
         .enableRunButton()

@@ -1,27 +1,12 @@
-import { User, UserStatus } from '../../models'
+import { User } from '../../models'
+
+const USER_STORAGE_KEY = 'user'
 
 export class UserStore {
   private static user: User
-  public static currentUser: () => Promise<User> = async () => {
+  public static currentUser(): User {
     if (!UserStore.user) {
-      // TODO: Load user info
-      UserStore.user = {
-        id: '1234',
-        firstName: 'Juan David',
-        lastName: 'Nicholls Cardona',
-        birthdate: '26-08-1991',
-        address: 'Cra 84b #4a-75 Apto 1523',
-        email: 'jdnichollsc@hotmail.com',
-        phoneNumber: '232322',
-        termsAndConditions: true,
-        status: UserStatus.Active,
-        capital: 0,
-        score: 0,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        businesses: [],
-        managers: [],
-      }
+      UserStore.user = JSON.parse(localStorage.getItem(USER_STORAGE_KEY) as string) || null
     }
     return UserStore.user
   }

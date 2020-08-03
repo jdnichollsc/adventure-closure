@@ -27,7 +27,9 @@ export class RunBusinessButton extends GameObjects.Sprite {
     this.textureLoaded = true
     if (this.active) {
       this.setInteractive()
+      const { displayHeight, displayWidth } = this
       this.setTexture(this.imageKey)
+      this.setDisplaySize(displayWidth, displayHeight)
     }
   }
 
