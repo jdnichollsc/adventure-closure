@@ -13,8 +13,10 @@ const GameContainer: React.FC<ContainerProps> = () => {
   useRealtimeGame(gameConfig, parentEl)
 
   return (
-    <div ref={parentEl} className="container">
-    </div>
+    <div
+      ref={parentEl}
+      className="container"
+    />
   );
 };
 

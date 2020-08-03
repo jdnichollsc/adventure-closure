@@ -12,7 +12,7 @@ import {
   WebSocketServer,
   SubscribeMessage,
   MessageBody,
-  ConnectedSocket
+  ConnectedSocket,
 } from '@nestjs/websockets'
 import { Server, Socket } from 'socket.io'
 
@@ -63,7 +63,7 @@ export class GameGateway
   handleConnection(client: Socket): void {
     const { clientsCount } = client.conn.server
     this.logger.debug(`New client connected: ${client.id}, total users: ${clientsCount}`)
-    client.emit("connection", "Successfully connected to server")
+    client.emit('connection', 'Successfully connected to server')
   }
 
   handleDisconnect(client: Socket): void {
@@ -71,13 +71,21 @@ export class GameGateway
     this.logger.debug(`Client disconnected: ${client.id}, total users: ${clientsCount}`)
   }
 
+  private async loadGameState(client: AuthSocket) {
+    const user = await this.userService.findByDocument(client.user.sub)
+    delete user.password
+    client.emit(ServerMessage.GAME_STATE, { user })
+  }
+
   @UseGuards(WsGuard)
   @SubscribeMessage(ClientMessage.STATUS)
   handleStatus(
     @ConnectedSocket() client: AuthSocket,
   ): string {
+    this.loadGameState(client)
     const userId = client.user.sub
-    const statusMessage = `Client: ${userId}, Status: ${ client.connected ? 'OK' : 'ERROR' }`
+    const status = client.connected ? 'OK' : 'ERROR'
+    const statusMessage = `Client: ${userId}, Status: ${status}`
     this.logger.debug(statusMessage)
     return statusMessage
   }
@@ -86,7 +94,10 @@ export class GameGateway
     client: AuthSocket,
     capitalToAdd: number,
   ) {
-    const newCapital = await this.userService.incrementAndGetCapital(client.user.sub, capitalToAdd)
+    const newCapital = await this.userService.incrementAndGetCapital(
+      client.user.sub,
+      capitalToAdd
+    )
     client.emit(ServerMessage.USER_CAPITAL, newCapital)
   }
 
@@ -100,16 +111,27 @@ export class GameGateway
     const lastRunAt = new Date()
     try {
       const userId = client.user.sub
-      const business = await this.businessService.getIfCanRunBusiness(userId, businessId, lastRunAt)
+      const business = await this.businessService.getIfCanRunBusiness(
+        userId,
+        businessId,
+        lastRunAt
+      )
       if (business) {
         client.emit(ServerMessage.RUN_BUSINESS_UPDATE, {
           businessId,
           lastRunAt
         })
-        const inventory = await this.businessService.updateUserBusinessAndGetInventory(userId, business.id, lastRunAt)
+        const inventory = await this.businessService.updateUserBusinessAndGetInventory(
+          userId,
+          business.id,
+          lastRunAt
+        )
         // TODO: Use queue for pending tasks instead of timeouts
         setTimeout(
-          () => this.incrementCapitalAndUpdateClient(client, business.income * inventory),
+          () => this.incrementCapitalAndUpdateClient(
+            client,
+            business.income * inventory
+          ),
           business.duration
         )
       } else {
@@ -131,7 +153,10 @@ export class GameGateway
     try {
       const userId = client.user.sub
       const business = await this.businessService.findOne(businessId)
-      const newCapital = await this.userService.reduceCapitalAndUpdateBusiness(userId, business)
+      const newCapital = await this.userService.reduceCapitalAndUpdateBusiness(
+        userId,
+        business
+      )
       if (newCapital !== null) {
         client.emit(ServerMessage.USER_CAPITAL, newCapital)
         const userBusiness = await this.businessService.getUserBusiness(userId, businessId)

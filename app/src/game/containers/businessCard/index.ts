@@ -145,6 +145,7 @@ export class BusinessCard extends GameObjects.Container {
 
   public enableRunButton() {
     this.runButton.disabled = false
+    this.runButton.setScale(1)
     this.runButton.setDisplaySize(70, 70)
     this.runButton.input.hitArea.setTo(0, 0, 250, 250)
     // TESTING

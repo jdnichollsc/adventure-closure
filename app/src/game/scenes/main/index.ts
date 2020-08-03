@@ -1,10 +1,13 @@
 import { Scene, Cameras } from 'phaser'
-import { find, unionBy } from 'lodash'
+import { find } from 'lodash'
 
 import { RealTimeGame, ServerMessage, ClientMessage, UserBusiness, User } from '../../models'
 import { PlayerCard, BusinessCard } from '../../containers'
 import { GameStore, BusinessStore } from '../../stores'
 import { BusinessUtils, sleep } from '../../utils'
+
+const SOCKET_ERROR = 'WebSockets not initialized'
+type GameState = { user: User }
 
 export class MainScene extends Scene {
   private playerCard!: PlayerCard
@@ -16,10 +19,10 @@ export class MainScene extends Scene {
     this.camera.setBackgroundColor('#24252A')
     // Required to initialize shared resources
     GameStore.setCurrentScene(this)
-    const { socket } = (this.game as RealTimeGame)
-    // TODO: Validate retry connection
-    if (!socket) throw new Error('Socket not initialized')
-    socket.emit(ClientMessage.STATUS, null, this.onStatus)
+
+    const { socket } = this.game as RealTimeGame
+    if (!socket) throw new Error(SOCKET_ERROR)
+    socket.on(ServerMessage.GAME_STATE, this.onGameState)
     socket.on(ServerMessage.RUN_BUSINESS_UPDATE, this.onRunBusinessUpdate)
     socket.on(ServerMessage.RUN_BUSINESS_ERROR, this.onRunBusinessError)
     socket.on(ServerMessage.PURCHASE_BUSINESS_UPDATE, this.onPurchaseBusinessUpdate)
@@ -30,11 +33,7 @@ export class MainScene extends Scene {
   }
 
   create () {
-    const player = new User()
-    player.firstName = 'Eliana'
-    player.lastName = 'Mask'
-    player.capital = 0
-    this.playerCard = new PlayerCard(this, player)
+    this.playerCard = new PlayerCard(this, new User())
     const carPosition = {
       x: 25,
       y: this.playerCard.y + this.playerCard.height
@@ -44,6 +43,10 @@ export class MainScene extends Scene {
     this.input
       .on('wheel', this.onWhell, this)
       .on('pointermove', this.onPointerMove, this)
+    
+    // INITIALIZE GAME STATE
+    const game = (this.game as RealTimeGame)
+    game.socket?.emit(ClientMessage.STATUS, null, this.onStatus)
   }
 
   onScrollCamera(newScrollY: number, camera = this.camera) {
@@ -65,12 +68,13 @@ export class MainScene extends Scene {
     this.onScrollCamera(newScrollY)
   }
 
-  onStatus = (data: any) => {
-    console.debug(data)
-  }
+  onStatus = (data: any) => console.debug(data)
+
+  onGameState = ({ user }: GameState) => {
+    this.playerCard.setPlayer(user)
+  } 
 
   onUpdateCapital = (newCapital: number) => {
-    this.playerCard.player.capital = newCapital
     this.playerCard.setCapital(newCapital)
     this.businessCards.forEach((card) => {
       card.enablePurchaseButton(card.business.investment <= newCapital)
@@ -89,8 +93,7 @@ export class MainScene extends Scene {
         .enableRunButton()
         .setInventory(ub.inventory)
     }
-    const { businesses } = this.playerCard.player
-    this.playerCard.player.businesses = unionBy([ub], businesses, 'id') 
+    this.playerCard.onUpdateBusiness(ub)
   }
 
   onHireManagerUpdate = () => {
@@ -112,8 +115,6 @@ export class MainScene extends Scene {
   async loadBusinessCards (x: number, y: number) {
     const businesses = await BusinessStore.getBusinesses()
     this.businessCards = await BusinessUtils.loadCards(this, businesses, x, y)
-    // TODO: Remove this delay and fix an issue loading the texture
-    await sleep(300)
     const firstBusinessCard = this.businessCards[0]
     firstBusinessCard
       .enableRunButton()

@@ -51,9 +51,9 @@ export class User implements IUser {
 
   status!: UserStatus
 
-  capital!: number
+  capital: number = 0
 
-  score!: number
+  score: number = 0
 
   createdAt!: Date
 

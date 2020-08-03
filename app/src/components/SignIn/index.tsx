@@ -140,13 +140,13 @@ const SignIn: React.FC<SignInProps> = ({
         isOpen={state.showSignAlert}
         onDidDismiss={() => onUpdateValue('showSignAlert', false)}
         header='Error'
-        message={'Document/Password is invalid, please try again.'}
+        message='Credentials are not valid, please check and try again.'
         buttons={['Okey']}
       />
       <IonLoading
         isOpen={state.showLoading}
         onDidDismiss={() => onUpdateValue('showLoading', false)}
-        message={'Please wait...'}
+        message='Please wait...'
       />
     </IonCard>
   )

@@ -66,7 +66,17 @@ export class UserService {
     const rawData = await this.repository.query(
       `SELECT
           u.*,
-          row_to_json(r) as role
+          row_to_json(r) as role,
+          (
+            SELECT json_agg(row_to_json(ub))
+            FROM ${PUBLIC_TABLES.USER_BUSINESS} ub
+            WHERE ub."userId" = u.id
+          ) as businesses,
+          (
+            SELECT json_agg(row_to_json(um))
+            FROM ${PUBLIC_TABLES.USER_MANAGER} um
+            WHERE um."userId" = u.id
+          ) as managers
         FROM ${PUBLIC_TABLES.USER} u
         LEFT OUTER JOIN role r ON u."roleId" = r.id
         WHERE u.id=$1;`,

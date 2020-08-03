@@ -6,6 +6,7 @@ export enum ClientMessage {
 }
 
 export enum ServerMessage {
+  GAME_STATE = 'GameState',
   RUN_BUSINESS_UPDATE = 'RunBusinessUpdate',
   RUN_BUSINESS_ERROR = 'RunBusinessError',
   PURCHASE_BUSINESS_UPDATE = 'PurchaseBusinessUpdate',
