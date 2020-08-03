@@ -4,9 +4,8 @@ import { PassportModule } from '@nestjs/passport'
 
 import { UserModule, RoleModule } from '../repositories'
 import { AUTH_SECRET_TOKEN, AUTH_JWT_OPTIONS } from '../constants'
-import { RolesGuard } from './guards/roles.guard'
-import { JwtStrategy } from './jwt.strategy'
-import { LocalStrategy } from './local.strategy'
+import { RolesGuard } from './guards'
+import { JwtStrategy, LocalStrategy, WsJwtStrategy } from './strategies'
 import { AuthService } from './auth.service'
 
 const passportModule = PassportModule.register({ defaultStrategy: 'jwt' })
@@ -24,7 +23,13 @@ const passportModule = PassportModule.register({ defaultStrategy: 'jwt' })
       })
     }),
   ],
-  providers: [AuthService, LocalStrategy, JwtStrategy, RolesGuard],
+  providers: [
+    AuthService,
+    LocalStrategy,
+    JwtStrategy,
+    WsJwtStrategy,
+    RolesGuard
+  ],
   exports: [AuthService, passportModule]
 })
 export class AuthModule {}

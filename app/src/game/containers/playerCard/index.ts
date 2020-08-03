@@ -1,7 +1,9 @@
 import { GameObjects, Scene } from 'phaser'
+import { unionBy } from 'lodash'
 
 import { PLAYER_SPRITES } from '../../constants'
-import { User } from '../../models'
+import { User, UserBusiness } from '../../models'
+import { concatStrings } from '../../utils'
 
 const {
   PROFILE_IMG
@@ -11,20 +13,20 @@ export class PlayerCard extends GameObjects.Container {
   private profileImg!: GameObjects.Image
   private fullName!: GameObjects.Text
   private capital!: GameObjects.Text
-  public player!: User
+  private user!: User
   constructor (
-    scene: Scene,
-    player: User
+    public readonly scene: Scene,
+    private player: User,
   ) {
     super(scene)
-    this.player = player
+    this.user = player
     this.scene.add.existing(this)
 
     this.profileImg = this.scene.add.image(20, 20, PROFILE_IMG).setOrigin(0).setScale(0.8)
     this.add(this.profileImg)
     this.height = this.profileImg.height
 
-    const name = [player.firstName, player.lastName].filter(Boolean).join(' ')
+    const name = concatStrings([player.firstName, player.lastName])
     this.fullName = this.scene.add.text(this.profileImg.width + 10, 20, name, {
       fontFamily: 'Rancho',
       fontSize: 40
@@ -42,6 +44,24 @@ export class PlayerCard extends GameObjects.Container {
   }
 
   setCapital(capital: number) {
+    this.user.capital = capital
     this.capital.text = '$' + capital
+  }
+
+  onUpdateBusiness(userBusiness: UserBusiness) {
+    this.user.businesses = unionBy([userBusiness], this.user.businesses, 'id')
+  }
+
+  setPlayer(player: Partial<User>) {
+    if (player.firstName && player.lastName) {
+      this.fullName.text = concatStrings([player.firstName, player.lastName])
+    }
+    if (player.capital !== undefined) {
+      this.capital.text = `$${player.capital}`
+    }
+    this.user = {
+      ...this.user,
+      ...player
+    }
   }
 }

@@ -36,4 +36,8 @@ export class AuthService {
       access_token: this.jwtService.sign(payload),
     }
   }
+
+  getPayloadFromToken(token: string): AuthPayload {
+    return this.jwtService.decode(token) as AuthPayload
+  }
 }

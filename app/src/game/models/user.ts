@@ -1,7 +1,4 @@
-export enum UserStatus {
-  Inactive = 'INACTIVE',
-  Active = 'ACTIVE'
-}
+import { IUser, UserStatus } from '../../models'
 
 export class UserBusiness {
   public id!: number
@@ -33,7 +30,7 @@ export class UserManager {
   updatedAt!: Date
 }
 
-export class User {
+export class User implements IUser {
   id!: string
 
   firstName!: string
@@ -54,9 +51,9 @@ export class User {
 
   status!: UserStatus
 
-  capital!: number
+  capital: number = 0
 
-  score!: number
+  score: number = 0
 
   createdAt!: Date
 

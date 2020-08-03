@@ -1,8 +1,19 @@
-import React from 'react'
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react'
+import React, { useCallback } from 'react'
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+  IonButtons,
+  IonButton,
+  IonIcon
+} from '@ionic/react'
+import { useHistory } from 'react-router-dom'
+import { logOutOutline } from 'ionicons/icons'
 
-import { useFBInstant } from '../../hooks'
-import GameContainer from '../../components/GameContainer'
+import { useFBInstant, useAuth } from '../../hooks'
+import { GameContainer } from '../../containers'
 import './style.scss'
 
 const Game: React.FC = () => {
@@ -10,11 +21,23 @@ const Game: React.FC = () => {
     onStartGame,
     onLoadingProgress,
   } = useFBInstant()
+  const { onSignOut } = useAuth()
+  const history = useHistory()
+
+  const onLogOut = useCallback(async () => {
+    await onSignOut()
+    history.replace('/login')
+  }, [onSignOut, history])
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
           <IonTitle>Adventure Closure</IonTitle>
+          <IonButtons slot="end">
+            <IonButton onClick={onLogOut}>
+              <IonIcon size='large' icon={logOutOutline} />
+            </IonButton>
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
       <IonContent>

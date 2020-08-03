@@ -3,17 +3,18 @@ import { Game, Types } from 'phaser'
 
 export function useGame (
   config: Types.Core.GameConfig,
-  container: HTMLDivElement | null
+  containerRef: React.RefObject<HTMLDivElement>
 ): Game | undefined {
   const [game, setGame] = useState<Game>()
   useEffect(() => {
-    if (container) {
-      const newGame = new Game({ ...config, parent: container })
+    if (!game && containerRef.current) {
+      const newGame = new Game({ ...config, parent: containerRef.current })
       setGame(newGame)
-
-      return () => newGame.destroy(true)
     }
-  }, [config, container])
+    return () => {
+      game?.destroy(true)
+    }
+  }, [config, containerRef, game])
 
   return game
 }

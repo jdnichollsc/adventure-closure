@@ -2,6 +2,7 @@ import {
   Logger,
   UseInterceptors,
   ClassSerializerInterceptor,
+  UseGuards,
 } from '@nestjs/common'
 import {
   WebSocketGateway,
@@ -11,13 +12,14 @@ import {
   WebSocketServer,
   SubscribeMessage,
   MessageBody,
-  ConnectedSocket
+  ConnectedSocket,
 } from '@nestjs/websockets'
 import { Server, Socket } from 'socket.io'
 
 import { WEBSOCKET_PORT } from '../../constants'
-import { Business, Manager } from '../../models'
+import { Business, Manager, AuthPayload } from '../../models'
 import { BusinessService, UserService } from '../../repositories'
+import { WsGuard } from '../../auth/guards'
 
 export enum ClientMessage {
   STATUS = 'Status',
@@ -34,11 +36,13 @@ export enum ServerMessage {
   PURCHASE_BUSINESS_ERROR = 'PurchaseBusinessError',
   HIRE_MANAGER_UPDATE = 'HireManagerUpdate',
   HIRE_MANAGER_ERROR = 'HireManagerError',
-  USER_CAPITAL = 'UserCapital'
+  USER_CAPITAL = 'UserCapital',
 }
 
 export const ERROR_MESSAGE = 'MESSAGE NOT VALID'
 export const TASK_RUNNING = 'THE TASK IS RUNNING'
+
+type AuthSocket = Socket & { user: AuthPayload }
 
 @UseInterceptors(ClassSerializerInterceptor)
 @WebSocketGateway(WEBSOCKET_PORT)
@@ -53,13 +57,13 @@ export class GameGateway
   ) { }
 
   afterInit(server: Server): void {
-    this.logger.debug(`Init: ${server}`)
+    this.logger.debug(`Init: ${server.path()}`)
   }
 
   handleConnection(client: Socket): void {
     const { clientsCount } = client.conn.server
     this.logger.debug(`New client connected: ${client.id}, total users: ${clientsCount}`)
-    client.emit("connection", "Successfully connected to server")
+    client.emit('connection', 'Successfully connected to server')
   }
 
   handleDisconnect(client: Socket): void {
@@ -67,44 +71,67 @@ export class GameGateway
     this.logger.debug(`Client disconnected: ${client.id}, total users: ${clientsCount}`)
   }
 
+  private async loadGameState(client: AuthSocket) {
+    const user = await this.userService.findByDocument(client.user.sub)
+    delete user.password
+    client.emit(ServerMessage.GAME_STATE, { user })
+  }
+
+  @UseGuards(WsGuard)
   @SubscribeMessage(ClientMessage.STATUS)
   handleStatus(
-    @ConnectedSocket() client: Socket,
+    @ConnectedSocket() client: AuthSocket,
   ): string {
-    const statusMessage = `Status Client: ${ client.connected ? 'OK' : 'ERROR' }`
+    this.loadGameState(client)
+    const userId = client.user.sub
+    const status = client.connected ? 'OK' : 'ERROR'
+    const statusMessage = `Client: ${userId}, Status: ${status}`
     this.logger.debug(statusMessage)
     return statusMessage
   }
 
   private async incrementCapitalAndUpdateClient(
-    userId: string,
+    client: AuthSocket,
     capitalToAdd: number,
-    client: Socket,
   ) {
-    const newCapital = await this.userService.incrementAndGetCapital(userId, capitalToAdd)
+    const newCapital = await this.userService.incrementAndGetCapital(
+      client.user.sub,
+      capitalToAdd
+    )
     client.emit(ServerMessage.USER_CAPITAL, newCapital)
   }
 
+  @UseGuards(WsGuard)
   @SubscribeMessage(ClientMessage.RUN_BUSINESS)
   async handleRunBusiness(
     @MessageBody() { id: businessId } = new Business(),
-    @ConnectedSocket() client: Socket,
+    @ConnectedSocket() client: AuthSocket,
   ): Promise<string> {
     if (!businessId) return ERROR_MESSAGE
     const lastRunAt = new Date()
     try {
-      // FIXME: LOAD USER INFO USING JWT TOKEN
-      const userId = '1234'
-      const business = await this.businessService.getIfCanRunBusiness(userId, businessId, lastRunAt)
+      const userId = client.user.sub
+      const business = await this.businessService.getIfCanRunBusiness(
+        userId,
+        businessId,
+        lastRunAt
+      )
       if (business) {
         client.emit(ServerMessage.RUN_BUSINESS_UPDATE, {
           businessId,
           lastRunAt
         })
-        const inventory = await this.businessService.updateUserBusinessAndGetInventory(userId, business.id, lastRunAt)
+        const inventory = await this.businessService.updateUserBusinessAndGetInventory(
+          userId,
+          business.id,
+          lastRunAt
+        )
         // TODO: Use queue for pending tasks instead of timeouts
         setTimeout(
-          () => this.incrementCapitalAndUpdateClient(userId, business.income * inventory, client),
+          () => this.incrementCapitalAndUpdateClient(
+            client,
+            business.income * inventory
+          ),
           business.duration
         )
       } else {
@@ -116,17 +143,20 @@ export class GameGateway
     }
   }
 
+  @UseGuards(WsGuard)
   @SubscribeMessage(ClientMessage.PURCHASE_BUSINESS)
   async handlePurchaseBusiness(
     @MessageBody() { id: businessId } = new Business(),
-    @ConnectedSocket() client: Socket,
+    @ConnectedSocket() client: AuthSocket,
   ): Promise<string> {
     if (!businessId) return ERROR_MESSAGE
     try {
-      // FIXME: LOAD USER INFO USING JWT TOKEN
-      const userId = '1234'
+      const userId = client.user.sub
       const business = await this.businessService.findOne(businessId)
-      const newCapital = await this.userService.reduceCapitalAndUpdateBusiness(userId, business)
+      const newCapital = await this.userService.reduceCapitalAndUpdateBusiness(
+        userId,
+        business
+      )
       if (newCapital !== null) {
         client.emit(ServerMessage.USER_CAPITAL, newCapital)
         const userBusiness = await this.businessService.getUserBusiness(userId, businessId)
@@ -138,10 +168,11 @@ export class GameGateway
     }
   }
 
+  @UseGuards(WsGuard)
   @SubscribeMessage(ClientMessage.HIRE_MANAGER)
   async handleHireManager(
     @MessageBody() manager: Manager,
-    @ConnectedSocket() client: Socket,
+    @ConnectedSocket() client: AuthSocket,
   ): Promise<string> {
     if (!manager) return ERROR_MESSAGE
     try {

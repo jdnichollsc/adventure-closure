@@ -46,28 +46,22 @@ export class User implements IUser {
   @ApiProperty({ description: 'Last name' })
   @Column('varchar', { length: 50, name: 'lastName' })
   @IsNotEmpty({
-    message: 'Last name is required'
+    message: 'Last name is required',
   })
   lastName!: string
 
   @ApiProperty({ description: 'Birthday' })
-  @Column({ type: 'timestamp without time zone' })
-  @IsNotEmpty({
-    message: 'Date of birth is required'
-  })
+  @Column({ type: 'timestamp without time zone', nullable: true })
   birthdate?: string
 
   @ApiProperty({ description: 'Address' })
   @Column('varchar', { length: 50, nullable: true })
-  @IsNotEmpty({
-    message: 'Address is required'
-  })
   address?: string
 
   @ApiProperty({ description: 'Email' })
-  @Column('varchar', { length: 50 })
+  @Column('varchar', { length: 50, nullable: false })
   @Index('IDX_USER_EMAIL', { unique: true })
-  @IsEmail(null, {
+  @IsEmail({}, {
     message: 'The email is not valid'
   })
   @IsNotEmpty({

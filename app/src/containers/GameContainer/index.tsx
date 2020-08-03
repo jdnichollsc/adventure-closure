@@ -10,11 +10,13 @@ interface ContainerProps {
 
 const GameContainer: React.FC<ContainerProps> = () => {
   const parentEl = useRef<HTMLDivElement>(null)
-  useRealtimeGame(gameConfig, parentEl.current)
+  useRealtimeGame(gameConfig, parentEl)
 
   return (
-    <div ref={parentEl} className="container">
-    </div>
+    <div
+      ref={parentEl}
+      className="container"
+    />
   );
 };
 

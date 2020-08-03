@@ -8,7 +8,6 @@ import { RunBusinessButton, PurchaseBusinessButton, HireManagerButton } from '..
 import { BusinessProgressBar } from '../businessProgressBar'
 
 export class BusinessCard extends GameObjects.Container {
-  public business!: Business
   private background!: GameObjects.Image
   private progressBar!: BusinessProgressBar
   private runButton!: RunBusinessButton
@@ -26,14 +25,13 @@ export class BusinessCard extends GameObjects.Container {
   private readonly INV_PROGRESS_HEIGHT = 30
   private readonly INV_PROGRESS_BORDER = 5
   constructor (
-    scene: Scene,
-    business: Business,
+    public readonly scene: Scene,
+    private readonly business: Business,
     width = BUSINESS_CARD_SIZE.width,
     height = BUSINESS_CARD_SIZE.height
   ) {
     super(scene)
     this.scene.add.existing(this)
-    this.business = business
     this.setSize(width, height)
 
     // TESTING
@@ -143,8 +141,13 @@ export class BusinessCard extends GameObjects.Container {
     this.add(this.inventoryLabel)
   }
 
+  get id() {
+    return this.business.id
+  }
+
   public enableRunButton() {
     this.runButton.disabled = false
+    this.runButton.setScale(1)
     this.runButton.setDisplaySize(70, 70)
     this.runButton.input.hitArea.setTo(0, 0, 250, 250)
     // TESTING
@@ -187,6 +190,10 @@ export class BusinessCard extends GameObjects.Container {
         this.INV_PROGRESS_HEIGHT
       )
     return this
+  }
+
+  getInvestment() {
+    return this.business.investment
   }
 
   onRunBusiness () {

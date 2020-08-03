@@ -5,7 +5,7 @@ import { BootScene } from './scenes'
 const gameConfig: Types.Core.GameConfig = {
   width: "100%",
   height: "100%",
-  type: Phaser.AUTO,
+  type: Phaser.CANVAS,
   scale: {
     // mode: Phaser.Scale.WIDTH_CONTROLS_HEIGHT,
     // TODO: With RESIZE mode width/height are zero
