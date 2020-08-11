@@ -5,7 +5,7 @@ import {
   IonLabel,
 } from '@ionic/react';
 import {
-  AnimatableComponent,
+  createAnimatableComponent,
 } from '@proyecto26/animatable-component-react';
 
 interface InputProps {
@@ -17,6 +17,7 @@ interface InputProps {
   onChange: (value: string) => void
 }
 
+const AnimatableIonLabel = createAnimatableComponent(IonLabel)
 
 const Input: React.FC<InputProps> = ({
   type,
@@ -47,20 +48,17 @@ const Input: React.FC<InputProps> = ({
         {children}
       </IonInput>
       {showWarning && (
-        <AnimatableComponent
+        <AnimatableIonLabel
           autoPlay
           animation='pulsate-fwd'
           duration={1000}
+          mode='ios'
+          color="danger"
+          position="stacked"
+          className='ion-text-left ion-padding-start'
         >
-          <IonLabel
-            mode='ios'
-            color="danger"
-            position="stacked"
-            className='ion-text-left ion-padding-start'
-          >
-            {warning}
-          </IonLabel>
-        </AnimatableComponent>
+          {warning}
+        </AnimatableIonLabel>
       )}
     </IonItem>
   );

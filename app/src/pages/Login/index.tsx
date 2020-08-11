@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useRef, useCallback } from 'react';
 import {
   IonContent,
   IonHeader,
@@ -13,11 +13,15 @@ import { LoginContainer } from '../../containers';
 import './style.scss';
 
 const Login: React.FC = () => {
+  const contentRef = useRef<HTMLIonContentElement>(null)
   const { state, onSignIn, onRegister, onLoadUser } = useAuth()
   const history = useHistory()
   const onNavigateToHome = useCallback(() => {
     history.replace('/game')
   }, [history])
+  const onScrollToTop = useCallback(() => {
+    contentRef.current?.scrollToTop(200)
+  }, [contentRef])
   return (
     <IonPage>
       <IonHeader>
@@ -25,12 +29,13 @@ const Login: React.FC = () => {
           <IonTitle>Login</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent scrollY={false} fullscreen={true}>
+      <IonContent ref={contentRef} fullscreen>
         <LoginContainer
           token={state.token}
           onSignIn={onSignIn}
           onRegister={onRegister}
           onLoadUser={onLoadUser}
+          onScrollToTop={onScrollToTop}
           onNavigateToHome={onNavigateToHome}
         />
       </IonContent>

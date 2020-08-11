@@ -87,6 +87,8 @@ const SignIn: React.FC<SignInProps> = ({
         </IonLabel>
         <IonInput
           type='text'
+          name='document'
+          autocomplete='off'
           value={state.document}
           onIonChange={(e) => onUpdateValue('document', e.detail.value || '')}
         >
@@ -103,6 +105,8 @@ const SignIn: React.FC<SignInProps> = ({
         </IonLabel>
         <IonInput
           type='password'
+          name='password'
+          autocomplete='off'
           value={state.password}
           onIonChange={(e) => onUpdateValue('password', e.detail.value || '')}
         >

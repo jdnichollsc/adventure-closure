@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 import {
   IonSlides,
   IonSlide,
@@ -13,6 +13,7 @@ interface LoginContainerProps {
   onSignIn: (document: string, password: string) => Promise<void>
   onLoadUser: () => Promise<void>
   onRegister: (user: IUser) => Promise<void>
+  onScrollToTop: () => void
   onNavigateToHome: () => void
 }
 
@@ -26,7 +27,6 @@ const slideOptions = {
 
 const slideStyle = {
   width: '100%',
-  height: '100%',
   margin: '0 auto',
 }
 
@@ -35,21 +35,31 @@ const LoginContainer: React.FC<LoginContainerProps> = ({
   onSignIn,
   onRegister,
   onLoadUser,
+  onScrollToTop,
   onNavigateToHome,
 }) => {
   const slidesRef = useRef<HTMLIonSlidesElement>(null)
+  const [slidesHeight, setSlidesHeight] = useState('100%')
 
-  const slideTo = useCallback(
-    (slide: number) => {
-      slidesRef.current?.slideTo(slide)
-    },
-    [slidesRef],
-  )
+  const onNavigateToSignIn = useCallback(() => {
+    onScrollToTop()
+    setSlidesHeight('100%')
+    slidesRef.current?.slideTo(0)
+  }, [onScrollToTop, slidesRef])
+
+  const onNavigateToRegister = useCallback(() => {
+    onScrollToTop()
+    setSlidesHeight('auto')
+    slidesRef.current?.slideTo(1)
+  }, [onScrollToTop, slidesRef])
 
   return (
     <IonSlides
       options={slideOptions}
-      style={slideStyle}
+      style={{
+        ...slideStyle,
+        height: slidesHeight
+      }}
       scrollbar={true}
       ref={slidesRef}
     >
@@ -59,13 +69,13 @@ const LoginContainer: React.FC<LoginContainerProps> = ({
           onSignIn={onSignIn}
           onLoadUser={onLoadUser}
           onNavigateToHome={onNavigateToHome}
-          onNavigateToRegister={() => slideTo(1)}
+          onNavigateToRegister={onNavigateToRegister}
         />
       </IonSlide>
       <IonSlide>
         <Register
           onRegister={onRegister}
-          onNavigateToSignIn={() => slideTo(0)}
+          onNavigateToSignIn={onNavigateToSignIn}
         />
       </IonSlide>
     </IonSlides>

@@ -7,7 +7,7 @@
     "@capacitor/core": "2.2.1",
     "@ionic/react": "^5.0.7",
     "@ionic/react-router": "^5.0.7",
-    "@proyecto26/animatable-component-react": "^1.0.3",
+    "@proyecto26/animatable-component-react": "^1.0.4",
     "axios": "^0.19.2",
     "ionicons": "^5.0.0",
     "lodash": "^4.17.19",

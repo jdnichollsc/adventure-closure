@@ -1,26 +1,26 @@
 # STANDARD ENVIRONMENT
 
-# runtime: nodejs10
-# entrypoint: npm run start:prod
-# handlers:
-#   - url: /images
-#     static_dir: dist/public/images
-#     http_headers:
-#       Access-Control-Allow-Origin: '*'
+runtime: nodejs10
+entrypoint: npm run start:prod
+handlers:
+  - url: /images
+    static_dir: dist/public/images
+    http_headers:
+      Access-Control-Allow-Origin: '*'
 
 # FLEXIBLE ENVIRONMENT
-runtime: nodejs
-env: flex
-entrypoint: npm run start:prod
-network:
-  session_affinity: true
+# runtime: nodejs
+# env: flex
+# entrypoint: npm run start:prod
+# network:
+#   session_affinity: true
 
 # This sample incurs costs to run on the App Engine flexible environment.
 # The settings below are to reduce costs during testing and are not appropriate
 # for production use. For more information, see:
 # https://cloud.google.com/appengine/docs/flexible/nodejs/configuring-your-app-with-app-yaml
-manual_scaling:
-  instances: 1
+# manual_scaling:
+#   instances: 1
 
 # ENVIRONMENT VARIABLES
 env_variables:
