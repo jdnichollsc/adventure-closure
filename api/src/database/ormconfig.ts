@@ -5,11 +5,11 @@ import { PROD_ENV } from '../constants'
 
 const connectionOptions: ConnectionOptions = {
   type: 'postgres',
-  host: process.env.SQL_HOST || 'ruby.db.elephantsql.com',
+  host: process.env.SQL_HOST || 'localhost',
   port: 5432,
-  username: process.env.SQL_USER || 'xdstzbvq',
-  password: process.env.SQL_PASSWORD || 'KnnbbTF-Zudk-OrqTvNgHh0I8da79xSq',
-  database: process.env.SQL_DATABASE || 'xdstzbvq',
+  username: process.env.SQL_USER || 'postgres',
+  password: process.env.SQL_PASSWORD || 'postgres',
+  database: process.env.SQL_DATABASE || 'my_database',
   entities: [
     join(__dirname, '../models/*{.ts,.js}'),
   ],
