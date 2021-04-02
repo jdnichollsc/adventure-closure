@@ -126,6 +126,7 @@ const Register: React.FC<RegisterProps> = ({
                 required
                 type='text'
                 label='First name'
+                autocomplete='given-name'
                 value={user.firstName}
                 warning='First name is required *'
                 onChange={(value) => onUpdateUserValue('firstName', value)}
@@ -138,6 +139,7 @@ const Register: React.FC<RegisterProps> = ({
                 required
                 type='text'
                 label='Last name'
+                autocomplete='family-name'
                 value={user.lastName}
                 warning='Last name is required *'
                 onChange={(value) => onUpdateUserValue('lastName', value)}
@@ -151,6 +153,7 @@ const Register: React.FC<RegisterProps> = ({
                 type='email'
                 label='Email'
                 value={user.email}
+                autocomplete='email'
                 warning='Email is required *'
                 onChange={(value) => onUpdateUserValue('email', value)}
               >

@@ -10,10 +10,11 @@ import {
 
 interface InputProps {
   label: string
-  warning?: string
-  type: HTMLIonInputElement['type']
-  value: HTMLIonInputElement['value']
-  required: HTMLIonInputElement['required']
+  warning?: string,
+  type: HTMLIonInputElement['type'],
+  value: HTMLIonInputElement['value'],
+  required: HTMLIonInputElement['required'],
+  autocomplete?: HTMLIonInputElement['autocomplete'],
   onChange: (value: string) => void
 }
 
@@ -26,6 +27,7 @@ const Input: React.FC<InputProps> = ({
   warning,
   required,
   children,
+  autocomplete,
   onChange
 }) => {
   const [showWarning, setShowWarning] = useState(false)
@@ -42,6 +44,7 @@ const Input: React.FC<InputProps> = ({
         required={required}
         type={type || 'text'}
         value={value}
+        autocomplete={autocomplete}
         onIonBlur={() => required && setShowWarning(!value)}
         onIonChange={(e) => onChange(e.detail.value || '')}
       >
